@@ -1,0 +1,253 @@
+:root {
+    --bu-primary: #00A3FF;
+    --bu-secondary: #33CCFF;
+    --bu-white: #FFFFFF;
+    --bu-text-primary: #212529;
+    --bu-text-secondary: #6B7280;
+    --bu-gradient-start: #00A3FF;
+    --bu-gradient-end: #FFA500;
+    --bu-border: #E5E7EB;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, var(--bu-gradient-start), var(--bu-gradient-end));
+    color: var(--bu-text-primary);
+    line-height: 1.5;
+    min-height: 100vh;
+}
+
+.main-container {
+    min-height: 100vh;
+    padding: 1rem;
+}
+
+.welcome-section {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.welcome-section h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.welcome-text {
+    color: white;
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+.content-card {
+    background: var(--bu-white);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.bu-card {
+    background: var(--bu-white);
+    border: 1px solid var(--bu-border);
+    border-radius: 8px;
+    overflow: hidden;
+    height: 100%;
+    margin-bottom: 1rem;
+}
+
+.bu-card-header {
+    padding: 1rem;
+    border-bottom: 1px solid var(--bu-border);
+    background-color: var(--bu-white);
+}
+
+.bu-card-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--bu-text-primary);
+}
+
+.bu-card-body {
+    padding: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--bu-text-primary);
+    font-size: 0.875rem;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.625rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bu-text-primary);
+    background-color: var(--bu-white);
+    border: 1px solid var(--bu-border);
+    border-radius: 6px;
+    transition: border-color 0.15s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: var(--bu-primary);
+    outline: 0;
+    box-shadow: 0 0 0 2px rgba(0, 163, 255, 0.1);
+}
+
+.form-check {
+    padding-left: 1.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.form-check-input {
+    margin-top: 0.25rem;
+    margin-left: -1.75rem;
+}
+
+.form-check-label {
+    font-size: 0.875rem;
+    color: var(--bu-text-primary);
+    cursor: pointer;
+}
+
+/* File Upload Styles */
+.file-upload-container {
+    width: 100%;
+    text-align: center;
+}
+
+.file-upload {
+    border: 2px dashed var(--bu-border);
+    padding: 1.5rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: border-color 0.3s, background-color 0.3s;
+    margin-top: 0.5rem;
+}
+
+.file-upload:hover, .file-upload.drag-over {
+    border-color: var(--bu-primary);
+    background-color: rgba(0, 163, 255, 0.05);
+}
+
+.upload-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 1rem;
+}
+
+/* Button Styles */
+.form-actions {
+    margin-top: 2rem;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.bu-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--bu-white);
+    background: linear-gradient(to right, var(--bu-primary), var(--bu-secondary));
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+    min-width: 120px;
+}
+
+.bu-button.secondary {
+    background: var(--bu-text-secondary);
+    background-image: none;
+}
+
+.bu-button:hover {
+    opacity: 0.9;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: var(--bu-white);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+#historyList {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+    text-align: left;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+#historyList li {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--bu-border);
+    line-height: 1.4;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .content-card {
+        padding: 1rem;
+    }
+
+    .welcome-section h1 {
+        font-size: 1.25rem;
+    }
+
+    .welcome-text {
+        font-size: 0.875rem;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .button-group .bu-button {
+        width: 100%;
+    }
+}
