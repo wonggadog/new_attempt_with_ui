@@ -1,4 +1,5 @@
 console.log("Script is running");
+console.log("Love u bebebebebe");
 
 // Form data configuration
 const formData = {
