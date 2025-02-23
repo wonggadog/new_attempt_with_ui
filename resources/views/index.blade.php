@@ -6,7 +6,7 @@
     <title>BUCS Management System</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
 </head>
 <body>
     <div class="main-container">
@@ -120,13 +120,13 @@
             <p>Submission History:</p>
             <ul id="historyList"></ul>
             <div class="modal-buttons">
-                <button id="historyOkButton" class="bu-button secondary">OK</button>
+                <button id="historyOkButton" class="bu-button primary">OK</button>
                 <button id="clearHistoryButton" class="bu-button secondary">Clear</button>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
