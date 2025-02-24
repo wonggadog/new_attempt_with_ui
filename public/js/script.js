@@ -151,9 +151,10 @@ function updateFileLabel(files) {
 }
 
 // Form submission handler
+// Form submission handler
 function handleFormSubmit(event) {
     event.preventDefault();
-    
+
     const formData = {
         to: document.getElementById('recipientTo').value,
         attention: document.getElementById('recipientAttention').value,
@@ -161,15 +162,74 @@ function handleFormSubmit(event) {
         actionItems: collectCheckedItems('actionItemsSection'),
         additionalActions: collectCheckedItems('additionalActionsSection'),
         fileType: document.getElementById('fileInput').value,
-        files: document.getElementById('fileInput').files
+        files: document.getElementById('fileInput').files,
     };
 
-    // Save to submission history
-    saveToHistory(formData);
+    // Log the collected data
+    console.log('Form data:', formData);
 
-    // Show confirmation
-    document.getElementById('confirmationModal').style.display = "flex";
+    // Convert files to FormData for upload
+    const formDataToSend = new FormData();
+    formDataToSend.append('to', formData.to);
+    formDataToSend.append('attention', formData.attention);
+
+    // Append departments as array items
+    formData.departments.forEach((dept, index) => {
+        formDataToSend.append(`departments[${index}]`, dept);
+    });
+
+    // Append action items as array items
+    formData.actionItems.forEach((item, index) => {
+        formDataToSend.append(`action_items[${index}]`, item);
+    });
+
+    // Append additional actions as array items
+    formData.additionalActions.forEach((action, index) => {
+        formDataToSend.append(`additional_actions[${index}]`, action);
+    });
+
+    formDataToSend.append('file_type', formData.fileType);
+
+    // Append files
+    for (let i = 0; i < formData.files.length; i++) {
+        formDataToSend.append('files[]', formData.files[i]);
+    }
+
+    // Get the route URL from the hidden input
+    const submitFormUrl = document.getElementById('submitFormUrl').value;
+
+    // Send data to Laravel backend
+    fetch(submitFormUrl, {
+        method: 'POST',
+        body: formDataToSend,
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => {
+                throw new Error(err.error || err.message || 'An error occurred while submitting the form.');
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            alert('Form submitted successfully!');
+            document.getElementById('confirmationModal').style.display = "flex";
+        } else {
+            alert('Error submitting form: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert(error.message || 'Error submitting form. Please try again.');
+    });
 }
+
+// Attach the form submission handler
+document.getElementById('communicationForm').addEventListener('submit', handleFormSubmit);
 
 // Save submission to history
 function saveToHistory(formData) {

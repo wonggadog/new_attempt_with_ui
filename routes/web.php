@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CommunicationFormController;
 
-Route::get('/', function () {
-    return view('index'); // Ensure your file is named index.blade.php inside resources/views/
-});
+// Display the form
+Route::get('/', [CommunicationFormController::class, 'index']);
+
+// Handle form submission
+Route::post('/submit-form', [CommunicationFormController::class, 'store'])->name('submit.form');

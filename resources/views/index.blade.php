@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BUCS Management System</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -20,6 +21,7 @@
                 <!-- Communication Form Section -->
                 <div class="content-card communication-section">
                     <form id="communicationForm">
+                        <input type="hidden" id="submitFormUrl" value="{{ route('submit.form') }}">
                         <div class="row g-4">
                             <!-- Main recipient fields -->
                             <div class="col-12">
