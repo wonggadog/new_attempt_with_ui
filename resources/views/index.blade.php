@@ -14,7 +14,7 @@
         <div class="container py-4">
             <div class="welcome-section mb-4">
                 <h1>BICOL UNIVERSITY COLLEGE OF SCIENCE</h1>
-                <p class="welcome-text">Communication Form Management System</p>
+                <p class="welcome-text">Document Sending System</p>
             </div>
 
             <div class="content-wrapper">
