@@ -216,8 +216,11 @@ function handleFormSubmit(event) {
     })
     .then(data => {
         if (data.success) {
-            alert('Form submitted successfully!');
+           // alert('Form submitted successfully!');
             document.getElementById('confirmationModal').style.display = "flex";
+    
+            // Save to history after successful submission
+            saveToHistory(formData);
         } else {
             alert('Error submitting form: ' + data.message);
         }
@@ -239,14 +242,16 @@ function saveToHistory(formData) {
         timestamp: new Date().toLocaleString(),
         to: formData.to,
         attention: formData.attention,
+        departments: formData.departments,
+        actionItems: formData.actionItems,
+        additionalActions: formData.additionalActions,
         fileType: formData.fileType,
-        files: Array.from(formData.files).map(f => f.name)
+        files: Array.from(formData.files).map(f => f.name),
     };
 
     submissionHistory.unshift(submission);
     localStorage.setItem("submissionHistory", JSON.stringify(submissionHistory));
 }
-
 // Initialize everything when DOM is loaded
 document.addEventListener("DOMContentLoaded", function() {
     initializeForm();
@@ -268,11 +273,11 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('fileLabel').innerHTML = "Upload a File<br><small>Drag and drop files here</small>";
     });
 
-    historyButton.addEventListener("click", function() {
+    historyButton.addEventListener("click", function () {
         const submissionHistory = JSON.parse(localStorage.getItem("submissionHistory")) || [];
         const historyList = document.getElementById("historyList");
         historyList.innerHTML = "";
-
+    
         if (submissionHistory.length > 0) {
             submissionHistory.forEach(entry => {
                 const listItem = document.createElement("li");
@@ -280,6 +285,9 @@ document.addEventListener("DOMContentLoaded", function() {
                     <strong>${entry.timestamp}</strong><br>
                     To: ${entry.to}<br>
                     Attention: ${entry.attention}<br>
+                    Departments: ${entry.departments.join(", ")}<br>
+                    Action Items: ${entry.actionItems.join(", ")}<br>
+                    Additional Actions: ${entry.additionalActions.join(", ")}<br>
                     Files: ${entry.files.join(", ")}
                 `;
                 historyList.appendChild(listItem);
@@ -287,7 +295,7 @@ document.addEventListener("DOMContentLoaded", function() {
         } else {
             historyList.innerHTML = "<li>No submissions yet</li>";
         }
-
+    
         historyModal.style.display = "flex";
     });
 
