@@ -18,11 +18,11 @@ body {
     min-height: 100vh;
 }
 
+/* Adjust Main Container */
 .main-container {
-    /*min-height: 100vh;*/
+    margin-left: 270px; /* Space from the NavBar (250px width + 20px gap) */
+    margin-top: 90px; /* Space from the Top Bar (60px height + 10px top + 20px gap) */
     padding: 1rem;
-    margin-left: 270px; /* Adjust based on NavBar width */
-    margin-top: 80px; /* Adjust based on TopBar height */
 }
 
 .welcome-section {
@@ -275,20 +275,21 @@ body {
 
 /* Top Bar Styles */
 .top-bar {
-    position: fixed;
-    top: 10px;
-    left: 270px; /* Adjust based on NavBar width */
-    right: 10;
+    position: absolute; /* Changed from fixed to absolute */
+    top: 10px; /* Space from the top of the browser */
+    left: 270px; /* Space from the NavBar (250px width + 20px gap) */
+    right: 10px; /* Space from the right edge of the browser */
     height: 60px;
-    background-color: var(--bu-white);
+    background-color: var(--bu-white); /* White background */
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    padding: 0 2rem;
+    padding: 0 20px; /* Add padding to create space between the edge and content */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    border-radius: 12px;
+    z-index: 1000; /* Ensure it stays on top of other content */
+    border-radius: 12px; /* Rounded corners */
 }
+
 
 #currentDateTime {
     font-size: 1rem;
