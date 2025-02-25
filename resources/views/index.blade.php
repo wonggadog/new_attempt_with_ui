@@ -9,7 +9,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
 </head>
+
 <body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div id="currentDateTime"></div>
+    </div>
+
+    <!-- Left NavBar -->
+    <nav class="left-navbar">
+        <ul>
+            <li><a href="#" class="nav-link">Document Upload</a></li>
+        </ul>
+    </nav>
+
     <div class="main-container">
         <div class="container py-4">
             <div class="welcome-section mb-4">

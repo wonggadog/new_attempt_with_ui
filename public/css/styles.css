@@ -11,15 +11,18 @@
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: linear-gradient(135deg, var(--bu-gradient-start), var(--bu-gradient-end));
+    background: linear-gradient(135deg, var(--bu-gradient-start), var(--bu-gradient-end)); /*---BACKGROUND GRADIENT      */
+    /*background: #f1f1f1; DIRTY WHITE BACKGROUND*/
     color: var(--bu-text-primary);
     line-height: 1.5;
     min-height: 100vh;
 }
 
 .main-container {
-    min-height: 100vh;
+    /*min-height: 100vh;*/
     padding: 1rem;
+    margin-left: 270px; /* Adjust based on NavBar width */
+    margin-top: 80px; /* Adjust based on TopBar height */
 }
 
 .welcome-section {
@@ -236,6 +239,61 @@ body {
 
 .form-check-input:hover {
     cursor: pointer;
+}
+
+/* Left NavBar Styles */
+.left-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100vh;
+    background-color: var(--bu-white);
+    padding: 1rem;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 0 12px 12px 0;
+}
+
+.left-navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.left-navbar .nav-link {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: var(--bu-text-primary);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.left-navbar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Top Bar Styles */
+.top-bar {
+    position: fixed;
+    top: 10px;
+    left: 270px; /* Adjust based on NavBar width */
+    right: 10;
+    height: 60px;
+    background-color: var(--bu-white);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 2rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-radius: 12px;
+}
+
+#currentDateTime {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--bu-text-primary);
 }
 
 /* Responsive Styles */
