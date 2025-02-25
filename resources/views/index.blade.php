@@ -64,18 +64,6 @@
 
                             <div class="col-md-8">
                                 <div class="row g-4">
-                                    <!-- Action Items Section -->
-                                    <div class="col-md-6">
-                                        <div class="bu-card">
-                                            <div class="bu-card-header">
-                                                <h3>Action Items</h3>
-                                            </div>
-                                            <div class="bu-card-body" id="actionItemsSection">
-                                                <!-- Action items will be populated by JavaScript -->
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     <!-- Additional Actions Section -->
                                     <div class="col-md-6">
                                         <div class="bu-card">
@@ -88,6 +76,29 @@
                                         </div>
                                     </div>
 
+                                    <!-- File Type Section -->
+                                    <div class="col-md-6">
+                                        <div class="bu-card">
+                                            <div class="bu-card-header">
+                                                <h3>File Type</h3>
+                                            </div>
+                                            <div class="bu-card-body" id="fileTypeSection">
+                                                <!-- File type options will be populated by JavaScript -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Action Items Section (Moved to the bottom) -->
+                                    <div class="col-12">
+                                        <div class="bu-card">
+                                            <div class="bu-card-header">
+                                                <h3>Action Items</h3>
+                                            </div>
+                                            <div class="bu-card-body" id="actionItemsSection">
+                                                <!-- Action items will be populated by JavaScript -->
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 

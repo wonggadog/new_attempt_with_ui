@@ -290,11 +290,21 @@ body {
     border-radius: 12px; /* Rounded corners */
 }
 
-
 #currentDateTime {
     font-size: 1rem;
     font-weight: 500;
     color: var(--bu-text-primary);
+}
+
+/* Ensure the landscape-style container for Action Items */
+#actionItemsSection {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+#actionItemsSection .form-check {
+    flex: 1 1 45%; /* Adjust as needed for layout */
 }
 
 /* Responsive Styles */

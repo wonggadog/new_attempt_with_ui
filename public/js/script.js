@@ -18,6 +18,9 @@ const formData = {
         'Please prepare an endorsement/answer/draft', 
         'Please communicate directly with the party',
         'Please review/revise', 'Please complete the attached forms'
+    ],
+    fileTypes: [
+        'Memos', 'Reports', 'Financial Documents', 'Student Records'
     ]
 };
 
@@ -60,7 +63,7 @@ function initializeForm() {
         .map(item => createCheckbox(item, item))
         .join('');
 
-    // Populate additional actions with checkboxes and name input fields where applicable
+    // Populate additional actions
     const additionalActionsSection = document.getElementById('additionalActionsSection');
     additionalActionsSection.innerHTML = formData.additionalActions
         .map(action => {
@@ -72,11 +75,28 @@ function initializeForm() {
         })
         .join('');
 
+    // Populate file types
+    const fileTypeSection = document.getElementById('fileTypeSection');
+    fileTypeSection.innerHTML = formData.fileTypes
+        .map(type => createRadioButton(type, type))
+        .join('');
+
     // Set up checkbox listeners for text field visibility
     setupCheckboxListeners();
 
     // Set up file upload listeners
     setupFileUpload();
+}
+
+// Helper function to create radio buttons
+function createRadioButton(id, label) {
+    const sanitizedId = id.toLowerCase().replace(/[^a-z0-9]/g, '');
+    return `
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="fileType" id="${sanitizedId}" value="${label}">
+            <label class="form-check-label" for="${sanitizedId}">${label}</label>
+        </div>
+    `;
 }
 
 // Set up checkbox listeners for additional actions that trigger name input field
@@ -151,7 +171,6 @@ function updateFileLabel(files) {
 }
 
 // Form submission handler
-// Form submission handler
 function handleFormSubmit(event) {
     event.preventDefault();
 
@@ -161,7 +180,7 @@ function handleFormSubmit(event) {
         departments: collectCheckedItems('departmentSection'),
         actionItems: collectCheckedItems('actionItemsSection'),
         additionalActions: collectCheckedItems('additionalActionsSection'),
-        fileType: document.getElementById('fileInput').value,
+        fileType: document.querySelector('input[name="fileType"]:checked')?.value || '', // Collect selected file type
         files: document.getElementById('fileInput').files,
     };
 
@@ -188,7 +207,7 @@ function handleFormSubmit(event) {
         formDataToSend.append(`additional_actions[${index}]`, action);
     });
 
-    formDataToSend.append('file_type', formData.fileType);
+    formDataToSend.append('file_type', formData.fileType); // Append selected file type
 
     // Append files
     for (let i = 0; i < formData.files.length; i++) {
@@ -216,10 +235,7 @@ function handleFormSubmit(event) {
     })
     .then(data => {
         if (data.success) {
-           // alert('Form submitted successfully!');
             document.getElementById('confirmationModal').style.display = "flex";
-    
-            // Save to history after successful submission
             saveToHistory(formData);
         } else {
             alert('Error submitting form: ' + data.message);
@@ -230,6 +246,7 @@ function handleFormSubmit(event) {
         alert(error.message || 'Error submitting form. Please try again.');
     });
 }
+
 
 // Attach the form submission handler
 document.getElementById('communicationForm').addEventListener('submit', handleFormSubmit);
