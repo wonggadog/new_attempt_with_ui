@@ -1,5 +1,4 @@
 console.log("Script is running");
-console.log("Love u bebebebebe");
 
 // Form data configuration
 const formData = {
@@ -86,6 +85,12 @@ function initializeForm() {
 
     // Set up file upload listeners
     setupFileUpload();
+
+    // Set up department checkbox listeners for recipient dropdown
+    setupDepartmentCheckboxListeners();
+
+    // Set up typing listener for "To:" field with debouncing
+    setupRecipientSearch();
 }
 
 // Helper function to create radio buttons
@@ -247,10 +252,6 @@ function handleFormSubmit(event) {
     });
 }
 
-
-// Attach the form submission handler
-document.getElementById('communicationForm').addEventListener('submit', handleFormSubmit);
-
 // Save submission to history
 function saveToHistory(formData) {
     let submissionHistory = JSON.parse(localStorage.getItem("submissionHistory")) || [];
@@ -269,6 +270,113 @@ function saveToHistory(formData) {
     submissionHistory.unshift(submission);
     localStorage.setItem("submissionHistory", JSON.stringify(submissionHistory));
 }
+
+// Function to fetch recipients based on selected departments and search term
+function fetchRecipients(departments, searchTerm = '') {
+    console.log('Fetching recipients for departments:', departments, 'and search term:', searchTerm); // Debugging
+
+    fetch('/fetch-recipients', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+        },
+        body: JSON.stringify({ 
+            departments: departments,
+            search: searchTerm, // Include the search term in the request
+        }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Recipients Data:', data); // Debugging
+        const dropdown = document.getElementById('recipientSelect');
+        dropdown.innerHTML = '<option value="">Select a recipient</option>'; // Reset the dropdown options
+        
+        // Populate the dropdown with recipients
+        data.forEach(recipient => {
+            const option = document.createElement('option');
+            option.value = recipient.name;
+            option.textContent = recipient.name;
+            dropdown.appendChild(option);
+        });
+
+        // Show the dropdown (but don't open it yet)
+        document.getElementById('recipientDropdown').style.display = 'block';
+
+        // Automatically open the dropdown if there's a search term
+        if (searchTerm.trim() !== '') {
+            dropdown.size = data.length + 1; // Show all options (including the default)
+        } else {
+            dropdown.size = 1; // Collapse the dropdown
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching recipients:', error);
+    });
+}
+
+// Debounce function to limit how often fetchRecipients is called
+function debounce(func, delay) {
+    let timeout;
+    return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), delay);
+    };
+}
+
+// Set up typing listener for "To:" field with debouncing
+function setupRecipientSearch() {
+    const recipientToField = document.getElementById('recipientTo');
+    const debouncedFetchRecipients = debounce(function() {
+        const searchTerm = recipientToField.value.trim(); // Get the typed text
+        const selectedDepartments = Array.from(document.querySelectorAll('#departmentSection input[type="checkbox"]:checked'))
+            .map(box => box.nextElementSibling.textContent.trim());
+
+        if (selectedDepartments.length > 0) {
+            fetchRecipients(selectedDepartments, searchTerm); // Fetch recipients with the search term
+        } else {
+            document.getElementById('recipientDropdown').style.display = 'none';
+        }
+    }, 300); // 300ms delay
+
+    recipientToField.addEventListener('input', debouncedFetchRecipients);
+}
+
+// Event listener for department checkboxes
+function setupDepartmentCheckboxListeners() {
+    document.querySelectorAll('#departmentSection input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const selectedDepartments = Array.from(document.querySelectorAll('#departmentSection input[type="checkbox"]:checked'))
+                .map(box => box.nextElementSibling.textContent.trim());
+
+            console.log('Selected Departments:', selectedDepartments); // Debugging
+
+            if (selectedDepartments.length > 0) {
+                const searchTerm = document.getElementById('recipientTo').value.trim(); // Get the current search term
+                fetchRecipients(selectedDepartments, searchTerm); // Fetch recipients with the search term
+            } else {
+                document.getElementById('recipientDropdown').style.display = 'none';
+            }
+        });
+    });
+}
+
+// Event listener for recipient dropdown
+document.getElementById('recipientSelect').addEventListener('change', function() {
+    const recipientToField = document.getElementById('recipientTo');
+    recipientToField.value = this.value; // Set the selected recipient in the "To:" field
+
+    // Minimize the dropdown back to its default state and hide it
+    this.size = 1; // Collapse the dropdown
+    this.innerHTML = '<option value="">Select a recipient</option>'; // Reset the dropdown options
+    document.getElementById('recipientDropdown').style.display = 'none'; // Hide the dropdown
+});
+
 // Initialize everything when DOM is loaded
 document.addEventListener("DOMContentLoaded", function() {
     initializeForm();

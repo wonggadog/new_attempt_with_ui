@@ -41,6 +41,12 @@
                                 <div class="form-group">
                                     <label class="form-label">To:</label>
                                     <input type="text" class="form-control" id="recipientTo" required>
+                                    <!-- Recipient Dropdown -->
+                                    <div id="recipientDropdown" style="display: none; margin-top: 10px;">
+                                        <select id="recipientSelect" class="form-control">
+                                            <option value="">Select a recipient</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12">
