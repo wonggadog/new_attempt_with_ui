@@ -9,6 +9,9 @@ class RecipientsTableSeeder extends Seeder
 {
     public function run()
     {
+        // Truncate to remove existing data
+        Recipient::truncate();
+
         $recipients = [
             ['name' => 'John Doe', 'department' => 'Admin'],
             ['name' => 'Jane Smith', 'department' => 'Admin'],
@@ -43,7 +46,11 @@ class RecipientsTableSeeder extends Seeder
         ];
 
         foreach ($recipients as $recipient) {
-            Recipient::create($recipient);
+            Recipient::updateOrCreate(
+                ['name' => $recipient['name'], 'department' => $recipient['department']], // Check if exists
+                $recipient
+            );
         }
     }
 }
+

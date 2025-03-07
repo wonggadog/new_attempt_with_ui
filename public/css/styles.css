@@ -11,17 +11,71 @@
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: linear-gradient(135deg, var(--bu-gradient-start), var(--bu-gradient-end)); /*---BACKGROUND GRADIENT      */
-    /*background: #f1f1f1; DIRTY WHITE BACKGROUND*/
+    background: linear-gradient(135deg, var(--bu-gradient-start), var(--bu-gradient-end));
     color: var(--bu-text-primary);
     line-height: 1.5;
     min-height: 100vh;
 }
 
-/* Adjust Main Container */
+/* Top Bar */
+.top-bar {
+    position: absolute;
+    top: 10px;
+    left: 270px;
+    right: 10px;
+    height: 60px;
+    background-color: var(--bu-white);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-radius: 12px;
+}
+
+#currentDateTime {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--bu-text-primary);
+}
+
+/* Left NavBar */
+.left-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100vh;
+    background-color: var(--bu-white);
+    padding: 1rem;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 0 12px 12px 0;
+}
+
+.left-navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.left-navbar .nav-link {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: var(--bu-text-primary);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.left-navbar .nav-link:hover {
+    background-color: rgba(0, 163, 255, 0.1);
+}
+
+/* Main Container */
 .main-container {
-    margin-left: 270px; /* Space from the NavBar (250px width + 20px gap) */
-    margin-top: 90px; /* Space from the Top Bar (60px height + 10px top + 20px gap) */
+    margin-left: 270px;
+    margin-top: 90px;
     padding: 1rem;
 }
 
@@ -43,14 +97,7 @@ body {
     margin-bottom: 0;
 }
 
-.content-card {
-    background: var(--bu-white);
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    margin-bottom: 2rem;
-}
-
+/* Cards */
 .bu-card {
     background: var(--bu-white);
     border: 1px solid var(--bu-border);
@@ -77,6 +124,7 @@ body {
     padding: 1rem;
 }
 
+/* Form Elements */
 .form-group {
     margin-bottom: 1rem;
 }
@@ -109,23 +157,7 @@ body {
     box-shadow: 0 0 0 2px rgba(0, 163, 255, 0.1);
 }
 
-.form-check {
-    padding-left: 1.75rem;
-    margin-bottom: 0.75rem;
-}
-
-.form-check-input {
-    margin-top: 0.25rem;
-    margin-left: -1.75rem;
-}
-
-.form-check-label {
-    font-size: 0.875rem;
-    color: var(--bu-text-primary);
-    cursor: pointer;
-}
-
-/* File Upload Styles */
+/* File Upload */
 .file-upload-container {
     width: 100%;
     text-align: center;
@@ -151,22 +183,12 @@ body {
 }
 
 .upload-icon {
-    width: 40px;
-    height: 40px;
+    font-size: 2rem;
+    color: var(--bu-primary);
     margin-bottom: 1rem;
 }
 
-/* Button Styles */
-.form-actions {
-    margin-top: 2rem;
-}
-
-.button-group {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-}
-
+/* Buttons */
 .bu-button {
     display: inline-flex;
     align-items: center;
@@ -192,7 +214,7 @@ body {
     opacity: 0.9;
 }
 
-/* Modal Styles */
+/* Modals */
 .modal {
     display: none;
     position: fixed;
@@ -237,95 +259,31 @@ body {
     line-height: 1.4;
 }
 
-.form-check-input:hover {
-    cursor: pointer;
+/* Additional Notes Section */
+#additionalNotes {
+    width: 100%;
+    min-height: 150px; /* Adjust height as needed */
+    resize: vertical; /* Allow vertical resizing */
 }
 
-/* Left NavBar Styles */
-.left-navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 220px;
-    height: 100vh;
-    background-color: var(--bu-white);
-    padding: 1rem;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    border-radius: 0 12px 12px 0;
+/* Form Actions */
+.form-actions {
+    margin-top: 2rem; /* Add space above the buttons */
+    text-align: center; /* Center the buttons */
 }
 
-.left-navbar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.button-group {
+    display: inline-flex; /* Keep buttons in a row */
+    gap: 1rem; /* Space between buttons */
 }
 
-.left-navbar .nav-link {
-    display: block;
-    padding: 0.75rem 1rem;
-    color: var(--bu-text-primary);
-    text-decoration: none;
-    border-radius: 6px;
-    transition: background-color 0.3s;
+/* Document Upload Section */
+.file-upload-container {
+    margin-top: 2rem; /* Add space below the buttons */
 }
 
-.left-navbar .nav-link:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-}
-
-/* Top Bar Styles */
-.top-bar {
-    position: absolute; /* Changed from fixed to absolute */
-    top: 10px; /* Space from the top of the browser */
-    left: 270px; /* Space from the NavBar (250px width + 20px gap) */
-    right: 10px; /* Space from the right edge of the browser */
-    height: 60px;
-    background-color: var(--bu-white); /* White background */
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 0 20px; /* Add padding to create space between the edge and content */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 1000; /* Ensure it stays on top of other content */
-    border-radius: 12px; /* Rounded corners */
-}
-
-#currentDateTime {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--bu-text-primary);
-}
-
-/* Ensure the landscape-style container for Action Items */
-#actionItemsSection {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-#actionItemsSection .form-check {
-    flex: 1 1 45%; /* Adjust as needed for layout */
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
-    .content-card {
-        padding: 1rem;
-    }
-
-    .welcome-section h1 {
-        font-size: 1.25rem;
-    }
-
-    .welcome-text {
-        font-size: 0.875rem;
-    }
-
-    .button-group {
-        flex-direction: column;
-    }
-
-    .button-group .bu-button {
-        width: 100%;
-    }
+/* Icons */
+.fas {
+    margin-right: 0.5rem;
+    /*color: #FF5F1F;*/
 }

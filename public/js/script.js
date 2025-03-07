@@ -182,11 +182,13 @@ function handleFormSubmit(event) {
     const formData = {
         to: document.getElementById('recipientTo').value,
         attention: document.getElementById('recipientAttention').value,
-        departments: collectCheckedItems('departmentSection'),
+        departments: Array.from(document.querySelectorAll('#departmentSection input[type="checkbox"]:checked'))
+            .map(box => box.nextElementSibling.textContent.trim()),
         actionItems: collectCheckedItems('actionItemsSection'),
         additionalActions: collectCheckedItems('additionalActionsSection'),
-        fileType: document.querySelector('input[name="fileType"]:checked')?.value || '', // Collect selected file type
+        fileType: document.querySelector('input[name="fileType"]:checked')?.value || '',
         files: document.getElementById('fileInput').files,
+        additionalNotes: document.getElementById('additionalNotes').value, // New field
     };
 
     // Log the collected data
@@ -213,6 +215,7 @@ function handleFormSubmit(event) {
     });
 
     formDataToSend.append('file_type', formData.fileType); // Append selected file type
+    formDataToSend.append('additional_notes', formData.additionalNotes); // Append additional notes
 
     // Append files
     for (let i = 0; i < formData.files.length; i++) {
