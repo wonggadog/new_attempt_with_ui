@@ -9,48 +9,41 @@ class RecipientsTableSeeder extends Seeder
 {
     public function run()
     {
-        // Truncate to remove existing data
-        Recipient::truncate();
-
         $recipients = [
-            ['name' => 'John Doe', 'department' => 'Admin'],
-            ['name' => 'Jane Smith', 'department' => 'Admin'],
-            ['name' => 'Alice Johnson', 'department' => 'Budget'],
-            ['name' => 'Bob Brown', 'department' => 'Budget'],
-            ['name' => 'Charlie Davis', 'department' => 'Accounting'],
-            ['name' => 'Diana Evans', 'department' => 'Accounting'],
-            ['name' => 'Eve Foster', 'department' => 'Supply'],
-            ['name' => 'Frank Green', 'department' => 'Supply'],
-            ['name' => 'Grace Hall', 'department' => 'BACS'],
-            ['name' => 'Hank Irving', 'department' => 'BACS'],
-            ['name' => 'Ivy Jones', 'department' => 'Cashier'],
-            ['name' => 'Jack King', 'department' => 'Cashier'],
-            ['name' => 'Karen Lee', 'department' => 'Registrar'],
-            ['name' => 'Leo Martinez', 'department' => 'Registrar'],
-            ['name' => 'Mona Newton', 'department' => 'Biology'],
-            ['name' => 'Nina Owens', 'department' => 'Biology'],
-            ['name' => 'Oscar Perez', 'department' => 'Chemistry'],
-            ['name' => 'Paula Quinn', 'department' => 'Chemistry'],
-            ['name' => 'Quincy Reed', 'department' => 'CS/IT'],
-            ['name' => 'Rachel Scott', 'department' => 'CS/IT'],
-            ['name' => 'Steve Taylor', 'department' => 'Phys/Met'],
-            ['name' => 'Tina Underwood', 'department' => 'Phys/Met'],
-            ['name' => 'Uma Vance', 'department' => 'Math'],
-            ['name' => 'Victor White', 'department' => 'Math'],
-            ['name' => 'Wendy Xavier', 'department' => 'Comp Lab'],
-            ['name' => 'Xander Young', 'department' => 'Comp Lab'],
-            ['name' => 'Yara Zimmerman', 'department' => 'NatSci Lab'],
-            ['name' => 'Zack Adams', 'department' => 'NatSci Lab'],
-            ['name' => 'Amy Baker', 'department' => 'Others'],
-            ['name' => 'Brad Clark', 'department' => 'Others'],
+            ['name' => 'John Doe', 'department' => 'Admin', 'email' => 'johndoe@example.com'],
+            ['name' => 'Jane Smith', 'department' => 'Admin', 'email' => 'janesmith@example.com'],
+            ['name' => 'Alice Johnson', 'department' => 'Budget', 'email' => 'alicejohnson@example.com'],
+            ['name' => 'Bob Brown', 'department' => 'Budget', 'email' => 'bobbrown@example.com'],
+            ['name' => 'Charlie Davis', 'department' => 'Accounting', 'email' => 'charliedavis@example.com'],
+            ['name' => 'Diana Evans', 'department' => 'Accounting', 'email' => 'dianaevans@example.com'],
+            ['name' => 'Eve Foster', 'department' => 'Supply', 'email' => 'evefoster@example.com'],
+            ['name' => 'Frank Green', 'department' => 'Supply', 'email' => 'frankgreen@example.com'],
+            ['name' => 'Grace Hall', 'department' => 'BACS', 'email' => 'gracehall@example.com'],
+            ['name' => 'Hank Irving', 'department' => 'BACS', 'email' => 'hankirving@example.com'],
+            ['name' => 'Ivy Jones', 'department' => 'Cashier', 'email' => 'ivyjones@example.com'],
+            ['name' => 'Jack King', 'department' => 'Cashier', 'email' => 'jackking@example.com'],
+            ['name' => 'Karen Lee', 'department' => 'Registrar', 'email' => 'karenlee@example.com'],
+            ['name' => 'Leo Martinez', 'department' => 'Registrar', 'email' => 'leomartinez@example.com'],
+            ['name' => 'Mona Newton', 'department' => 'Biology', 'email' => 'monanewton@example.com'],
+            ['name' => 'Nina Owens', 'department' => 'Biology', 'email' => 'ninaowens@example.com'],
+            ['name' => 'Oscar Perez', 'department' => 'Chemistry', 'email' => 'oscarperez@example.com'],
+            ['name' => 'Paula Quinn', 'department' => 'Chemistry', 'email' => 'paulaquinn@example.com'],
+            ['name' => 'Quincy Reed', 'department' => 'CS/IT', 'email' => 'quincyreed@example.com'],
+            ['name' => 'Rachel Scott', 'department' => 'CS/IT', 'email' => 'rachelscott@example.com'],
+            ['name' => 'Steve Taylor', 'department' => 'Phys/Met', 'email' => 'stevetaylor@example.com'],
+            ['name' => 'Tina Underwood', 'department' => 'Phys/Met', 'email' => 'tinaunderwood@example.com'],
+            ['name' => 'Uma Vance', 'department' => 'Math', 'email' => 'umavance@example.com'],
+            ['name' => 'Victor White', 'department' => 'Math', 'email' => 'victorwhite@example.com'],
+            ['name' => 'Wendy Xavier', 'department' => 'Comp Lab', 'email' => 'wendyxavier@example.com'],
+            ['name' => 'Xander Young', 'department' => 'Comp Lab', 'email' => 'xanderyoung@example.com'],
+            ['name' => 'Yara Zimmerman', 'department' => 'NatSci Lab', 'email' => 'yarazimmerman@example.com'],
+            ['name' => 'Zack Adams', 'department' => 'NatSci Lab', 'email' => 'zackadams@example.com'],
+            ['name' => 'Amy Baker', 'department' => 'Others', 'email' => 'amybaker@example.com'],
+            ['name' => 'Brad Clark', 'department' => 'Others', 'email' => 'bradclark@example.com'],
         ];
 
         foreach ($recipients as $recipient) {
-            Recipient::updateOrCreate(
-                ['name' => $recipient['name'], 'department' => $recipient['department']], // Check if exists
-                $recipient
-            );
+            Recipient::create($recipient);
         }
     }
 }
-

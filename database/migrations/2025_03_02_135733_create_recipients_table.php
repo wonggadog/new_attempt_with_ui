@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id(); // Auto-incrementing primary key
             $table->string('name'); // Recipient's name
             $table->string('department'); // Associated department
+            $table->string('email'); // Recipient's email
             $table->timestamps(); // Created at and Updated at timestamps
         });
     }
