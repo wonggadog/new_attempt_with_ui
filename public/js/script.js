@@ -308,7 +308,7 @@ function fetchRecipients(departments, searchTerm = '') {
             dropdown.appendChild(option);
         });
 
-        // Show the dropdown (but don't open it yet)
+        // Show the dropdown
         document.getElementById('recipientDropdown').style.display = 'block';
 
         // Automatically open the dropdown if there's a search term
@@ -374,15 +374,16 @@ document.getElementById('recipientSelect').addEventListener('change', function()
     const recipientToField = document.getElementById('recipientTo');
     recipientToField.value = this.value; // Set the selected recipient in the "To:" field
 
-    // Minimize the dropdown back to its default state and hide it
-    this.size = 1; // Collapse the dropdown
-    this.innerHTML = '<option value="">Select a recipient</option>'; // Reset the dropdown options
-    document.getElementById('recipientDropdown').style.display = 'none'; // Hide the dropdown
+    // Hide the dropdown after selection
+    document.getElementById('recipientDropdown').style.display = 'none';
 });
 
 // Initialize everything when DOM is loaded
 document.addEventListener("DOMContentLoaded", function() {
     initializeForm();
+
+    // Hide the recipient dropdown initially
+    document.getElementById('recipientDropdown').style.display = 'none';
 
     // Form submission
     document.getElementById('communicationForm').addEventListener('submit', handleFormSubmit);

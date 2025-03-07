@@ -62,7 +62,7 @@
                                             <label class="form-label"><i class="fas fa-user"></i> To:</label>
                                             <input type="text" class="form-control" id="recipientTo" required>
                                             <!-- Recipient Dropdown -->
-                                            <div id="recipientDropdown" class="recipient-dropdown">
+                                            <div id="recipientDropdown" class="recipient-dropdown" style="display: none;">
                                                 <select id="recipientSelect" class="form-control">
                                                     <option value="">Select a recipient</option>
                                                 </select>
