@@ -61,6 +61,15 @@
                             <i class="bi bi-sun-fill" id="lightIcon"></i>
                             <i class="bi bi-moon-fill d-none" id="darkIcon"></i>
                         </button>
+                        <button class="btn btn-icon position-relative">
+                            <i class="bi bi-bell"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger rounded-circle">
+                                <span class="visually-hidden">New alerts</span>
+                            </span>
+                        </button>
+                        <button class="btn btn-icon">
+                            <i class="bi bi-gear"></i>
+                        </button>
                         <div class="avatar">AD</div>
                     </div>
                 </div>
