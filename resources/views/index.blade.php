@@ -112,7 +112,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label class="form-label"><i class="bi bi-bullhorn me-2"></i>Attention:</label>
+                                        <label class="form-label"><i class="bi bi-bullhorn me-2"></i>Attention/Subject:</label>
                                         <input type="text" class="form-control" id="recipientAttention" required>
                                     </div>
                                 </div>
