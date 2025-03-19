@@ -9,7 +9,7 @@ class RecipientsTableSeeder extends Seeder
 {
     public function run()
     {
-        $recipients = [
+        $users = [
             ['name' => 'John Doe', 'department' => 'Admin', 'email' => 'johndoe@example.com'],
             ['name' => 'Jane Smith', 'department' => 'Admin', 'email' => 'janesmith@example.com'],
             ['name' => 'Alice Johnson', 'department' => 'Budget', 'email' => 'alicejohnson@example.com'],
@@ -42,8 +42,8 @@ class RecipientsTableSeeder extends Seeder
             ['name' => 'Brad Clark', 'department' => 'Others', 'email' => 'bradclark@example.com'],
         ];
 
-        foreach ($recipients as $recipient) {
-            Recipient::create($recipient);
+        foreach ($users as $user) {
+            Recipient::create($user);
         }
     }
 }

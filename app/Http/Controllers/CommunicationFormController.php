@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\CommunicationForm;
 use Illuminate\Support\Facades\Storage;
-use App\Models\Recipient;
+use App\Models\User;
 
 class CommunicationFormController extends Controller
 {
@@ -75,7 +75,7 @@ class CommunicationFormController extends Controller
         }
     }
 
-    public function fetchRecipients(Request $request)
+    public function fetchUsers(Request $request)
     {
         // Validate the request
         $request->validate([
@@ -84,16 +84,16 @@ class CommunicationFormController extends Controller
             'search' => 'nullable|string', // Add search term validation
         ]);
 
-        // Fetch recipients based on the selected departments
-        $recipients = Recipient::whereIn('department', $request->input('departments'));
+        // Fetch users based on the selected departments
+        $users = User::whereIn('department', $request->input('departments'));
 
-        // If a search term is provided, filter recipients by name
+        // If a search term is provided, filter users by name
         if ($request->has('search') && !empty($request->input('search'))) {
             $searchTerm = $request->input('search');
-            $recipients->where('name', 'LIKE', "%{$searchTerm}%");
+            $users->where('name', 'LIKE', "%{$searchTerm}%");
         }
 
-        // Return the recipients as JSON
-        return response()->json($recipients->get());
+        // Return the users as JSON
+        return response()->json($users->get());
     }
 }

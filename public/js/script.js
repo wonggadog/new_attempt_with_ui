@@ -86,11 +86,11 @@ function initializeForm() {
     // Set up file upload listeners
     setupFileUpload();
 
-    // Set up department checkbox listeners for recipient dropdown
+    // Set up department checkbox listeners for user dropdown
     setupDepartmentCheckboxListeners();
 
     // Set up typing listener for "To:" field with debouncing
-    setupRecipientSearch();
+    setupUserSearch();
 }
 
 // Helper function to create radio buttons
@@ -180,8 +180,8 @@ function handleFormSubmit(event) {
     event.preventDefault();
 
     const formData = {
-        to: document.getElementById('recipientTo').value,
-        attention: document.getElementById('recipientAttention').value,
+        to: document.getElementById('userTo').value,
+        attention: document.getElementById('userAttention').value,
         departments: Array.from(document.querySelectorAll('#departmentSection input[type="checkbox"]:checked'))
             .map(box => box.nextElementSibling.textContent.trim()),
         actionItems: collectCheckedItems('actionItemsSection'),
@@ -274,11 +274,11 @@ function saveToHistory(formData) {
     localStorage.setItem("submissionHistory", JSON.stringify(submissionHistory));
 }
 
-// Function to fetch recipients based on selected departments and search term
-function fetchRecipients(departments, searchTerm = '') {
-    console.log('Fetching recipients for departments:', departments, 'and search term:', searchTerm); // Debugging
+// Function to fetch users based on selected departments and search term
+function fetchUsers(departments, searchTerm = '') {
+    console.log('Fetching users for departments:', departments, 'and search term:', searchTerm); // Debugging
 
-    fetch('/fetch-recipients', {
+    fetch('/fetch-users', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -296,20 +296,20 @@ function fetchRecipients(departments, searchTerm = '') {
         return response.json();
     })
     .then(data => {
-        console.log('Recipients Data:', data); // Debugging
-        const dropdown = document.getElementById('recipientSelect');
-        dropdown.innerHTML = '<option value="">Select a recipient</option>'; // Reset the dropdown options
+        console.log('Users Data:', data); // Debugging
+        const dropdown = document.getElementById('userSelect');
+        dropdown.innerHTML = '<option value="">Select a user</option>'; // Reset the dropdown options
         
-        // Populate the dropdown with recipients
-        data.forEach(recipient => {
+        // Populate the dropdown with users
+        data.forEach(user => {
             const option = document.createElement('option');
-            option.value = recipient.name;
-            option.textContent = recipient.name;
+            option.value = user.name;
+            option.textContent = user.name;
             dropdown.appendChild(option);
         });
 
         // Show the dropdown
-        document.getElementById('recipientDropdown').style.display = 'block';
+        document.getElementById('userDropdown').style.display = 'block';
 
         // Automatically open the dropdown if there's a search term
         if (searchTerm.trim() !== '') {
@@ -319,11 +319,11 @@ function fetchRecipients(departments, searchTerm = '') {
         }
     })
     .catch(error => {
-        console.error('Error fetching recipients:', error);
+        console.error('Error fetching users:', error);
     });
 }
 
-// Debounce function to limit how often fetchRecipients is called
+// Debounce function to limit how often fetchUsers is called
 function debounce(func, delay) {
     let timeout;
     return function(...args) {
@@ -333,21 +333,21 @@ function debounce(func, delay) {
 }
 
 // Set up typing listener for "To:" field with debouncing
-function setupRecipientSearch() {
-    const recipientToField = document.getElementById('recipientTo');
-    const debouncedFetchRecipients = debounce(function() {
-        const searchTerm = recipientToField.value.trim(); // Get the typed text
+function setupUserSearch() {
+    const userToField = document.getElementById('userTo');
+    const debouncedFetchUsers = debounce(function() {
+        const searchTerm = userToField.value.trim(); // Get the typed text
         const selectedDepartments = Array.from(document.querySelectorAll('#departmentSection input[type="checkbox"]:checked'))
             .map(box => box.nextElementSibling.textContent.trim());
 
         if (selectedDepartments.length > 0) {
-            fetchRecipients(selectedDepartments, searchTerm); // Fetch recipients with the search term
+            fetchUsers(selectedDepartments, searchTerm); // Fetch users with the search term
         } else {
-            document.getElementById('recipientDropdown').style.display = 'none';
+            document.getElementById('userDropdown').style.display = 'none';
         }
     }, 300); // 300ms delay
 
-    recipientToField.addEventListener('input', debouncedFetchRecipients);
+    userToField.addEventListener('input', debouncedFetchUsers);
 }
 
 // Event listener for department checkboxes
@@ -360,30 +360,30 @@ function setupDepartmentCheckboxListeners() {
             console.log('Selected Departments:', selectedDepartments); // Debugging
 
             if (selectedDepartments.length > 0) {
-                const searchTerm = document.getElementById('recipientTo').value.trim(); // Get the current search term
-                fetchRecipients(selectedDepartments, searchTerm); // Fetch recipients with the search term
+                const searchTerm = document.getElementById('userTo').value.trim(); // Get the current search term
+                fetchUsers(selectedDepartments, searchTerm); // Fetch users with the search term
             } else {
-                document.getElementById('recipientDropdown').style.display = 'none';
+                document.getElementById('userDropdown').style.display = 'none';
             }
         });
     });
 }
 
-// Event listener for recipient dropdown
-document.getElementById('recipientSelect').addEventListener('change', function() {
-    const recipientToField = document.getElementById('recipientTo');
-    recipientToField.value = this.value; // Set the selected recipient in the "To:" field
+// Event listener for user dropdown
+document.getElementById('userSelect').addEventListener('change', function() {
+    const userToField = document.getElementById('userTo');
+    userToField.value = this.value; // Set the selected user in the "To:" field
 
     // Hide the dropdown after selection
-    document.getElementById('recipientDropdown').style.display = 'none';
+    document.getElementById('userDropdown').style.display = 'none';
 });
 
 // Initialize everything when DOM is loaded
 document.addEventListener("DOMContentLoaded", function() {
     initializeForm();
 
-    // Hide the recipient dropdown initially
-    document.getElementById('recipientDropdown').style.display = 'none';
+    // Hide the user dropdown initially
+    document.getElementById('userDropdown').style.display = 'none';
 
     // Form submission
     document.getElementById('communicationForm').addEventListener('submit', handleFormSubmit);

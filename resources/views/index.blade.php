@@ -96,16 +96,16 @@
                             </div>
                         </div>
 
-                        <!-- Recipient and Attention Fields -->
+                        <!-- User and Attention Fields -->
                         <div class="col-md-8">
                             <div class="row g-4">
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label class="form-label"><i class="bi bi-person me-2"></i>To:</label>
-                                        <input type="text" class="form-control" id="recipientTo" required>
-                                        <div id="recipientDropdown" class="recipient-dropdown" style="display: none;">
-                                            <select id="recipientSelect" class="form-control">
-                                                <option value="">Select a recipient</option>
+                                        <input type="text" class="form-control" id="userTo" required>
+                                        <div id="userDropdown" class="user-dropdown" style="display: none;">
+                                            <select id="userSelect" class="form-control">
+                                                <option value="">Select a user</option>
                                             </select>
                                         </div>
                                     </div>
@@ -113,7 +113,7 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label class="form-label"><i class="bi bi-bullhorn me-2"></i>Attention/Subject:</label>
-                                        <input type="text" class="form-control" id="recipientAttention" required>
+                                        <input type="text" class="form-control" id="userAttention" required>
                                     </div>
                                 </div>
 
