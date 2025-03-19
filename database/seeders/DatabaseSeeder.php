@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Al Dian Gel Wong',
                 'email_verified_at' => now(),
                 // original code----- 'password' => bcrypt('password'),
+                'id_number' => '2021-2401-23944',
                 'password' => 'BicolUni2021',
                 'department' => 'Admin',
                 'remember_token' => Str::random(10),

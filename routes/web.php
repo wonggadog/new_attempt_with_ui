@@ -7,6 +7,12 @@ use Illuminate\Support\Facades\Auth;
 // Authentication Routes
 Auth::routes();
 
+// Guest routes
+Route::middleware(['guest'])->group(function () {
+    Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
+});
+
 // Protected Routes (require authentication)
 Route::middleware(['auth'])->group(function () {
     // Display the form (your existing functionality)
@@ -17,12 +23,7 @@ Route::middleware(['auth'])->group(function () {
     
     // Fetch users
     Route::post('/fetch-users', [CommunicationFormController::class, 'fetchUsers'])->name('fetch.users');
+    
+    // Logout route
+    Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 });
-
-// Redirect unauthenticated users to login
-Route::get('/login', function () {
-    return redirect()->route('login');
-})->name('login.redirect');
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

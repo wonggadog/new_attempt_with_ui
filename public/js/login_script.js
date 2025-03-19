@@ -1,3 +1,5 @@
+// public/js/login_script.js
+
 // Toggle password visibility
 function togglePassword() {
     const passwordInput = document.getElementById('password');
@@ -18,20 +20,6 @@ function togglePassword() {
         `;
     }
 }
-
-// Handle form submission
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    
-    const idNumber = document.getElementById('idNumber').value;
-    const password = document.getElementById('password').value;
-    
-    // Here you would typically send the credentials to your server
-    console.log('Login attempt:', { idNumber, password });
-    
-    // For demo purposes, show an alert
-    alert('Login functionality would be implemented on the server side.');
-});
 
 // Handle Google Sign-In
 function handleGoogleSignIn() {
