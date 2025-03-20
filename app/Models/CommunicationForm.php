@@ -11,6 +11,7 @@ class CommunicationForm extends Model
 
     protected $fillable = [
         'to',
+        'from',
         'attention',
         'departments',
         'action_items',

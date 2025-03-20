@@ -11,6 +11,7 @@ class CreateCommunicationFormsTable extends Migration
         Schema::create('communication_forms', function (Blueprint $table) {
             $table->id();
             $table->string('to');
+            $table->string('from'); // added from column
             $table->string('attention');
             $table->json('departments')->nullable();
             $table->json('action_items')->nullable();
