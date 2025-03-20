@@ -34,7 +34,6 @@
             <a href="#" class="nav-link active">
               <i class="bi bi-inbox me-2"></i>
               Received Documents
-              <!-- <span class="badge rounded-pill ms-auto">24</span> -->
             </a>
             <a href="#" class="nav-link">
               <i class="bi bi-send me-2"></i>
@@ -69,7 +68,7 @@
             </button>
             <div class="position-relative search-container">
               <i class="bi bi-search position-absolute search-icon"></i>
-              <input type="search" class="form-control search-input" placeholder="Search">
+              <input type="search" class="form-control search-input" placeholder="Search" id="searchInput">
             </div>
           </div>
           <div class="d-flex align-items-center gap-3">
@@ -270,6 +269,12 @@
 
   <!-- Bootstrap JS Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Pass PHP data to JavaScript -->
+  <script>
+    const documents = @json($documents);
+  </script>
+
   <!-- Custom JavaScript -->
   <script src="{{ asset('js/received_docs_script.js') }}"></script>
 </body>

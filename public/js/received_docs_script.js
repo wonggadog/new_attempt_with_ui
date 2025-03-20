@@ -1,67 +1,3 @@
-// Sample data for documents
-const documents = [
-  {
-    id: 1,
-    sender: "Sarah Johnson",
-    senderEmail: "sarah.j@company.com",
-    subject: "Q3 Financial Report",
-    fileType: "PDF",
-    iconClass: "bi-file-earmark-pdf",
-    iconColor: "pdf",
-    dateReceived: "2023-10-15T09:30:00",
-    action: "Review and Approve",
-    additionalAction: "Forward to Finance Team",
-    notes: "Please review by Friday and provide feedback on the Q3 projections.",
-    isStarred: true,
-    isUrgent: true,
-  },
-  {
-    id: 2,
-    sender: "Michael Chen",
-    senderEmail: "m.chen@tech.co",
-    subject: "Product Design Mockups",
-    fileType: "Image",
-    iconClass: "bi-file-earmark-image",
-    iconColor: "image",
-    dateReceived: "2023-10-14T14:45:00",
-    action: "Review and Comment",
-    additionalAction: "Share with Design Team",
-    notes: "These are the final mockups for the new dashboard interface.",
-    isStarred: false,
-    isUrgent: false,
-  },
-  {
-    id: 3,
-    sender: "Alex Rodriguez",
-    senderEmail: "alex.r@legal.org",
-    subject: "Contract Agreement",
-    fileType: "Document",
-    iconClass: "bi-file-earmark-text",
-    iconColor: "doc",
-    dateReceived: "2023-10-13T11:20:00",
-    action: "Sign and Return",
-    additionalAction: "Keep Copy for Records",
-    notes: "Please sign the contract and return it by end of week.",
-    isStarred: true,
-    isUrgent: true,
-  },
-  {
-    id: 4,
-    sender: "Emily Watson",
-    senderEmail: "e.watson@marketing.net",
-    subject: "Marketing Campaign Proposal",
-    fileType: "Presentation",
-    iconClass: "bi-file-earmark-slides",
-    iconColor: "presentation",
-    dateReceived: "2023-10-12T16:10:00",
-    action: "Review and Approve",
-    additionalAction: "Schedule Meeting to Discuss",
-    notes: "Proposal for the holiday marketing campaign. Need approval by Monday.",
-    isStarred: false,
-    isUrgent: false,
-  },
-];
-
 // DOM Elements
 const documentsList = document.getElementById("documentsList");
 const documentDetail = document.getElementById("documentDetail");
@@ -74,11 +10,27 @@ const sidebar = document.getElementById("sidebar");
 const themeToggle = document.getElementById("themeToggle");
 const lightIcon = document.getElementById("lightIcon");
 const darkIcon = document.getElementById("darkIcon");
+const searchInput = document.getElementById("searchInput");
+
+// Pagination variables
+let currentPage = 1;
+const itemsPerPage = 6; // Adjust as needed
 
 // Initialize the application
 document.addEventListener("DOMContentLoaded", () => {
-  // Render documents
-  renderDocuments();
+  // Show loading spinner
+  allDocumentsContainer.innerHTML = `
+    <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  `;
+
+  // Simulate a delay (remove this in production)
+  setTimeout(() => {
+    renderPaginatedDocuments();
+  }, 1000); // Simulate 1-second delay
 
   // Event listeners
   backToDocumentsBtn.addEventListener("click", showDocumentsList);
@@ -91,19 +43,52 @@ document.addEventListener("DOMContentLoaded", () => {
     themeToggle.addEventListener("click", toggleTheme);
   }
 
+  if (searchInput) {
+    searchInput.addEventListener("input", handleSearch);
+  }
+
+  // Pagination event listeners
+  document.getElementById("prevPage")?.addEventListener("click", () => {
+    if (currentPage > 1) {
+      currentPage--;
+      renderPaginatedDocuments();
+    }
+  });
+
+  document.getElementById("nextPage")?.addEventListener("click", () => {
+    if (currentPage * itemsPerPage < documents.length) {
+      currentPage++;
+      renderPaginatedDocuments();
+    }
+  });
+
   // Apply saved theme preference
   applySavedTheme();
 });
 
+// Render paginated documents
+function renderPaginatedDocuments() {
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedDocuments = documents.slice(startIndex, endIndex);
+  renderDocuments(paginatedDocuments);
+}
+
 // Render all documents
-function renderDocuments() {
+function renderDocuments(documentsToRender = documents) {
   // Clear containers
   allDocumentsContainer.innerHTML = "";
   starredDocumentsContainer.innerHTML = "";
   urgentDocumentsContainer.innerHTML = "";
 
+  // Check if documents array is valid
+  if (!Array.isArray(documentsToRender) || documentsToRender.length === 0) {
+    allDocumentsContainer.innerHTML = '<p class="text-muted">No documents found.</p>';
+    return;
+  }
+
   // Render documents in each container
-  documents.forEach((doc) => {
+  documentsToRender.forEach((doc) => {
     const docCard = createDocumentCard(doc);
     allDocumentsContainer.appendChild(docCard);
 
@@ -304,4 +289,15 @@ function applySavedTheme() {
     lightIcon.classList.add("d-none");
     darkIcon.classList.remove("d-none");
   }
+}
+
+// Handle search functionality
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  const filteredDocuments = documents.filter((doc) =>
+    doc.subject.toLowerCase().includes(searchTerm) ||
+    doc.sender.toLowerCase().includes(searchTerm) ||
+    doc.action.toLowerCase().includes(searchTerm)
+  );
+  renderDocuments(filteredDocuments);
 }
