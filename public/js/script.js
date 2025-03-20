@@ -438,16 +438,53 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-// Function to update the date and time
-//function updateDateTime() {
-//    const now = new Date();
-//    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
-//    const formattedDateTime = now.toLocaleDateString('en-US', options);
-//    document.getElementById('currentDateTime').textContent = formattedDateTime;
-//}
+// Dropdown Functionality
+document.addEventListener('DOMContentLoaded', function () {
+    const avatarDropdown = document.getElementById('avatarDropdown');
+    const avatarDropdownContent = document.getElementById('avatarDropdownContent');
 
-// Update the date and time every second
-//setInterval(updateDateTime, 1000);
+    // Toggle dropdown on avatar click
+    avatarDropdown.addEventListener('click', function (e) {
+        e.preventDefault();
+        avatarDropdownContent.style.display = avatarDropdownContent.style.display === 'block' ? 'none' : 'block';
+    });
 
-// Initialize the date and time on page load
-//updateDateTime();
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function (e) {
+        if (!avatarDropdown.contains(e.target)) {
+            avatarDropdownContent.style.display = 'none';
+        }
+    });
+});
+
+// Theme Toggle Functionality
+const themeToggle = document.getElementById("themeToggle");
+const lightIcon = document.getElementById("lightIcon");
+const darkIcon = document.getElementById("darkIcon");
+
+// Toggle Theme (light/dark mode)
+function toggleTheme() {
+    document.body.classList.toggle('dark-theme');
+    console.log("Dark Mode toggled");
+
+    // Toggle icons
+    lightIcon.classList.toggle('d-none');
+    darkIcon.classList.toggle('d-none');
+
+    // Save preference to localStorage
+    const isDarkMode = document.body.classList.contains('dark-theme');
+    localStorage.setItem('darkMode', isDarkMode);
+}
+
+// Add event listener to the theme toggle button
+if (themeToggle) {
+    themeToggle.addEventListener("click", toggleTheme);
+}
+
+// Check for saved theme preference on page load
+const savedDarkMode = localStorage.getItem('darkMode') === "true";
+if (savedDarkMode) {
+    document.body.classList.add('dark-theme');
+    lightIcon.classList.add('d-none');
+    darkIcon.classList.remove('d-none');
+}

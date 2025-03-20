@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BUCS Document Upload System</title>
+    <title>BUCS DocuManage</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -22,11 +22,29 @@
             </div>
             <nav class="sidebar-nav">
                 <div class="px-3 py-2">
-                    <h6 class="sidebar-heading px-2 mb-2">Actions</h6>
+                    <h6 class="sidebar-heading px-2 mb-2">Options</h6>
                     <div class="nav-items">
+                        <a href="#" class="nav-link">
+                            <i class="bi bi-house-door me-2"></i>
+                            Home
+                        </a>
                         <a href="#" class="nav-link active">
                             <i class="bi bi-upload me-2"></i>
                             Upload Documents
+                        </a>
+                        <a href="#" class="nav-link">
+                            <i class="bi bi-inbox me-2"></i>
+                            Received Documents
+                            <!-- <span class="badge rounded-pill ms-auto">24</span> -->
+                        </a>
+                        <a href="#" class="nav-link">
+                            <i class="bi bi-send me-2"></i>
+                            Sent Documents
+                            <!-- <span class="badge rounded-pill ms-auto">24</span> -->
+                        </a>
+                        <a href="#" class="nav-link">
+                            <i class="bi bi-trash me-2"></i>
+                            Trash
                         </a>
                     </div>
                 </div>
@@ -57,6 +75,7 @@
                         </div>
                     </div>
                     <div class="d-flex align-items-center gap-3">
+                        <!-- Theme Toggle Button -->
                         <button class="btn btn-icon" id="themeToggle">
                             <i class="bi bi-sun-fill" id="lightIcon"></i>
                             <i class="bi bi-moon-fill d-none" id="darkIcon"></i>
@@ -70,7 +89,20 @@
                         <button class="btn btn-icon">
                             <i class="bi bi-gear"></i>
                         </button>
-                        <div class="avatar">AD</div>
+                        <!-- Avatar with Dropdown -->
+                        <div class="dropdown">
+                            <button class="btn btn-icon" id="avatarDropdown">
+                                <div class="avatar">AD</div>
+                            </button>
+                            <div class="dropdown-content" id="avatarDropdownContent">
+                                <a href="#">Profile</a>
+                                <a href="#">Settings</a>
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">Logout</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </header>

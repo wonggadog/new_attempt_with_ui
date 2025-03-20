@@ -10,7 +10,7 @@ class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
-    protected $redirectTo = '/index';
+    protected $redirectTo = '/login';
 
     public function __construct()
     {
@@ -31,5 +31,11 @@ class LoginController extends Controller
             $this->username() => 'required|string',
             'password' => 'required|string',
         ]);
+    }
+
+    // Redirect after logout
+    protected function loggedOut(Request $request)
+    {
+        return redirect('/login');
     }
 }
