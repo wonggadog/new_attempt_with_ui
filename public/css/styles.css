@@ -206,7 +206,6 @@ body {
 .main-content {
     margin-left: var(--sidebar-width);
     flex: 1;
-    padding: 1rem;
     overflow-y: auto; /* Allow vertical scrolling */
 }
 

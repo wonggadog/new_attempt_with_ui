@@ -71,7 +71,7 @@
                         </button>
                         <div class="position-relative search-container">
                             <i class="bi bi-search position-absolute search-icon"></i>
-                            <input type="search" class="form-control search-input" placeholder="Search...">
+                            <input type="search" class="form-control search-input" placeholder="Search">
                         </div>
                     </div>
                     <div class="d-flex align-items-center gap-3">

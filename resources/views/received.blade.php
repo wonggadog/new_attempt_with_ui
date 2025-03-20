@@ -69,7 +69,7 @@
             </button>
             <div class="position-relative search-container">
               <i class="bi bi-search position-absolute search-icon"></i>
-              <input type="search" class="form-control search-input" placeholder="Search documents...">
+              <input type="search" class="form-control search-input" placeholder="Search">
             </div>
           </div>
           <div class="d-flex align-items-center gap-3">
@@ -274,4 +274,3 @@
   <script src="{{ asset('js/received_docs_script.js') }}"></script>
 </body>
 </html>
-
