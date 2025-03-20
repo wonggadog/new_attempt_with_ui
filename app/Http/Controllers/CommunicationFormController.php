@@ -96,4 +96,18 @@ class CommunicationFormController extends Controller
         // Return the users as JSON
         return response()->json($users->get());
     }
+
+        // Display received documents
+    public function receivedDocuments()
+    {
+        // Get the authenticated user
+        $user = auth()->user();
+    
+        // Fetch documents where this user is the recipient
+        $receivedDocuments = CommunicationForm::where('to', $user->name)
+            ->orderBy('created_at', 'desc')
+            ->get();
+    
+        return view('received', compact('receivedDocuments'));
+    }
 }

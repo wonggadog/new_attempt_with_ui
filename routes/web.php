@@ -23,6 +23,9 @@ Route::middleware(['auth'])->group(function () {
     
     // Fetch users
     Route::post('/fetch-users', [CommunicationFormController::class, 'fetchUsers'])->name('fetch.users');
+
+    // Received Documents route
+    Route::get('/received-documents', [CommunicationFormController::class, 'receivedDocuments'])->name('received.documents');
     
     // Logout route
     Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');

@@ -32,7 +32,7 @@
                             <i class="bi bi-upload me-2"></i>
                             Upload Documents
                         </a>
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('received.documents') }}" class="nav-link">
                             <i class="bi bi-inbox me-2"></i>
                             Received Documents
                             <!-- <span class="badge rounded-pill ms-auto">24</span> -->
