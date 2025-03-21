@@ -16,6 +16,7 @@ class CommunicationForm extends Model
         'departments',
         'action_items',
         'additional_actions',
+        'additional_notes',
         'file_type',
         'files',
     ];

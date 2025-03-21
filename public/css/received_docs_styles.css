@@ -606,3 +606,58 @@ h1, h2, h3, h4, h5, h6,
   background-color: var(--light-bg);
   color: var(--text-color);
 }
+
+/* Dropdown Container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0; /* Align dropdown to the right */
+  background-color: var(--background-color);
+  min-width: 160px;
+  box-shadow: var(--shadow-md);
+  border-radius: var(--border-radius);
+  z-index: 1000;
+  padding: 0.5rem 0;
+}
+
+/* Dropdown Links */
+.dropdown-content a {
+  color: var(--text-color);
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  display: block;
+  font-size: 0.875rem;
+  transition: background-color 0.2s;
+}
+
+.dropdown-content a:hover {
+  background-color: var(--light-bg);
+}
+
+/* Logout Button Styling */
+.dropdown-content button {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--text-color);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.dropdown-content button:hover {
+  background-color: var(--light-bg);
+}
+
+/* Show Dropdown on Hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}

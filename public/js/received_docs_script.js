@@ -18,6 +18,13 @@ const itemsPerPage = 6; // Adjust as needed
 
 // Initialize the application
 document.addEventListener("DOMContentLoaded", () => {
+  // Initialize avatars
+  AvatarHelper.initAvatars(
+    '.avatar[data-user="current"]',
+    '.avatar:not([data-user="current"])',
+    currentUserName
+  );
+
   // Show loading spinner
   allDocumentsContainer.innerHTML = `
     <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
@@ -119,7 +126,7 @@ function createDocumentCard(doc) {
   cardHeader.innerHTML = `
     <div class="d-flex justify-content-between align-items-start">
       <div class="d-flex align-items-center">
-        <div class="avatar me-2">${doc.sender.charAt(0)}</div>
+        <div class="avatar me-2" data-name="${doc.sender}">${AvatarHelper.getInitial(doc.sender)}</div>
         <div>
           <div class="fw-medium">${doc.sender}</div>
           <div class="small text-muted">${doc.senderEmail}</div>
@@ -181,7 +188,11 @@ function showDocumentDetail(doc) {
   document.getElementById("detailSubject").textContent = doc.subject;
   document.getElementById("detailSender").textContent = doc.sender;
   document.getElementById("detailDate").textContent = formatDate(doc.dateReceived, true);
-  document.getElementById("detailSenderAvatar").textContent = doc.sender.charAt(0);
+  
+  // Set sender avatar with initials
+  const detailSenderAvatar = document.getElementById("detailSenderAvatar");
+  detailSenderAvatar.setAttribute("data-name", doc.sender);
+  detailSenderAvatar.textContent = AvatarHelper.getInitial(doc.sender);
 
   // Set urgent badge
   const urgentBadge = document.getElementById("detailUrgentBadge");
@@ -301,3 +312,22 @@ function handleSearch(e) {
   );
   renderDocuments(filteredDocuments);
 }
+
+// Dropdown Functionality
+document.addEventListener('DOMContentLoaded', function () {
+    const avatarDropdown = document.getElementById('avatarDropdown');
+    const avatarDropdownContent = document.getElementById('avatarDropdownContent');
+
+    // Toggle dropdown on avatar click
+    avatarDropdown.addEventListener('click', function (e) {
+        e.preventDefault();
+        avatarDropdownContent.style.display = avatarDropdownContent.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function (e) {
+        if (!avatarDropdown.contains(e.target)) {
+            avatarDropdownContent.style.display = 'none';
+        }
+    });
+});

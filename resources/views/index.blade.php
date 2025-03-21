@@ -51,10 +51,10 @@
             </nav>
             <div class="sidebar-footer">
                 <div class="d-flex align-items-center gap-2">
-                    <div class="avatar">AD</div>
+                    <div class="avatar" data-user="current"></div>
                     <div>
-                        <div class="fw-medium">Admin User</div>
-                        <div class="text-muted small">admin@bucs.edu</div>
+                        <div class="fw-medium">{{ Auth::user()->name }}</div>
+                        <!-- <div class="text-muted small">{{ Auth::user()->email }}</div>   COMMENTED IT FIRST TO ENSURE THE AVATAR STAYS AS A CIRCLE  -->
                     </div>
                 </div>
             </div>
@@ -64,7 +64,8 @@
         <div class="d-flex flex-column flex-grow-1 main-content">
             <!-- Header -->
             <header class="header">
-                <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center justify-content-between w-100">
+                    <!-- Left side with hamburger menu and search -->
                     <div class="d-flex align-items-center">
                         <button class="btn btn-icon d-md-none me-2" id="sidebarToggle">
                             <i class="bi bi-list"></i>
@@ -74,6 +75,8 @@
                             <input type="search" class="form-control search-input" placeholder="Search">
                         </div>
                     </div>
+                    
+                    <!-- Right side with icons and avatar -->
                     <div class="d-flex align-items-center gap-3">
                         <!-- Theme Toggle Button -->
                         <button class="btn btn-icon" id="themeToggle">
@@ -86,9 +89,7 @@
                                 <span class="visually-hidden">New alerts</span>
                             </span>
                         </button>
-                        <button class="btn btn-icon">
-                            <i class="bi bi-gear"></i>
-                        </button>
+                        
                         <!-- Avatar with Dropdown -->
                         <div class="dropdown">
                             <button class="btn btn-icon" id="avatarDropdown">
@@ -254,6 +255,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Avatar Helper -->
+    <script src="{{ asset('js/avatar-helper.js') }}"></script>
 
     <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

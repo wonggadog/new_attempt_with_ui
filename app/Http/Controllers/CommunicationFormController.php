@@ -64,6 +64,7 @@ class CommunicationFormController extends Controller
                 'additional_actions' => $request->input('additional_actions'),
                 'file_type' => $request->input('file_type'),
                 'files' => $uploadedFiles,
+                'additional_notes' => $request->input('additional_notes'),
             ]);
 
             return response()->json([

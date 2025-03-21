@@ -48,10 +48,10 @@
       </nav>
       <div class="sidebar-footer">
         <div class="d-flex align-items-center gap-2">
-          <div class="avatar">JD</div>
+          <div class="avatar" data-user="current"></div>
           <div>
-            <div class="fw-medium">John Doe</div>
-            <div class="text-muted small">john@example.com</div>
+            <div class="fw-medium">{{ Auth::user()->name }}</div>
+            <!-- <div class="text-muted small">{{ Auth::user()->email }}</div>   COMMENTED IT FIRST TO ENSURE THE AVATAR STAYS AS A CIRCLE  -->
           </div>
         </div>
       </div>
@@ -61,7 +61,8 @@
     <div class="d-flex flex-column flex-grow-1 main-content">
       <!-- Header -->
       <header class="header">
-        <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center justify-content-between w-100">
+          <!-- Left side with toggle and search -->
           <div class="d-flex align-items-center">
             <button class="btn btn-icon d-md-none me-2" id="sidebarToggle">
               <i class="bi bi-list"></i>
@@ -71,6 +72,8 @@
               <input type="search" class="form-control search-input" placeholder="Search" id="searchInput">
             </div>
           </div>
+          
+          <!-- Right side with icons and avatar -->
           <div class="d-flex align-items-center gap-3">
             <button class="btn btn-icon" id="themeToggle">
               <i class="bi bi-sun-fill" id="lightIcon"></i>
@@ -82,10 +85,21 @@
                 <span class="visually-hidden">New alerts</span>
               </span>
             </button>
-            <button class="btn btn-icon">
-              <i class="bi bi-gear"></i>
-            </button>
-            <div class="avatar">JD</div>
+            
+            <!-- Avatar with Dropdown -->
+            <div class="dropdown">
+              <button class="btn btn-icon" id="avatarDropdown">
+                <div class="avatar" data-user="current"></div>
+              </button>
+              <div class="dropdown-content" id="avatarDropdownContent">
+                <a href="#">Profile</a>
+                <a href="#">Settings</a>
+                <form action="{{ route('logout') }}" method="POST">
+                  @csrf
+                  <button type="submit" class="dropdown-item">Logout</button>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
       </header>
@@ -166,7 +180,7 @@
             <div class="card-header">
               <div class="d-flex justify-content-between">
                 <div class="d-flex gap-3">
-                  <div class="avatar avatar-lg" id="detailSenderAvatar"></div>
+                  <div class="avatar avatar-lg" id="detailSenderAvatar" data-name=""></div>
                   <div>
                     <h2 class="fs-3 fw-bold" id="detailSubject"></h2>
                     <div class="d-flex align-items-center mt-1">
@@ -270,9 +284,13 @@
   <!-- Bootstrap JS Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   
+  <!-- Avatar Helper -->
+  <script src="{{ asset('js/avatar-helper.js') }}"></script>
+  
   <!-- Pass PHP data to JavaScript -->
   <script>
     const documents = @json($documents);
+    const currentUserName = "{{ Auth::user()->name }}";
   </script>
 
   <!-- Custom JavaScript -->
