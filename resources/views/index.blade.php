@@ -150,8 +150,8 @@
                                     </div>
                                 </div>
 
-                                <!-- File Type Section -->
-                                <div class="col-12">
+                                <!-- File Type and Action Items Sections (Side by Side) -->
+                                <div class="col-md-8">
                                     <div class="card">
                                         <div class="card-header">
                                             <h3 class="fs-5 fw-medium"><i class="bi bi-file-earmark me-2"></i>File Type</h3>
@@ -161,14 +161,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <!-- Action Items and Additional Actions -->
-                        <div class="col-md-4">
-                            <div class="row g-4">
-                                <!-- Action Items Section -->
-                                <div class="col-12">
+                                <div class="col-md-4">
                                     <div class="card">
                                         <div class="card-header">
                                             <h3 class="fs-5 fw-medium"><i class="bi bi-list-task me-2"></i>Action Items</h3>
@@ -178,7 +171,12 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
+                        <!-- Additional Actions Section -->
+                        <div class="col-md-4">
+                            <div class="row g-4">
                                 <!-- Additional Actions Section -->
                                 <div class="col-12">
                                     <div class="card">
