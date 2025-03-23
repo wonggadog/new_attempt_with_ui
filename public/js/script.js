@@ -4,8 +4,8 @@ console.log("Script is running");
 const formData = {
     departments: [
         'Admin', 'Budget', 'Accounting', 'Supply', 'BACS', 'Cashier', 
-        'Registrar', 'Biology', 'Chemistry', 'CS/IT', 'Phys/Met', 
-        'Math', 'Comp Lab', 'NatSci Lab', 'Others'
+        'Registrar', 'Biology', 'Chemistry', 'Computer Science','Information Technology', 'Physics', 'Meteorology', 
+        'Mathematics', 'Computer Laboratory', 'NatSci Lab', 'Others'
     ],
     actionItems: [
         'Comments/recommendations', 'Action', 
