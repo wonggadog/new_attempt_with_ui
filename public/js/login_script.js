@@ -1,5 +1,5 @@
 // public/js/login_script.js
-
+// hi
 // Toggle password visibility
 function togglePassword() {
     const passwordInput = document.getElementById('password');
