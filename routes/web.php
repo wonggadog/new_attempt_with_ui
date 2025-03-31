@@ -32,10 +32,3 @@ Route::middleware('auth')->group(function () {
     // Logout route
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
-
-// Add these inside your auth middleware group
-Route::prefix('admin')->group(function () {
-    Route::get('/users', [AdminController::class, 'index'])->name('admin.users');
-    Route::post('/users', [AdminController::class, 'store'])->name('admin.users.store');
-    Route::delete('/users/{user}', [AdminController::class, 'destroy'])->name('admin.users.destroy');
-});
