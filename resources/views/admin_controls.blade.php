@@ -64,7 +64,7 @@
                     <div class="form-actions">
                         <button type="submit" class="btn-submit">Add User</button>
                         <button type="reset" class="btn-reset">Reset</button>
-                        <a href="{{ route('home') }}" class="btn-home">Home</a>
+                        <button> <a href="{{ route('home') }}" class="btn-home">Home</a> </button>
 
                     </div>
                 </form>

@@ -29,7 +29,7 @@
                             Home
                         </a>
                         <a href="{{ route('admin_controls') }}" class="nav-link">
-                            <i class="bi bi-house-door me-2"></i>
+                            <i class="bi bi-shield-lock me-2"></i>
                             Admin Controls
                         </a>
                         <a href="#" class="nav-link active">
