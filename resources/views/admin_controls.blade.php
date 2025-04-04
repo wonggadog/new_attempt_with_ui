@@ -17,6 +17,7 @@
             <section class="form-section">
                 <h2>Add New User</h2>
                 <form id="userForm">
+                    <!-- Existing form fields remain the same -->
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" required>
@@ -64,8 +65,7 @@
                     <div class="form-actions">
                         <button type="submit" class="btn-submit">Add User</button>
                         <button type="reset" class="btn-reset">Reset</button>
-                        <button> <a href="{{ route('home') }}" class="btn-home">Home</a> </button>
-
+                        <button type="button" onclick="window.location.href='{{ route('home') }}'" class="btn-home">Home</button>
                     </div>
                 </form>
                 <div id="message" class="message"></div>
@@ -73,6 +73,30 @@
             
             <section class="data-section">
                 <h2>User Database</h2>
+                <div class="filters">
+                    <select id="departmentFilter">
+                        <option value="all">All Departments</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Budget">Budget</option>
+                        <option value="Accounting">Accounting</option>
+                        <option value="Supply">Supply</option>
+                        <option value="BACS">BACS</option>
+                        <option value="Cashier">Cashier</option>
+                        <option value="Registrar">Registrar</option>
+                        <option value="Biology">Biology</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Computer_Science">Computer Science</option>
+                        <option value="Information_Technology">Information Technology</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Meteorology">Meteorology</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Computer_Laboratory">Computer Laboratory</option>
+                        <option value="NatSci_Lab">NatSci Lab</option>
+                        <option value="Others">Others</option>
+                    </select>
+                    <button id="clearFilters" class="btn-filter">Clear Filters</button>
+                    <span id="filterStatus" class="filter-status"></span>
+                </div>
                 <div class="table-container">
                     <table id="userTable">
                         <thead>
@@ -85,19 +109,15 @@
                             </tr>
                         </thead>
                         <tbody id="userTableBody">
-                            @foreach($users as $user)
-                            <tr data-id="{{ $user->id }}">
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>{{ $user->id_number }}</td>
-                                <td>{{ $user->department }}</td>
-                                <td>
-                                    <button class="btn-delete" data-id="{{ $user->id }}">Delete</button>
-                                </td>
-                            </tr>
-                            @endforeach
+                            <!-- Users will be loaded via JavaScript -->
                         </tbody>
                     </table>
+                    
+                    <div class="pagination">
+                        <button id="prevPage" disabled>Previous</button>
+                        <span id="pageInfo">Page 1 of 1</span>
+                        <button id="nextPage" disabled>Next</button>
+                    </div>
                 </div>
             </section>
         </main>

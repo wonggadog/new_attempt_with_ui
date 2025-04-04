@@ -9,8 +9,32 @@ class AdminControlsController extends Controller
 {
     public function admin_controls()
     {
-        $users = User::all(); // Get users from database
-        return view('admin_controls', compact('users'));
+        return view('admin_controls');
+    }
+
+    public function index(Request $request)
+    {
+        $query = User::query()->orderBy('created_at', 'desc');
+        
+        // Apply department filter if provided and not 'all'
+        if ($request->has('department') && $request->department !== 'all') {
+            $query->where('department', $request->department);
+        }
+        
+        $users = $query->paginate(10);
+        
+        return response()->json([
+            'success' => true,
+            'users' => $users->items(),
+            'pagination' => [
+                'current_page' => $users->currentPage(),
+                'last_page' => $users->lastPage(),
+                'total' => $users->total()
+            ],
+            'filters' => [
+                'department' => $request->department ?? 'all'
+            ]
+        ]);
     }
 
     public function store(Request $request)
