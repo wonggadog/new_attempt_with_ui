@@ -27,6 +27,10 @@
               <i class="bi bi-house-door me-2"></i>
               Home
             </a>
+            <a href="{{ route('admin_controls') }}" class="nav-link">
+              <i class="bi bi-shield-lock me-2"></i>
+              Admin Controls
+            </a>
             <a href="{{ route('home') }}" class="nav-link"> 
               <i class="bi bi-upload me-2"></i>
               Upload Documents
