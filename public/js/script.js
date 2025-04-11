@@ -17,9 +17,6 @@ const formData = {
         'Please prepare an endorsement/answer/draft', 
         'Please communicate directly with the party',
         'Please review/revise', 'Please complete the attached forms'
-    ],
-    fileTypes: [
-        'Memos', 'Reports', 'Financial Documents', 'Student Records'
     ]
 };
 
@@ -48,8 +45,20 @@ function createCheckboxWithTextField(id, label) {
     `;
 }
 
+// Function to load file types from backend
+async function loadFileTypes() {
+    try {
+        const response = await fetch('/admin/file-types/list');
+        const fileTypes = await response.json();
+        return fileTypes;
+    } catch (error) {
+        console.error('Error loading file types:', error);
+        return [];
+    }
+}
+
 // Initialize form
-function initializeForm() {
+async function initializeForm() {
     // Populate departments
     const departmentSection = document.getElementById('departmentSection');
     departmentSection.innerHTML = formData.departments
@@ -74,9 +83,10 @@ function initializeForm() {
         })
         .join('');
 
-    // Populate file types
+    // Load and populate file types
+    const fileTypes = await loadFileTypes();
     const fileTypeSection = document.getElementById('fileTypeSection');
-    fileTypeSection.innerHTML = formData.fileTypes
+    fileTypeSection.innerHTML = fileTypes
         .map(type => createRadioButton(type, type))
         .join('');
 
@@ -488,3 +498,61 @@ if (savedDarkMode) {
     lightIcon.classList.add('d-none');
     darkIcon.classList.remove('d-none');
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Populate File Types
+    fetch('/file-types/options')
+        .then(response => response.json())
+        .then(fileTypes => {
+            const fileTypeSection = document.getElementById('fileTypeSection');
+            fileTypeSection.innerHTML = ''; // Clear existing content
+
+            fileTypes.forEach(fileType => {
+                const div = document.createElement('div');
+                div.className = 'form-check mb-2';
+                div.innerHTML = `
+                    <input class="form-check-input" type="radio" name="file_type" id="fileType${fileType.id}" value="${fileType.id}" required>
+                    <label class="form-check-label" for="fileType${fileType.id}">
+                        ${fileType.name}
+                    </label>
+                `;
+                fileTypeSection.appendChild(div);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching file types:', error);
+            const fileTypeSection = document.getElementById('fileTypeSection');
+            fileTypeSection.innerHTML = '<div class="alert alert-danger">Error loading file types. Please try again later.</div>';
+        });
+
+    // Handle file upload
+    const fileInput = document.getElementById('fileInput');
+    const fileLabel = document.getElementById('fileLabel');
+
+    fileInput.addEventListener('change', function() {
+        if (this.files.length > 0) {
+            fileLabel.innerHTML = this.files[0].name;
+        } else {
+            fileLabel.innerHTML = 'Upload a File<br><small>Drag and drop files here</small>';
+        }
+    });
+
+    // Handle form submission
+    const form = document.getElementById('communicationForm');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Show confirmation modal
+        const modal = document.getElementById('confirmationModal');
+        modal.style.display = 'block';
+    });
+
+    // Handle modal close
+    const modalOkButton = document.getElementById('modalOkButton');
+    modalOkButton.addEventListener('click', function() {
+        const modal = document.getElementById('confirmationModal');
+        modal.style.display = 'none';
+        form.reset();
+        fileLabel.innerHTML = 'Upload a File<br><small>Drag and drop files here</small>';
+    });
+});

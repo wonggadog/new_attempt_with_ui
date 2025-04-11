@@ -25,5 +25,11 @@ class DatabaseSeeder extends Seeder
         );
 
         //  No need for test users since admins can now add them via the dashboard
+
+        $this->call([
+            AdminUserSeeder::class,
+            FileTypeSeeder::class,
+            // ... other seeders ...
+        ]);
     }
 }

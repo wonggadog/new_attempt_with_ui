@@ -11,6 +11,9 @@
     <div class="container">
         <header>
             <h1>Admin Dashboard</h1>
+            <nav class="admin-nav">
+                <a href="{{ route('admin.file-types.index') }}" class="nav-link">Manage File Types</a>
+            </nav>
         </header>
         
         <main>

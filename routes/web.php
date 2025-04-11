@@ -5,6 +5,8 @@ use App\Http\Controllers\CommunicationFormController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AdminControlsController;
+use App\Http\Controllers\FileTypeController;
+use App\Http\Controllers\AdminController;
 
 Auth::routes();
 
@@ -25,4 +27,24 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin_controls/users', [AdminControlsController::class, 'index']);
     Route::post('/admin_controls/users', [AdminControlsController::class, 'store']);
     Route::delete('/admin_controls/users/{user}', [AdminControlsController::class, 'destroy']);
+
+    // File Type Management Routes
+    Route::prefix('admin')->group(function () {
+        Route::resource('file-types', FileTypeController::class)->names([
+            'index' => 'admin.file-types.index',
+            'store' => 'admin.file-types.store',
+            'update' => 'admin.file-types.update',
+            'destroy' => 'admin.file-types.destroy'
+        ]);
+        Route::get('/file-types/list', [FileTypeController::class, 'getFileTypes'])->name('file-types.list');
+        Route::put('file-types/bulk-update', [FileTypeController::class, 'bulkUpdate'])->name('admin.file-types.bulk-update');
+    });
+
+    // File Types for Upload Form
+    Route::get('/file-types/options', [FileTypeController::class, 'getFileTypeOptions'])->name('file-types.options');
+});
+
+// Test route for CSS file
+Route::get('/test-css', function () {
+    return response()->file(public_path('css/file-types.css'));
 });
