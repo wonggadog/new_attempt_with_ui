@@ -7,8 +7,13 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AdminControlsController;
 use App\Http\Controllers\FileTypeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\GoogleController;
 
 Auth::routes();
+
+// Google Authentication Routes
+Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('auth.google.callback');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');

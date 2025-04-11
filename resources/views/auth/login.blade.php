@@ -62,10 +62,10 @@
                             <span class="divider-line"></span>
                         </div>
                         <div class="d-grid gap-2">
-                            <button class="btn btn-light google-btn" onclick="handleGoogleSignIn()">
+                            <a href="{{ route('auth.google') }}" class="btn btn-light google-btn">
                                 <img src="{{ asset('images/googlelogo.png') }}" alt="Google Logo" class="google-icon">
                                 Sign in with Google
-                            </button>
+                            </a>
                             <a href="#" class="bu-icto">Bicol University ICTO</a>
                         </div>
                     </div>
