@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Str;
 
 class GoogleController extends Controller
 {
@@ -31,10 +32,14 @@ class GoogleController extends Controller
             $user = User::where('email', $googleUser->getEmail())->first();
 
             if (!$user) {
+                // Generate a random id_number for new users
+                $id_number = 'G-' . strtoupper(Str::random(8));
+                
                 $user = User::create([
                     'name' => $googleUser->getName(),
                     'email' => $googleUser->getEmail(),
                     'google_id' => $googleUser->getId(),
+                    'id_number' => $id_number,
                     'password' => bcrypt(uniqid()), // Random password since we're using Google auth
                 ]);
             } else {
@@ -45,13 +50,13 @@ class GoogleController extends Controller
             }
 
             // Log the user in
-            Auth::login($user, true);
+            Auth::login($user);
             
             // Regenerate session
             session()->regenerate();
 
             // Redirect to home route
-            return redirect()->route('home');
+            return redirect('/');
 
         } catch (\Exception $e) {
             \Log::error('Google authentication error: ' . $e->getMessage());
