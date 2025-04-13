@@ -7,9 +7,17 @@ use App\Models\CommunicationForm;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Services\GoogleDriveService;
 
 class CommunicationFormController extends Controller
 {
+    protected $driveService;
+
+    public function __construct(GoogleDriveService $driveService)
+    {
+        $this->driveService = $driveService;
+    }
+
     /**
      * Display the form.
      */
@@ -44,10 +52,35 @@ class CommunicationFormController extends Controller
 
             // Handle file uploads
             $uploadedFiles = [];
+            $googleDriveFileIds = [];
+
             if ($request->hasFile('files')) {
                 foreach ($request->file('files') as $file) {
-                    $path = $file->store('uploads'); // Save files to the 'uploads' directory
+                    // Store file locally
+                    $path = $file->store('uploads');
                     $uploadedFiles[] = $path;
+
+                    // Get recipient user
+                    $recipient = User::where('name', $request->input('to'))->first();
+
+                    if ($recipient && $recipient->google_drive_connected) {
+                        try {
+                            // Set recipient's Google Drive token
+                            $this->driveService->setAccessToken(json_decode($recipient->google_drive_token, true));
+
+                            // Upload to Google Drive
+                            $fileId = $this->driveService->uploadFile(
+                                $file->getPathname(),
+                                $file->getClientOriginalName(),
+                                $recipient->google_drive_folder_id
+                            );
+
+                            $googleDriveFileIds[] = $fileId;
+                        } catch (\Exception $e) {
+                            \Log::error('Google Drive upload failed: ' . $e->getMessage());
+                            // Continue with local storage if Google Drive upload fails
+                        }
+                    }
                 }
             }
 
@@ -64,6 +97,7 @@ class CommunicationFormController extends Controller
                 'additional_actions' => $request->input('additional_actions'),
                 'file_type' => $request->input('file_type'),
                 'files' => $uploadedFiles,
+                'google_drive_file_ids' => $googleDriveFileIds,
                 'additional_notes' => $request->input('additional_notes'),
             ]);
 

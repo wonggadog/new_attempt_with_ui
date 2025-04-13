@@ -8,12 +8,21 @@ use App\Http\Controllers\AdminControlsController;
 use App\Http\Controllers\FileTypeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\GoogleDriveController;
 
 Auth::routes();
 
 // Google Authentication Routes
 Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
 Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+
+// Google Drive Routes
+Route::middleware('auth')->group(function () {
+    Route::get('/google-drive/connect', [GoogleDriveController::class, 'connect'])->name('google.drive.connect');
+    Route::get('/google-drive/callback', [GoogleDriveController::class, 'callback'])->name('google.drive.callback');
+    Route::post('/google-drive/disconnect', [GoogleDriveController::class, 'disconnect'])->name('google.drive.disconnect');
+    Route::post('/google-drive/upload/{recipient}', [GoogleDriveController::class, 'uploadToRecipient'])->name('google.drive.upload');
+});
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
