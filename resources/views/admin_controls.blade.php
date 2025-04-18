@@ -113,6 +113,7 @@
                         </thead>
                         <tbody id="userTableBody">
                             <!-- Users will be loaded via JavaScript -->
+                            <!-- Removed PHP code referencing undefined $user variable -->
                         </tbody>
                     </table>
                     
@@ -126,6 +127,58 @@
         </main>
     </div>
     
+    <!-- Add a modal for editing user accounts -->
+    <div class="modal" id="editUserModal" style="display: none;">
+        <div class="modal-content">
+            <h2>Edit User</h2>
+            <form id="editUserForm">
+                <div class="form-group">
+                    <label for="editName">Name</label>
+                    <input type="text" id="editName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="editEmail">Email</label>
+                    <input type="email" id="editEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="editIdNumber">ID Number</label>
+                    <input type="text" id="editIdNumber" name="id_number" required>
+                </div>
+                <div class="form-group">
+                    <label for="editDepartment">Department</label>
+                    <select id="editDepartment" name="department" required>
+                        <option value="">Select Department</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Budget">Budget</option>
+                        <option value="Accounting">Accounting</option>
+                        <option value="Supply">Supply</option>
+                        <option value="BACS">BACS</option>
+                        <option value="Cashier">Cashier</option>
+                        <option value="Registrar">Registrar</option>
+                        <option value="Biology">Biology</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Computer_Science">Computer Science</option>
+                        <option value="Information_Technology">Information Technology</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Meteorology">Meteorology</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Computer_Laboratory">Computer Laboratory</option>
+                        <option value="NatSci_Lab">NatSci Lab</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editPassword">Password</label>
+                    <input type="password" id="editPassword" name="password">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit">Save Changes</button>
+                    <button type="button" class="btn-reset" id="closeEditModal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="{{ asset('js/admin_controls_script.js') }}"></script>
 </body>
 </html>

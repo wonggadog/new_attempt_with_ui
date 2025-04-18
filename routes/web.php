@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin_controls/users', [AdminControlsController::class, 'index']);
     Route::post('/admin_controls/users', [AdminControlsController::class, 'store']);
     Route::delete('/admin_controls/users/{user}', [AdminControlsController::class, 'destroy']);
+    Route::put('/admin_controls/users/{user}', [AdminControlsController::class, 'update']);
 
     // File Type Management Routes
     Route::prefix('admin')->group(function () {

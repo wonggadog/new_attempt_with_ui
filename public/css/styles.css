@@ -343,8 +343,12 @@ body {
     padding: 2rem;
     border-radius: 12px;
     text-align: center;
-    max-width: 400px;
+    max-width: 500px;
     width: 90%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.3s ease-out;
+    border: 2px solid var(--primary-color); /* Add a visible border */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhance shadow for visibility */
 }
 
 .modal-buttons {
@@ -352,6 +356,18 @@ body {
     justify-content: center;
     gap: 1rem;
     margin-top: 1.5rem;
+}
+
+/* Animation for modal appearance */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Dropdown Container */

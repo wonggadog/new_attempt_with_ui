@@ -61,6 +61,20 @@ class AdminControlsController extends Controller
         ]);
     }
 
+    public function update(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'id_number' => 'required|string|unique:users,id_number,' . $user->id,
+            'department' => 'required|string'
+        ]);
+
+        $user->update($validated);
+
+        return response()->json(['success' => true, 'user' => $user]);
+    }
+
     public function destroy(User $user)
     {
         $user->delete();

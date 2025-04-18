@@ -80,7 +80,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     <td>${user.email}</td>
                     <td>${user.id_number}</td>
                     <td>${user.department}</td>
-                    <td><button class="btn-delete" data-id="${user.id}">Delete</button></td>
+                    <td>
+                        <button class="btn-edit" data-id="${user.id}">Edit</button>
+                        <button class="btn-delete" data-id="${user.id}">Delete</button>
+                    </td>
                 </tr>
               `).join('')
             : `<tr><td colspan="5" class="no-data">No users found</td></tr>`;
@@ -122,14 +125,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
     async function handleFormSubmit(event) {
         event.preventDefault();
+        const userId = elements.form.dataset.editing;
         const formData = getFormData();
-        
+
         if (!validateForm(formData)) return;
 
         try {
             showLoading(true);
-            const response = await fetch('/admin_controls/users', {
-                method: 'POST',
+            const response = await fetch(`/admin_controls/users/${userId}`, {
+                method: userId ? 'PUT' : 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': csrfToken
@@ -138,27 +142,31 @@ document.addEventListener("DOMContentLoaded", function() {
             });
 
             const data = await response.json();
-            
+
             if (response.ok) {
                 loadUsers();
-                showMessage("User added successfully!", "success");
+                showMessage(userId ? 'User updated successfully!' : 'User added successfully!', 'success');
                 elements.form.reset();
+                delete elements.form.dataset.editing;
             } else {
-                showMessage(data.message || "Error adding user", "error");
+                showMessage(data.message || 'Error saving user', 'error');
             }
         } catch (error) {
-            console.error("Error:", error);
-            showMessage("Network error occurred", "error");
+            console.error('Error:', error);
+            showMessage('Network error occurred', 'error');
         } finally {
             showLoading(false);
         }
     }
 
     async function handleTableClick(event) {
-        if (event.target.classList.contains("btn-delete")) {
-            if (!confirm("Are you sure you want to delete this user?")) return;
-            
-            const userId = event.target.getAttribute("data-id");
+        if (event.target.classList.contains('btn-edit')) {
+            const userId = event.target.getAttribute('data-id');
+            showEditUserModal(userId);
+        } else if (event.target.classList.contains('btn-delete')) {
+            if (!confirm('Are you sure you want to delete this user?')) return;
+
+            const userId = event.target.getAttribute('data-id');
             try {
                 showLoading(true);
                 const response = await fetch(`/admin_controls/users/${userId}`, {
@@ -168,13 +176,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 if (response.ok) {
                     loadUsers();
-                    showMessage("User deleted successfully!", "success");
+                    showMessage('User deleted successfully!', 'success');
                 } else {
-                    showMessage("Error deleting user", "error");
+                    showMessage('Error deleting user', 'error');
                 }
             } catch (error) {
-                console.error("Error:", error);
-                showMessage("Network error occurred", "error");
+                console.error('Error:', error);
+                showMessage('Network error occurred', 'error');
             } finally {
                 showLoading(false);
             }
@@ -239,4 +247,103 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     }
+
+    async function handleEditUser(userId) {
+        const userRow = document.querySelector(`tr[data-id='${userId}']`);
+        const name = userRow.querySelector('td:nth-child(1)').textContent;
+        const email = userRow.querySelector('td:nth-child(2)').textContent;
+        const idNumber = userRow.querySelector('td:nth-child(3)').textContent;
+        const department = userRow.querySelector('td:nth-child(4)').textContent;
+
+        // Populate the modal with user data
+        document.getElementById('editName').value = name;
+        document.getElementById('editEmail').value = email;
+        document.getElementById('editIdNumber').value = idNumber;
+        document.getElementById('editDepartment').value = department;
+
+        // Re-apply the visible container styles for the modal
+        const editUserModal = document.getElementById('editUserModal');
+        editUserModal.style.display = 'block'; // Set modal display style to block
+
+        // Attach the user ID to the form for submission
+        const editUserForm = document.getElementById('editUserForm');
+        editUserForm.dataset.editing = userId;
+    }
+
+    // Close modal functionality
+    document.getElementById('closeEditModal').addEventListener('click', () => {
+        const editUserModal = document.getElementById('editUserModal');
+        editUserModal.style.display = 'none';
+    });
+
+    // Handle edit form submission
+    document.getElementById('editUserForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const userId = this.dataset.editing;
+        const formData = {
+            name: document.getElementById('editName').value.trim(),
+            email: document.getElementById('editEmail').value.trim(),
+            id_number: document.getElementById('editIdNumber').value.trim(),
+            department: document.getElementById('editDepartment').value,
+            password: document.getElementById('editPassword').value.trim()
+        };
+
+        try {
+            const response = await fetch(`/admin_controls/users/${userId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                loadUsers();
+                showMessage('User updated successfully!', 'success');
+                this.reset();
+                delete this.dataset.editing;
+                document.getElementById('editUserModal').style.display = 'none';
+            } else {
+                showMessage(data.message || 'Error updating user', 'error');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showMessage('Network error occurred', 'error');
+        }
+    });
+
+    // Show the modal when editing a user
+    function showEditUserModal(userId) {
+        const userRow = document.querySelector(`tr[data-id='${userId}']`);
+        const name = userRow.querySelector('td:nth-child(1)').textContent;
+        const email = userRow.querySelector('td:nth-child(2)').textContent;
+        const idNumber = userRow.querySelector('td:nth-child(3)').textContent;
+        const department = userRow.querySelector('td:nth-child(4)').textContent;
+
+        // Populate the modal with user data
+        document.getElementById('editName').value = name;
+        document.getElementById('editEmail').value = email;
+        document.getElementById('editIdNumber').value = idNumber;
+        document.getElementById('editDepartment').value = department;
+
+        // Show the modal
+        const editUserModal = document.getElementById('editUserModal');
+        editUserModal.style.display = 'flex';
+
+        // Attach the user ID to the form for submission
+        const editUserForm = document.getElementById('editUserForm');
+        editUserForm.dataset.editing = userId;
+    }
+
+    // Close the modal
+    function closeEditUserModal() {
+        const editUserModal = document.getElementById('editUserModal');
+        editUserModal.style.display = 'none';
+    }
+
+    // Attach event listener to close button
+    document.getElementById('closeEditModal').addEventListener('click', closeEditUserModal);
 });
