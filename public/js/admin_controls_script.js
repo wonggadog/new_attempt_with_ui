@@ -329,7 +329,7 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('editIdNumber').value = idNumber;
         document.getElementById('editDepartment').value = department;
 
-        // Show the modal
+        // Show the modal as a pop-up dialog box
         const editUserModal = document.getElementById('editUserModal');
         editUserModal.style.display = 'flex';
 
