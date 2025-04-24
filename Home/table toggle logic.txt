@@ -1,0 +1,87 @@
+Absolutely! Here's a **simple table toggle logic** that simulates a database check. You can later replace the dummy DB array with your real DB logic.
+
+---
+
+### ✅ JavaScript Snippet for Dummy DB + Table Toggle
+
+Add this **at the end of `scripts.js`**:
+
+```javascript
+document.addEventListener("DOMContentLoaded", function () {
+  // Simulated "database" data
+  const dummyHistory = []; // Leave empty to simulate no history
+
+  const tableSection = document.querySelector(".table-responsive");
+  const historyPlaceholder = document.getElementById("history-placeholder");
+
+  if (dummyHistory.length === 0) {
+    // No data – show placeholder
+    tableSection.style.display = "none";
+    historyPlaceholder.style.display = "block";
+  } else {
+    // Data present – show table
+    tableSection.style.display = "block";
+    historyPlaceholder.style.display = "none";
+
+    const tableBody = document.querySelector("table tbody");
+    dummyHistory.forEach(entry => {
+      const row = document.createElement("tr");
+      row.classList.add("clickable-row");
+      row.setAttribute("data-href", entry.link);
+      row.innerHTML = `
+        <td>
+          <div class="d-flex align-items-center">
+            <img src="${entry.profile}" alt="Profile" class="rounded-circle me-2" width="40" height="40">
+            <div>
+              <div class="fw-semibold">${entry.name}</div>
+              <small class="text-muted">${entry.position}</small>
+            </div>
+          </div>
+        </td>
+        <td><span class="badge bg-${entry.statusColor} text-dark">${entry.status}</span></td>
+        <td>${entry.date}</td>
+        <td>${entry.time}</td>
+        <td>${entry.type}</td>
+      `;
+      tableBody.appendChild(row);
+    });
+  }
+});
+```
+
+---
+
+### 🔧 Dummy Data Example
+
+You can change `dummyHistory` to simulate a populated table:
+
+```javascript
+const dummyHistory = [
+  {
+    name: "Christian Y. Sy",
+    position: "Associate Dean",
+    profile: "images/profile-pic.png",
+    status: "Pending",
+    statusColor: "warning",
+    date: "Sept 30, 2025",
+    time: "9:30 AM",
+    type: "Reports",
+    link: "tracking.html?id=1"
+  },
+  {
+    name: "Jane Dela Cruz",
+    position: "Registrar",
+    profile: "images/profile-pic.png",
+    status: "Completed",
+    statusColor: "success",
+    date: "Sept 29, 2025",
+    time: "3:45 PM",
+    type: "Clearance",
+    link: "tracking.html?id=2"
+  }
+];
+```
+
+Just toggle between an empty array (`[]`) or the above array to show/hide the table for demo.
+
+Want me to also set up a button to toggle between the two live on the page for testing?
