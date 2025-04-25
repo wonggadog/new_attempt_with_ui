@@ -54,6 +54,7 @@ class CommunicationFormController extends Controller
             $uploadedFiles = [];
             $googleDriveFileIds = [];
 
+            // Add logic to upload received files directly to Google Drive if the recipient is connected
             if ($request->hasFile('files')) {
                 foreach ($request->file('files') as $file) {
                     // Store file locally

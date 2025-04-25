@@ -57,6 +57,39 @@ Route::middleware('auth')->group(function () {
 
     // File Types for Upload Form
     Route::get('/file-types/options', [FileTypeController::class, 'getFileTypeOptions'])->name('file-types.options');
+    
+    // Add a route to display logs in the browser
+    Route::get('/logs', function () {
+        $logFile = storage_path('logs/laravel.log');
+
+        if (file_exists($logFile)) {
+            return response()->file($logFile);
+        } else {
+            return response('Log file not found.', 404);
+        }
+    })->middleware('auth')->name('view.logs');
+
+    // Add a route for a beginner-friendly log viewer
+    Route::get('/log-viewer', function () {
+        $logFile = storage_path('logs/laravel.log');
+
+        if (!file_exists($logFile)) {
+            return response('Log file not found.', 404);
+        }
+
+        $logs = file($logFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $formattedLogs = array_map(function ($log) {
+            // Attempt to parse the log line into components
+            preg_match('/\[(.*?)\] (\w+): (.*)/', $log, $matches);
+            return [
+                'timestamp' => $matches[1] ?? 'Unknown',
+                'level' => $matches[2] ?? 'Unknown',
+                'message' => $matches[3] ?? $log,
+            ];
+        }, $logs);
+
+        return view('log-viewer', ['logs' => $formattedLogs]);
+    })->middleware('auth')->name('log.viewer');
 });
 
 // Test route for CSS file

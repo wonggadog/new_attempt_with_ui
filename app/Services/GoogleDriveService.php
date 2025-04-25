@@ -67,13 +67,23 @@ class GoogleDriveService
                 $fileMetadata->setParents([$folderId]);
             }
 
+            // Add logging to check if the file content is being read and transferred
+            Log::info('Attempting to read file content from path: ' . $filePath);
             $content = file_get_contents($filePath);
+            if ($content === false) {
+                Log::error('Failed to read file content from path: ' . $filePath);
+            } else {
+                Log::info('File content successfully read from path: ' . $filePath);
+            }
+
+            Log::info('Attempting to upload file to Google Drive with name: ' . $fileName);
             $file = $this->drive->files->create($fileMetadata, [
                 'data' => $content,
                 'mimeType' => mime_content_type($filePath),
                 'uploadType' => 'multipart',
                 'fields' => 'id'
             ]);
+            Log::info('File successfully uploaded to Google Drive with ID: ' . $file->id);
 
             return $file->id;
         } catch (\Exception $e) {
@@ -108,4 +118,4 @@ class GoogleDriveService
             throw $e;
         }
     }
-} 
+}
