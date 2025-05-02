@@ -24,7 +24,7 @@
                 <div class="px-3 py-2">
                     <h6 class="sidebar-heading px-2 mb-2">Options</h6>
                     <div class="nav-items">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('dashboard') }}" class="nav-link">
                             <i class="bi bi-house-door me-2"></i>
                             Home
                         </a>
@@ -41,7 +41,7 @@
                             Received Documents
                             <!-- <span class="badge rounded-pill ms-auto">24</span> -->
                         </a>
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('sent.tracking') }}" class="nav-link">
                             <i class="bi bi-send me-2"></i>
                             Sent Documents
                             <!-- <span class="badge rounded-pill ms-auto">24</span> -->

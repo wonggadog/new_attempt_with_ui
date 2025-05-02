@@ -90,6 +90,16 @@ Route::middleware('auth')->group(function () {
 
         return view('log-viewer', ['logs' => $formattedLogs]);
     })->middleware('auth')->name('log.viewer');
+
+    // Route for the dashboard view
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    // Route for the sent tracking view
+    Route::get('/sent-tracking', function () {
+        return view('sent_tracking');
+    })->name('sent.tracking');
 });
 
 // Test route for CSS file

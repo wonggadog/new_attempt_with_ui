@@ -23,7 +23,7 @@
         <div class="px-3 py-2">
           <h6 class="sidebar-heading px-2 mb-2">Options</h6>
           <div class="nav-items">
-            <a href="#" class="nav-link">
+            <a href="{{ route('dashboard') }}" class="nav-link">
               <i class="bi bi-house-door me-2"></i>
               Home
             </a>
@@ -35,11 +35,11 @@
               <i class="bi bi-upload me-2"></i>
               Upload Documents
             </a>
-            <a href="#" class="nav-link active">
+            <a href="{{ route('received.documents') }}" class="nav-link">
               <i class="bi bi-inbox me-2"></i>
               Received Documents
             </a>
-            <a href="#" class="nav-link">
+            <a href="{{ route('sent.tracking') }}" class="nav-link">
               <i class="bi bi-send me-2"></i>
               Sent Documents
             </a>
