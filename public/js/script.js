@@ -185,12 +185,12 @@ function updateFileLabel(files) {
     }
 }
 
-// Form submission handler
+// Update the form submission handler to handle multiple recipients
 function handleFormSubmit(event) {
     event.preventDefault();
 
     const formData = {
-        to: document.getElementById('userTo').value,
+        to: document.getElementById('userTo').value.split(',').map(name => name.trim()), // Split names by commas
         attention: document.getElementById('userAttention').value,
         departments: Array.from(document.querySelectorAll('#departmentSection input[type="checkbox"]:checked'))
             .map(box => box.nextElementSibling.textContent.trim()),
@@ -198,44 +198,36 @@ function handleFormSubmit(event) {
         additionalActions: collectCheckedItems('additionalActionsSection'),
         fileType: document.querySelector('input[name="fileType"]:checked')?.value || '',
         files: document.getElementById('fileInput').files,
-        additionalNotes: document.getElementById('additionalNotes').value, // New field
+        additionalNotes: document.getElementById('additionalNotes').value,
     };
 
-    // Log the collected data
-    console.log('Form data:', formData);
-
-    // Convert files to FormData for upload
     const formDataToSend = new FormData();
-    formDataToSend.append('to', formData.to);
+    formData.to.forEach((recipient, index) => {
+        formDataToSend.append(`to[${index}]`, recipient);
+    });
     formDataToSend.append('attention', formData.attention);
 
-    // Append departments as array items
     formData.departments.forEach((dept, index) => {
         formDataToSend.append(`departments[${index}]`, dept);
     });
 
-    // Append action items as array items
     formData.actionItems.forEach((item, index) => {
         formDataToSend.append(`action_items[${index}]`, item);
     });
 
-    // Append additional actions as array items
     formData.additionalActions.forEach((action, index) => {
         formDataToSend.append(`additional_actions[${index}]`, action);
     });
 
-    formDataToSend.append('file_type', formData.fileType); // Append selected file type
-    formDataToSend.append('additional_notes', formData.additionalNotes); // Append additional notes
+    formDataToSend.append('file_type', formData.fileType);
+    formDataToSend.append('additional_notes', formData.additionalNotes);
 
-    // Append files
     for (let i = 0; i < formData.files.length; i++) {
         formDataToSend.append('files[]', formData.files[i]);
     }
 
-    // Get the route URL from the hidden input
     const submitFormUrl = document.getElementById('submitFormUrl').value;
 
-    // Send data to Laravel backend
     fetch(submitFormUrl, {
         method: 'POST',
         body: formDataToSend,
