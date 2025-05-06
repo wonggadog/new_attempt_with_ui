@@ -80,10 +80,57 @@
           <div class="col-lg-8 order-2 order-lg-1">
             <h2 class="fw-bold">Good Morning Sir Christian</h2>
             <h5 class="text-muted mb-4">History</h5>
-            <!-- History Placeholder -->
-            <div id="history-placeholder" class="text-center text-muted my-5">
-              <i class="bi bi-clock-history" style="font-size: 2rem;"></i>
-              <p class="mt-2">Your history is currently empty</p>
+            <!-- History Table -->
+            <div class="card shadow-sm mb-4">
+              <div class="card-header bg-white">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h6 class="mb-0 fw-bold">Recent Received Documents</h6>
+                  <div class="input-group input-group-sm" style="width: 200px;">
+                    <input type="text" class="form-control" placeholder="Search documents...">
+                    <button class="btn btn-outline-secondary" type="button">
+                      <i class="bi bi-search"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                      <tr>
+                        <th scope="col">Reference #</th>
+                        <th scope="col">Subject</th>
+                        <th scope="col">From</th>
+                        <th scope="col">Date Received</th>
+                        <th scope="col">Due Date</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="documents-table-body">
+                      <!-- Table content will be dynamically generated -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="card-footer bg-white">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="text-muted small">Showing 5 of 24 documents</span>
+                  <nav aria-label="Page navigation">
+                    <ul class="pagination pagination-sm mb-0">
+                      <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                      </li>
+                      <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -117,6 +164,10 @@
                     <!-- Calendar dynamically generated -->
                   </tbody>
                 </table>
+                <div class="mt-2 d-flex align-items-center justify-content-end">
+                  <span class="due-date-indicator me-2"></span>
+                  <small class="text-muted">Document Due Date</small>
+                </div>
               </div>
             </div>
           </div>

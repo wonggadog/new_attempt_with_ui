@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Services\GoogleDriveService;
@@ -27,14 +26,14 @@ class GoogleDriveController extends Controller
         try {
             $code = $request->get('code');
             $token = $this->driveService->fetchAccessToken($code);
-
             $user = Auth::user();
+
             $user->connectGoogleDrive(
                 json_encode($token),
                 $token['refresh_token'] ?? null
             );
 
-            // Create a folder for the user if it doesn't exist
+            // Create folder if not exists
             if (!$user->google_drive_folder_id) {
                 $folderName = "DMS Documents - " . $user->name;
                 $folderId = $this->driveService->createFolder($folderName);
@@ -64,7 +63,7 @@ class GoogleDriveController extends Controller
     {
         try {
             $recipient = \App\Models\User::findOrFail($recipientId);
-            
+
             if (!$recipient->google_drive_connected) {
                 return response()->json([
                     'success' => false,
@@ -72,8 +71,25 @@ class GoogleDriveController extends Controller
                 ], 400);
             }
 
-            $this->driveService->setAccessToken(json_decode($recipient->google_drive_token, true));
+            // Decode stored token
+            $token = json_decode($recipient->google_drive_token, true);
 
+            // Refresh token if expired
+            if ($this->isTokenExpired($token)) {
+                $refreshToken = $recipient->google_drive_refresh_token;
+                if (!$refreshToken) {
+                    throw new \Exception("No refresh token available for recipient ID: $recipientId");
+                }
+                $token = $this->driveService->refreshToken($refreshToken);
+                $recipient->update([
+                    'google_drive_token' => json_encode($token)
+                ]);
+            }
+
+            // Set refreshed token
+            $this->driveService->setAccessToken($token);
+
+            // Upload file
             $file = $request->file('file');
             $fileName = $file->getClientOriginalName();
             $filePath = $file->getPathname();
@@ -89,8 +105,13 @@ class GoogleDriveController extends Controller
             Log::error('Google Drive upload failed: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to upload file to Google Drive.'
+                'message' => 'Failed to upload file to Google Drive: ' . $e->getMessage()
             ], 500);
         }
     }
-} 
+
+    private function isTokenExpired(array $token): bool
+    {
+        return !isset($token['expires_in']) || $token['expires_in'] < time();
+    }
+}

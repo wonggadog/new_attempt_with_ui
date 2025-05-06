@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Services;
 
 use Google_Client;
@@ -20,11 +19,10 @@ class GoogleDriveService
         $this->client->setClientSecret(config('services.google.client_secret'));
         $this->client->setRedirectUri(config('services.google.redirect'));
         $this->client->addScope([
-            'https://www.googleapis.com/auth/drive.file',
-            'https://www.googleapis.com/auth/drive.appdata'
+            'https://www.googleapis.com/auth/drive', // Full access
         ]);
         $this->client->setAccessType('offline');
-        $this->client->setPrompt('consent');
+        $this->client->setPrompt('consent'); // Force refresh token
     }
 
     public function setAccessToken($token)
@@ -40,15 +38,12 @@ class GoogleDriveService
                 'name' => $folderName,
                 'mimeType' => 'application/vnd.google-apps.folder'
             ]);
-
             if ($parentId) {
                 $fileMetadata->setParents([$parentId]);
             }
-
             $folder = $this->drive->files->create($fileMetadata, [
                 'fields' => 'id'
             ]);
-
             return $folder->id;
         } catch (\Exception $e) {
             Log::error('Google Drive folder creation failed: ' . $e->getMessage());
@@ -62,32 +57,35 @@ class GoogleDriveService
             $fileMetadata = new Google_Service_Drive_DriveFile([
                 'name' => $fileName
             ]);
-
             if ($folderId) {
                 $fileMetadata->setParents([$folderId]);
             }
 
-            // Add logging to check if the file content is being read and transferred
-            Log::info('Attempting to read file content from path: ' . $filePath);
-            $content = file_get_contents($filePath);
-            if ($content === false) {
-                Log::error('Failed to read file content from path: ' . $filePath);
-            } else {
-                Log::info('File content successfully read from path: ' . $filePath);
+            // Validate file exists
+            if (!file_exists($filePath)) {
+                Log::error("File not found: $filePath");
+                throw new \Exception("File not found: $filePath");
             }
 
-            Log::info('Attempting to upload file to Google Drive with name: ' . $fileName);
+            // Read file content
+            $content = file_get_contents($filePath);
+            if ($content === false) {
+                Log::error("Failed to read file: $filePath");
+                throw new \Exception("Failed to read file: $filePath");
+            }
+
+            // Upload to Google Drive
             $file = $this->drive->files->create($fileMetadata, [
                 'data' => $content,
                 'mimeType' => mime_content_type($filePath),
                 'uploadType' => 'multipart',
                 'fields' => 'id'
             ]);
-            Log::info('File successfully uploaded to Google Drive with ID: ' . $file->id);
 
+            Log::info("File uploaded to Google Drive: ID={$file->id}");
             return $file->id;
         } catch (\Exception $e) {
-            Log::error('Google Drive file upload failed: ' . $e->getMessage());
+            Log::error('Google Drive upload failed: ' . $e->getMessage());
             throw $e;
         }
     }
@@ -112,6 +110,9 @@ class GoogleDriveService
     {
         try {
             $token = $this->client->fetchAccessTokenWithAuthCode($code);
+            if (isset($token['error'])) {
+                throw new \Exception("OAuth error: " . $token['error']);
+            }
             return $token;
         } catch (\Exception $e) {
             Log::error('Google Drive token fetch failed: ' . $e->getMessage());
