@@ -122,10 +122,10 @@
                         <div class="col-md-4">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="fs-5 fw-medium"><i class="bi bi-building me-2"></i>Department</h3>
+                                    <h3 class="fs-5 fw-medium"><i class="bi bi-building me-2"></i>Department/Office</h3>
                                 </div>
                                 <div class="card-body">
-                                    <label class="form-label">Select Department(s):</label>
+                                    <!--<label class="form-label">Select Department(s):</label>-->
                                     <div id="departmentSection" class="department-checkboxes">
                                         <!-- Departments will be populated by JavaScript -->
                                     </div>

@@ -10,23 +10,40 @@ const formData = {
     actionItems: [
         'Comments/recommendations', 'Action', 
         'Information/notation and return/dissemination', 'Compliance',
-        'Guidance', 'Study', 'Investigation and report', 'File/reference'
+        'Guidance', 'Study', 'Investigation and report', 'File/reference', 'Others'
     ],
     additionalActions: [
         'Please endorse to', 'Please confer with', 'Please coordinate with',
         'Please prepare an endorsement/answer/draft', 
         'Please communicate directly with the party',
-        'Please review/revise', 'Please complete the attached forms'
+        'Please review/revise', 'Please complete the attached forms', 'Others'
     ]
 };
 
 // Helper function to create checkboxes
-function createCheckbox(id, label) {
+function createCheckbox(id, label, sectionId = '') {
     const sanitizedId = id.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const fullId = sectionId ? `${sectionId}${sanitizedId}` : sanitizedId;
+    
+    console.log('Creating checkbox:', { id, label, sectionId, fullId }); // Debug log
+    
+    if (label === 'Others') {
+        const html = `
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="${fullId}">
+                <label class="form-check-label" for="${fullId}">${label}:</label>
+                <div id="${fullId}TextField" class="name-input-field" style="display:none;">
+                    <input type="text" class="form-control mt-2" placeholder="Enter ${sectionId ? sectionId.replace('Section', '') : ''} name">
+                </div>
+            </div>
+        `;
+        console.log('Generated HTML for Others:', html); // Debug log
+        return html;
+    }
     return `
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="${sanitizedId}">
-            <label class="form-check-label" for="${sanitizedId}">${label}</label>
+            <input class="form-check-input" type="checkbox" id="${fullId}">
+            <label class="form-check-label" for="${fullId}">${label}</label>
         </div>
     `;
 }
@@ -59,16 +76,18 @@ async function loadFileTypes() {
 
 // Initialize form
 async function initializeForm() {
+    console.log('Initializing form...'); // Debug log
+    
     // Populate departments
     const departmentSection = document.getElementById('departmentSection');
     departmentSection.innerHTML = formData.departments
-        .map(dept => createCheckbox(dept, dept))
+        .map(dept => createCheckbox(dept, dept, 'department'))
         .join('');
 
     // Populate action items
     const actionItemsSection = document.getElementById('actionItemsSection');
     actionItemsSection.innerHTML = formData.actionItems
-        .map(item => createCheckbox(item, item))
+        .map(item => createCheckbox(item, item, 'actionitems'))
         .join('');
 
     // Populate additional actions
@@ -78,7 +97,7 @@ async function initializeForm() {
             if (["Please endorse to", "Please confer with", "Please coordinate with"].includes(action)) {
                 return createCheckboxWithTextField(action, action);
             } else {
-                return createCheckbox(action, action);
+                return createCheckbox(action, action, 'additionalactions');
             }
         })
         .join('');
@@ -116,12 +135,60 @@ function createRadioButton(id, label) {
 
 // Set up checkbox listeners for additional actions that trigger name input field
 function setupCheckboxListeners() {
+    console.log('Setting up checkbox listeners...'); // Debug log
+    
     const actionsWithTextFields = [
         "Please endorse to",
         "Please confer with",
         "Please coordinate with"
     ];
 
+    // Add listener for "Others" checkbox in departments section
+    const othersCheckbox = document.getElementById('departmentothers');
+    console.log('Department Others checkbox:', othersCheckbox); // Debug log
+    if (othersCheckbox) {
+        const othersTextField = document.getElementById('departmentothersTextField');
+        console.log('Department Others text field:', othersTextField); // Debug log
+        othersCheckbox.addEventListener('change', function() {
+            if (othersCheckbox.checked) {
+                othersTextField.style.display = 'block';
+            } else {
+                othersTextField.style.display = 'none';
+            }
+        });
+    }
+
+    // Add listener for "Others" checkbox in action items section
+    const actionItemsOthersCheckbox = document.getElementById('actionitemsothers');
+    console.log('Action Items Others checkbox:', actionItemsOthersCheckbox); // Debug log
+    if (actionItemsOthersCheckbox) {
+        const actionItemsOthersTextField = document.getElementById('actionitemsothersTextField');
+        console.log('Action Items Others text field:', actionItemsOthersTextField); // Debug log
+        actionItemsOthersCheckbox.addEventListener('change', function() {
+            if (actionItemsOthersCheckbox.checked) {
+                actionItemsOthersTextField.style.display = 'block';
+            } else {
+                actionItemsOthersTextField.style.display = 'none';
+            }
+        });
+    }
+
+    // Add listener for "Others" checkbox in additional actions section
+    const additionalActionsOthersCheckbox = document.getElementById('additionalactionsothers');
+    console.log('Additional Actions Others checkbox:', additionalActionsOthersCheckbox); // Debug log
+    if (additionalActionsOthersCheckbox) {
+        const additionalActionsOthersTextField = document.getElementById('additionalactionsothersTextField');
+        console.log('Additional Actions Others text field:', additionalActionsOthersTextField); // Debug log
+        additionalActionsOthersCheckbox.addEventListener('change', function() {
+            if (additionalActionsOthersCheckbox.checked) {
+                additionalActionsOthersTextField.style.display = 'block';
+            } else {
+                additionalActionsOthersTextField.style.display = 'none';
+            }
+        });
+    }
+
+    // Existing listeners for additional actions
     actionsWithTextFields.forEach(action => {
         const checkboxId = action.toLowerCase().replace(/[^a-z0-9]/g, '');
         const checkbox = document.getElementById(checkboxId);
@@ -193,9 +260,32 @@ function handleFormSubmit(event) {
         to: document.getElementById('userTo').value.split(',').map(name => name.trim()), // Split names by commas
         attention: document.getElementById('userAttention').value,
         departments: Array.from(document.querySelectorAll('#departmentSection input[type="checkbox"]:checked'))
-            .map(box => box.nextElementSibling.textContent.trim()),
-        actionItems: collectCheckedItems('actionItemsSection'),
-        additionalActions: collectCheckedItems('additionalActionsSection'),
+            .map(box => {
+                const label = box.nextElementSibling.textContent.trim();
+                if (label === 'Others:') {
+                    const othersInput = document.getElementById('departmentothersTextField').querySelector('input');
+                    return othersInput.value.trim();
+                }
+                return label;
+            }),
+        actionItems: Array.from(document.querySelectorAll('#actionItemsSection input[type="checkbox"]:checked'))
+            .map(box => {
+                const label = box.nextElementSibling.textContent.trim();
+                if (label === 'Others:') {
+                    const othersInput = document.getElementById('actionitemsothersTextField').querySelector('input');
+                    return othersInput.value.trim();
+                }
+                return label;
+            }),
+        additionalActions: Array.from(document.querySelectorAll('#additionalActionsSection input[type="checkbox"]:checked'))
+            .map(box => {
+                const label = box.nextElementSibling.textContent.trim();
+                if (label === 'Others:') {
+                    const othersInput = document.getElementById('additionalactionsothersTextField').querySelector('input');
+                    return othersInput.value.trim();
+                }
+                return label;
+            }),
         fileType: document.querySelector('input[name="fileType"]:checked')?.value || '',
         files: document.getElementById('fileInput').files,
         additionalNotes: document.getElementById('additionalNotes').value,
