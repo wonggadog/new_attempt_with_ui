@@ -25,7 +25,7 @@
             <div class="px-3 py-2">
               <h6 class="sidebar-heading px-2 mb-2">Options</h6>
               <div class="nav-items">
-                <a href="{{ route('dashboard') }}" class="nav-link">
+                <a href="{{ route('dashboard') }}" class="nav-link active">
                   <i class="bi bi-house-door me-2"></i>
                   Home
                 </a>
@@ -33,7 +33,7 @@
                   <i class="bi bi-shield-lock me-2"></i>
                   Admin Controls
                 </a>
-                <a href="#" class="nav-link active">
+                <a href="#" class="nav-link">
                   <i class="bi bi-upload me-2"></i>
                   Upload Documents
                 </a>
