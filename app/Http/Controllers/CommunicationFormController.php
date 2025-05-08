@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Services\GoogleDriveService;
+use App\Mail\DocumentReceived;
+use Illuminate\Support\Facades\Mail;
 
 class CommunicationFormController extends Controller
 {
@@ -74,6 +76,16 @@ class CommunicationFormController extends Controller
                         }
                     }
                 }
+
+                Mail::to($recipient->email)->send(new DocumentReceived(
+                    $recipientName,
+                    Auth::user()->name,
+                    $request->input('attention'),
+                    $uploadedFiles[0] ?? 'No file',
+                    implode(', ', $request->input('action_items', [])),
+                    implode(', ', $request->input('additional_actions', [])),
+                    $request->input('additional_notes', 'No notes')
+                ));
 
                 CommunicationForm::create([
                     'to' => $recipientName,
