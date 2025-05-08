@@ -94,9 +94,7 @@ Route::middleware('auth')->group(function () {
     })->middleware('auth')->name('log.viewer');
 
     // Route for the dashboard view
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
 
     // Route for the sent tracking view
     Route::get('/sent-tracking', function () {

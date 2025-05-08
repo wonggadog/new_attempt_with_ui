@@ -2,60 +2,60 @@ document.addEventListener("DOMContentLoaded", () => {
   const sidebar = document.getElementById("sidebarMenu")
   const toggleButton = document.getElementById("sidebarToggle")
 
-  // Sample document data with received dates and calculated due dates
-  const documents = [
-    {
-      id: "DOC-2023-0542",
-      subject: "Budget Proposal for Q2",
-      sender: "Finance Department",
-      dateReceived: new Date(2023, 4, 4), // May 4, 2023
-      status: "Approved",
-      statusClass: "success",
-    },
-    {
-      id: "DOC-2023-0541",
-      subject: "Faculty Meeting Minutes",
-      sender: "Dean's Office",
-      dateReceived: new Date(2023, 4, 3), // May 3, 2023
-      status: "Pending",
-      statusClass: "warning text-dark",
-    },
-    {
-      id: "DOC-2023-0538",
-      subject: "Research Grant Application",
-      sender: "Research Office",
-      dateReceived: new Date(2023, 4, 2), // May 2, 2023
-      status: "In Review",
-      statusClass: "info",
-    },
-    {
-      id: "DOC-2023-0535",
-      subject: "Equipment Requisition Form",
-      sender: "IT Department",
-      dateReceived: new Date(2023, 4, 1), // May 1, 2023
-      status: "Rejected",
-      statusClass: "danger",
-    },
-    {
-      id: "DOC-2023-0532",
-      subject: "Curriculum Development Proposal",
-      sender: "Academic Affairs",
-      dateReceived: new Date(2023, 3, 28), // April 28, 2023
-      status: "Approved",
-      statusClass: "success",
-    },
-  ]
+  // REMOVE or COMMENT OUT the following block:
+  // const documents = [
+  //   {
+  //     id: "DOC-2023-0542",
+  //     subject: "Budget Proposal for Q2",
+  //     sender: "Finance Department",
+  //     dateReceived: new Date(2023, 4, 4), // May 4, 2023
+  //     status: "Approved",
+  //     statusClass: "success",
+  //   },
+  //   {
+  //     id: "DOC-2023-0541",
+  //     subject: "Faculty Meeting Minutes",
+  //     sender: "Dean's Office",
+  //     dateReceived: new Date(2023, 4, 3), // May 3, 2023
+  //     status: "Pending",
+  //     statusClass: "warning text-dark",
+  //   },
+  //   {
+  //     id: "DOC-2023-0538",
+  //     subject: "Research Grant Application",
+  //     sender: "Research Office",
+  //     dateReceived: new Date(2023, 4, 2), // May 2, 2023
+  //     status: "In Review",
+  //     statusClass: "info",
+  //   },
+  //   {
+  //     id: "DOC-2023-0535",
+  //     subject: "Equipment Requisition Form",
+  //     sender: "IT Department",
+  //     dateReceived: new Date(2023, 4, 1), // May 1, 2023
+  //     status: "Rejected",
+  //     statusClass: "danger",
+  //   },
+  //   {
+  //     id: "DOC-2023-0532",
+  //     subject: "Curriculum Development Proposal",
+  //     sender: "Academic Affairs",
+  //     dateReceived: new Date(2023, 3, 28), // April 28, 2023
+  //     status: "Approved",
+  //     statusClass: "success",
+  //   },
+  // ];
 
   // Calculate due dates for all documents (5 business days after received date)
-  documents.forEach((doc) => {
-    doc.dueDate = calculateDueDate(doc.dateReceived, 5)
-  })
+  // documents.forEach((doc) => {
+  //   doc.dueDate = calculateDueDate(doc.dateReceived, 5)
+  // })
 
   // Populate the documents table
-  populateDocumentsTable(documents)
+  // populateDocumentsTable(documents)
 
   // Generate calendar with due dates
-  generateCalendar(new Date(), documents)
+  generateCalendar(new Date())
 
   // Sidebar toggle functionality
   toggleButton.addEventListener("click", () => {
@@ -167,7 +167,7 @@ function populateDocumentsTable(documents) {
  * @param {Date} date - The month to display
  * @param {Array} documents - Array of document objects with due dates
  */
-function generateCalendar(date, documents) {
+function generateCalendar(date, documents = []) {
   const monthYearEl = document.getElementById("calendar-month-year")
   const calendarBody = document.getElementById("calendar-body")
 

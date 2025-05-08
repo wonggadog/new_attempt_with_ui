@@ -25,4 +25,30 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function dashboard()
+    {
+        $user = auth()->user();
+        $receivedDocuments = \App\Models\CommunicationForm::where('to', $user->name)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        $documents = $receivedDocuments->map(function ($document) {
+            return [
+                'id' => $document->id,
+                'sender' => $document->from,
+                'subject' => $document->file_type,
+                'fileType' => $document->file_type,
+                'dateReceived' => $document->created_at->format('Y-m-d H:i'),
+                'action' => $document->action_items ? implode(', ', $document->action_items) : 'No action required',
+                'additionalAction' => $document->additional_actions ? implode(', ', $document->additional_actions) : '',
+                'notes' => $document->additional_notes ?? 'No notes',
+            ];
+        });
+
+        return view('dashboard', [
+            'documents' => $documents,
+            'paginator' => $receivedDocuments
+        ]);
+    }
 }

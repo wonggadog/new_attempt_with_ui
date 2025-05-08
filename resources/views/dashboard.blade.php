@@ -78,7 +78,7 @@
         <div class="row flex-column flex-lg-row">
           <!-- Left Section: Greeting and History -->
           <div class="col-lg-8 order-2 order-lg-1">
-            <h2 class="fw-bold">Good Morning Sir Christian</h2>
+            <h2 class="fw-bold">Good Morning {{ explode(' ', Auth::user()->name)[0] }}</h2>
             <h5 class="text-muted mb-4">History</h5>
             <!-- History Table -->
             <div class="card shadow-sm mb-4">
@@ -102,33 +102,38 @@
                         <th scope="col">Subject</th>
                         <th scope="col">From</th>
                         <th scope="col">Date Received</th>
-                        <th scope="col">Due Date</th>
-                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                        <th scope="col">Notes</th>
                         <th scope="col">Actions</th>
                       </tr>
                     </thead>
                     <tbody id="documents-table-body">
-                      <!-- Table content will be dynamically generated -->
+                      @forelse ($paginator as $document)
+                      <tr>
+                          <td>{{ $document->id ?? '' }}</td>
+                          <td>{{ $document->file_type ?? '' }}</td>
+                          <td>{{ $document->from ?? '' }}</td>
+                          <td>{{ $document->created_at ? $document->created_at->format('Y-m-d H:i') : '' }}</td>
+                          <td>{{ $document->action_items ? implode(', ', $document->action_items) : 'No action required' }}</td>
+                          <td>{{ $document->additional_notes ?? 'No notes' }}</td>
+                          <td>
+                              <a href="#" class="btn btn-sm btn-primary">View</a>
+                          </td>
+                      </tr>
+                      @empty
+                      <tr>
+                          <td colspan="7" class="text-center">No received documents found.</td>
+                      </tr>
+                      @endforelse
                     </tbody>
                   </table>
                 </div>
               </div>
               <div class="card-footer bg-white">
-                <div class="d-flex justify-content-between align-items-center">
-                  <span class="text-muted small">Showing 5 of 24 documents</span>
-                  <nav aria-label="Page navigation">
-                    <ul class="pagination pagination-sm mb-0">
-                      <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                      </li>
-                      <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                      </li>
-                    </ul>
-                  </nav>
+                <div class="d-flex justify-content-end align-items-center">
+                  <div class="pagination-container">
+                    {{ $paginator->links('pagination::bootstrap-5') }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -143,7 +148,7 @@
                 <img src="images/russ.jpg" alt="Profile" class="img-thumbnail">
               </div>
               <div class="card-body text-start">
-                <h5 class="fw-bold mb-1">Christian Y. Sy</h5>
+                <h5 class="fw-bold mb-1">{{ Auth::user()->name }}</h5>
                 <p class="mb-1">Associate Dean</p>
                 <p class="mb-1">Professor IV</p>
                 <p class="mb-2">College of Science</p>
@@ -179,5 +184,16 @@
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/dashboard_script.js"></script>
+  <style>
+  .pagination-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+  .pagination {
+    margin-bottom: 0;
+    font-size: 0.85rem;
+  }
+  </style>
 </body>
 </html>
