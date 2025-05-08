@@ -9,6 +9,8 @@ use App\Http\Controllers\FileTypeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\GoogleDriveController;
+use App\Mail\MyEmail;
+use Illuminate\Support\Facades\Mail;
 
 Auth::routes();
 
@@ -105,4 +107,10 @@ Route::middleware('auth')->group(function () {
 // Test route for CSS file
 Route::get('/test-css', function () {
     return response()->file(public_path('css/file-types.css'));
+});
+
+Route::get('/test-email', function () {
+    $name = 'Test User';
+    Mail::to('aldiangeldioquino.wong@bicol-u.edu.ph')->send(new MyEmail($name));
+    return 'Test email sent! Check your Mailtrap inbox.';
 });
