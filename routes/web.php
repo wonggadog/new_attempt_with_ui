@@ -97,9 +97,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
 
     // Route for the sent tracking view
-    Route::get('/sent-tracking', function () {
-        return view('sent_tracking');
-    })->name('sent.tracking');
+    Route::get('/sent-tracking', [App\Http\Controllers\CommunicationFormController::class, 'sentDocuments'])->name('sent.tracking');
+
+    // AJAX route for fetching a single document's timeline
+    Route::get('/sent-tracking/timeline/{id}', [App\Http\Controllers\CommunicationFormController::class, 'sentDocumentTimeline'])->name('sent.tracking.timeline');
 });
 
 // Test route for CSS file

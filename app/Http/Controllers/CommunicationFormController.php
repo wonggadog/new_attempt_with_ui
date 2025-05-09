@@ -159,6 +159,29 @@ class CommunicationFormController extends Controller
         return view('received', ['documents' => $documents]);
     }
 
+    /**
+     * Display sent documents for the authenticated user.
+     */
+    public function sentDocuments()
+    {
+        $user = Auth::user();
+        $sentDocuments = CommunicationForm::where('from', $user->name)
+            ->orderBy('created_at', 'desc')
+            ->with('statuses')
+            ->paginate(10);
+
+        return view('sent_tracking', ['documents' => $sentDocuments]);
+    }
+
+    /**
+     * Return the timeline for a single sent document (AJAX).
+     */
+    public function sentDocumentTimeline($id)
+    {
+        $doc = CommunicationForm::with('statuses')->findOrFail($id);
+        return view('partials.sent_timeline', compact('doc'))->render();
+    }
+
     // Helper function to map file type to icon class
     private function getFileIconClass($fileType)
     {

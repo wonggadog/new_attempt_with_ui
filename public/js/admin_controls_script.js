@@ -7,9 +7,6 @@ document.addEventListener("DOMContentLoaded", function() {
         form: document.getElementById("userForm"),
         tableBody: document.getElementById("userTableBody"),
         message: document.getElementById("message"),
-        prevPage: document.getElementById("prevPage"),
-        nextPage: document.getElementById("nextPage"),
-        pageInfo: document.getElementById("pageInfo"),
         departmentFilter: document.getElementById("departmentFilter"),
         clearFilters: document.getElementById("clearFilters"),
         filterStatus: document.getElementById("filterStatus"),
@@ -36,8 +33,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // Event Listeners
     elements.form.addEventListener("submit", handleFormSubmit);
     elements.tableBody.addEventListener("click", handleTableClick);
-    elements.prevPage.addEventListener("click", () => navigatePage(-1));
-    elements.nextPage.addEventListener("click", () => navigatePage(1));
     elements.departmentFilter.addEventListener("change", handleFilterChange);
     elements.clearFilters.addEventListener("click", clearFilters);
 
@@ -58,7 +53,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
             if (data.success) {
                 renderUsers(data.users);
-                updatePagination(data.pagination.current_page, data.pagination.last_page);
                 updateFilterStatus(data.filters.department);
             } else {
                 showMessage("Error loading users", "error");
@@ -87,14 +81,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 </tr>
               `).join('')
             : `<tr><td colspan="5" class="no-data">No users found</td></tr>`;
-    }
-
-    function updatePagination(currentPage, lastPage) {
-        state.currentPage = currentPage;
-        state.totalPages = lastPage;
-        elements.pageInfo.textContent = `Page ${currentPage} of ${lastPage}`;
-        elements.prevPage.disabled = currentPage <= 1;
-        elements.nextPage.disabled = currentPage >= lastPage;
     }
 
     function updateFilterStatus(activeFilter) {
@@ -186,14 +172,6 @@ document.addEventListener("DOMContentLoaded", function() {
             } finally {
                 showLoading(false);
             }
-        }
-    }
-
-    function navigatePage(direction) {
-        const newPage = state.currentPage + direction;
-        if (newPage > 0 && newPage <= state.totalPages) {
-            state.currentPage = newPage;
-            loadUsers();
         }
     }
 

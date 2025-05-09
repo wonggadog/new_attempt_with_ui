@@ -28,4 +28,9 @@ class CommunicationForm extends Model
         'additional_actions' => 'array',
         'files' => 'array',
     ];
+
+    public function statuses()
+    {
+        return $this->hasMany(\App\Models\CommunicationFormStatus::class);
+    }
 }

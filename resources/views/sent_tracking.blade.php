@@ -36,7 +36,7 @@
                                     <i class="bi bi-shield-lock me-2"></i>
                                     Admin Controls
                                 </a>
-                                <a href="#" class="nav-link active">
+                                <a href="{{ route('home') }}" class="nav-link">
                                     <i class="bi bi-upload me-2"></i>
                                     Upload Documents
                                 </a>
@@ -44,7 +44,7 @@
                                     <i class="bi bi-inbox me-2"></i>
                                     Received Documents
                                 </a>
-                                <a href="{{ route('sent.tracking') }}" class="nav-link">
+                                <a href="{{ route('sent.tracking') }}" class="nav-link active">
                                     <i class="bi bi-send me-2"></i>
                                     Sent Documents
                                 </a>
@@ -71,86 +71,61 @@
             <!-- Main Content -->
             <div class="col-md-9 col-lg-10 main-content">
                 <div class="tracking-container">
-                    <!-- Header with Toggle Button -->
-                    <div class="tracking-header d-flex justify-content-between align-items-center">
-                        <nav class="navbar navbar-light bg-light d-md-none">
-                            <button class="navbar-toggler d-md-none" type="button" id="sidebarToggle">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
-                        </nav>
-                        <h5>Tracking Details</h5>
-                        <div class="actions">
-                            <i class="bi bi-bell"></i>
-                            <div class="user-avatar header-avatar">JD</div>
-                        </div>
+                    <h4 class="mb-4">My Sent Documents</h4>
+                    <div class="mb-3 d-flex flex-wrap gap-2 align-items-center">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Search by recipient, subject, or type..." style="max-width: 250px;">
+                        <select id="statusFilter" class="form-select" style="max-width: 150px;">
+                            <option value="">All Statuses</option>
+                            <option value="sent">Sent</option>
+                            <option value="delivered">Delivered</option>
+                            <option value="read">Read</option>
+                            <option value="acknowledged">Acknowledged</option>
+                        </select>
+                        <select id="typeFilter" class="form-select" style="max-width: 150px;">
+                            <option value="">All Types</option>
+                            @foreach($documents->pluck('file_type')->unique() as $type)
+                                <option value="{{ $type }}">{{ $type }}</option>
+                            @endforeach
+                        </select>
+                        <input type="date" id="dateFilter" class="form-control" style="max-width: 180px;">
                     </div>
-
-                    <!-- Courier Info -->
-                    <div class="courier-info">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p class="info-label">Courier Info</p>
-                                <p class="courier-name">Delivery Partner: J&T Express PH</p>
-                                <p class="courier-person">Courier: Ocw Jorge T. Alesib</p>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="d-flex justify-content-between">
-                                    <p class="info-label">Tracking Number</p>
-                                    <div class="tracking-number">
-                                        828018L942398 <i class="bi bi-clipboard"></i>
-                                    </div>
-                                </div>
-                            </div>
+                    <table class="table table-hover table-bordered align-middle shadow-sm" id="sentDocsTable" style="background: #fff; border-radius: 8px; overflow: hidden;">
+                        <thead class="table-light">
+                            <tr>
+                                <th>To</th>
+                                <th>Subject</th>
+                                <th>Type</th>
+                                <th>Date Sent</th>
+                                <th>Status</th>
+                                <th>View Timeline</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($documents as $doc)
+                            <tr data-doc-id="{{ $doc->id }}" data-to="{{ strtolower($doc->to) }}" data-subject="{{ strtolower($doc->attention) }}" data-type="{{ strtolower($doc->file_type) }}" data-date="{{ $doc->created_at->format('Y-m-d') }}" data-status="{{ $doc->statuses->last() ? strtolower($doc->statuses->last()->status) : 'sent' }}">
+                                <td class="fw-semibold">{{ $doc->to }}</td>
+                                <td>{{ $doc->attention }}</td>
+                                <td><span class="badge bg-info text-dark">{{ $doc->file_type }}</span></td>
+                                <td>{{ $doc->created_at->format('M d, Y H:i') }}</td>
+                                <td>
+                                    @php $lastStatus = $doc->statuses->last(); @endphp
+                                    <span class="badge bg-{{ $lastStatus ? ($lastStatus->status === 'acknowledged' ? 'success' : ($lastStatus->status === 'read' ? 'primary' : ($lastStatus->status === 'delivered' ? 'warning text-dark' : 'secondary'))) : 'secondary' }}">
+                                        {{ $lastStatus ? ucfirst($lastStatus->status) : 'Sent' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline-primary btn-sm view-timeline-btn" data-doc-id="{{ $doc->id }}">View Timeline</button>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <div id="timelinePanel" class="mt-4"></div>
+                    @if(method_exists($documents, 'links'))
+                        <div class="d-flex justify-content-end mt-2">
+                            {{ $documents->onEachSide(1)->links('pagination::bootstrap-4') }}
                         </div>
-                    </div>
-
-                    <!-- Tracking Progress -->
-                    <div class="tracking-progress">
-                        <div class="stepper-wrapper">
-                            <div class="stepper-item completed">
-                                <div class="step-counter">
-                                    <i class="bi bi-pencil-square"></i>
-                                </div>
-                                <div class="step-name">Processing</div>
-                            </div>
-                            <div class="stepper-item completed">
-                                <div class="step-counter">
-                                    <i class="bi bi-house"></i>
-                                </div>
-                                <div class="step-name">Packed</div>
-                            </div>
-                            <div class="stepper-item completed">
-                                <div class="step-counter">
-                                    <i class="bi bi-truck"></i>
-                                </div>
-                                <div class="step-name">Shipped</div>
-                            </div>
-                            <div class="stepper-item completed">
-                                <div class="step-counter">
-                                    <i class="bi bi-check-circle-fill"></i>
-                                </div>
-                                <div class="step-name">Delivered</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tracking Timeline -->
-                    <div class="tracking-timeline">
-                        <div class="timeline-item">
-                            <div class="timeline-date">Jan 29 10:51</div>
-                            <div class="timeline-badge completed">
-                                <i class="bi bi-check"></i>
-                            </div>
-                            <div class="timeline-content">
-                                <div class="timeline-title">Delivered</div>
-                                <div class="timeline-description">Package has been delivered.</div>
-                                <div class="timeline-notice">
-                                    Please check item if complete and in good condition. For filing a Return/Refund, click "View Order Detail" on the top right portion of this page. [<a href="#">BARAGA</a>]
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Additional timeline items omitted for brevity -->
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -160,5 +135,81 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
     <script src="js/sent_tracking_script.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const timelinePanel = document.getElementById('timelinePanel');
+        let selectedRow = null;
+        document.querySelectorAll('.view-timeline-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const docId = this.getAttribute('data-doc-id');
+                fetch(`/sent-tracking/timeline/${docId}`)
+                    .then(response => response.text())
+                    .then(html => {
+                        timelinePanel.innerHTML = html;
+                        timelinePanel.scrollIntoView({ behavior: 'smooth' });
+                    });
+                // Highlight selected row
+                if (selectedRow) selectedRow.classList.remove('table-active');
+                selectedRow = this.closest('tr');
+                selectedRow.classList.add('table-active');
+            });
+        });
+        // Filtering logic
+        const searchInput = document.getElementById('searchInput');
+        const statusFilter = document.getElementById('statusFilter');
+        const typeFilter = document.getElementById('typeFilter');
+        const dateFilter = document.getElementById('dateFilter');
+        const tableRows = document.querySelectorAll('#sentDocsTable tbody tr');
+        function filterTable() {
+            const search = searchInput.value.toLowerCase();
+            const status = statusFilter.value;
+            const type = typeFilter.value.toLowerCase();
+            const date = dateFilter.value;
+            tableRows.forEach(row => {
+                const to = row.getAttribute('data-to');
+                const subject = row.getAttribute('data-subject');
+                const rowType = row.getAttribute('data-type');
+                const rowDate = row.getAttribute('data-date');
+                const rowStatus = row.getAttribute('data-status');
+                let show = true;
+                if (search && !(to.includes(search) || subject.includes(search) || rowType.includes(search))) show = false;
+                if (status && rowStatus !== status) show = false;
+                if (type && rowType !== type) show = false;
+                if (date && rowDate !== date) show = false;
+                row.style.display = show ? '' : 'none';
+            });
+        }
+        searchInput.addEventListener('input', filterTable);
+        statusFilter.addEventListener('change', filterTable);
+        typeFilter.addEventListener('change', filterTable);
+        dateFilter.addEventListener('change', filterTable);
+    });
+    </script>
+    <style>
+        #sentDocsTable th, #sentDocsTable td {
+            vertical-align: middle;
+            text-align: center;
+        }
+        #sentDocsTable th {
+            font-weight: 600;
+            background: #f8f9fa;
+        }
+        #sentDocsTable tr.table-active {
+            background: #e9f5ff !important;
+        }
+        .pagination {
+            margin-bottom: 0;
+        }
+        .pagination .page-link {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.9rem;
+        }
+        .tracking-container {
+            background: #f6f8fa;
+            border-radius: 10px;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+    </style>
 </body>
 </html>

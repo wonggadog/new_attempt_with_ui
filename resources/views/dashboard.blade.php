@@ -132,7 +132,7 @@
               <div class="card-footer bg-white">
                 <div class="d-flex justify-content-end align-items-center">
                   <div class="pagination-container">
-                    {{ $paginator->links('pagination::bootstrap-5') }}
+                    {{ $paginator->links() }}
                   </div>
                 </div>
               </div>

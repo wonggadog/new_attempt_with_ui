@@ -152,15 +152,8 @@
                         </thead>
                         <tbody id="userTableBody">
                             <!-- Users will be loaded via JavaScript -->
-                            <!-- Removed PHP code referencing undefined $user variable -->
                         </tbody>
                     </table>
-                    
-                    <div class="pagination">
-                        <button id="prevPage" disabled>Previous</button>
-                        <span id="pageInfo">Page 1 of 1</span>
-                        <button id="nextPage" disabled>Next</button>
-                    </div>
                 </div>
             </section>
         </main>
