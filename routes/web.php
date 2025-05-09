@@ -101,6 +101,8 @@ Route::middleware('auth')->group(function () {
 
     // AJAX route for fetching a single document's timeline
     Route::get('/sent-tracking/timeline/{id}', [App\Http\Controllers\CommunicationFormController::class, 'sentDocumentTimeline'])->name('sent.tracking.timeline');
+
+    Route::get('/download/{form}', [CommunicationFormController::class, 'download'])->name('communication-form.download');
 });
 
 // Test route for CSS file

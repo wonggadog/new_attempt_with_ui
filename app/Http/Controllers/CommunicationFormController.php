@@ -228,4 +228,27 @@ class CommunicationFormController extends Controller
                 return 'doc';
         }
     }
+
+    /**
+     * Download the uploaded file for a CommunicationForm (recipient only).
+     */
+    public function download($formId)
+    {
+        $form = CommunicationForm::findOrFail($formId);
+        $user = Auth::user();
+        // Only the recipient can download
+        if ($form->to !== $user->name) {
+            abort(403, 'You are not authorized to download this file.');
+        }
+        $files = $form->files;
+        if (!$files || !is_array($files) || !isset($files[0]['path'])) {
+            abort(404, 'File not found.');
+        }
+        $filePath = $files[0]['path'];
+        $originalName = $files[0]['original'] ?? basename($filePath);
+        if (!\Storage::exists($filePath)) {
+            abort(404, 'File not found on server.');
+        }
+        return \Storage::download($filePath, $originalName);
+    }
 }

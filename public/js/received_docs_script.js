@@ -261,6 +261,14 @@ function showDocumentDetail(doc) {
     }
   }
   document.getElementById("detailFileName").textContent = detailFileName;
+
+  // Set up Download File button
+  const downloadBtn = document.querySelector('.file-box .btn-primary.w-100.mb-2');
+  if (downloadBtn) {
+    downloadBtn.onclick = function() {
+      window.location.href = `/download/${doc.id}`;
+    };
+  }
 }
 
 // Show documents list
