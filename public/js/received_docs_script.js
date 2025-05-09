@@ -234,7 +234,6 @@ function showDocumentDetail(doc) {
   document.getElementById("detailNotes").textContent = doc.notes;
 
   // Set file information
-  document.getElementById("detailFileName").textContent = `${doc.subject}.${doc.fileType.toLowerCase()}`;
   document.getElementById("detailFileType").textContent = `${doc.fileType} Document`;
   document.getElementById("detailInfoFileType").textContent = doc.fileType;
   document.getElementById("detailInfoDate").textContent = new Date(doc.dateReceived).toLocaleDateString();
@@ -242,6 +241,13 @@ function showDocumentDetail(doc) {
   // Set file icon
   const fileIconContainer = document.getElementById("detailFileIcon");
   fileIconContainer.innerHTML = `<div class="file-preview"><i class="bi ${doc.iconClass} ${doc.iconColor}"></i></div>`;
+
+  // Set filename below the icon
+  let fileName = '';
+  if (doc.files && doc.files.length > 0) {
+    fileName = doc.files[0].split('/').pop();
+  }
+  document.getElementById("detailFileName").textContent = fileName;
 }
 
 // Show documents list

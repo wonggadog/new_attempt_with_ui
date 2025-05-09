@@ -236,8 +236,10 @@
                 
                 <div class="col-md-4">
                   <div class="border rounded p-4 text-center mb-4 file-box">
-                    <div id="detailFileIcon" class="mb-3 mx-auto"></div>
-                    <h3 class="fs-5 fw-medium" id="detailFileName"></h3>
+                    <div id="detailFileIcon" class="mb-3 mx-auto" style="font-size: 3rem;"></div>
+                    <div class="mb-2">
+                        <span id="detailFileName" class="fw-semibold"></span>
+                    </div>
                     <p class="small text-muted" id="detailFileType"></p>
                     <button class="btn btn-primary w-100 mb-2">
                       <i class="bi bi-download me-2"></i>
