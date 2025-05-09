@@ -143,13 +143,22 @@ function createDocumentCard(doc) {
 
   const cardBody = document.createElement("div");
   cardBody.className = "card-body";
+  // Get the filename from doc.files[0] if available
+  let fileName = '';
+  if (doc.files && doc.files.length > 0) {
+    if (typeof doc.files[0] === 'object' && doc.files[0].original) {
+      fileName = doc.files[0].original;
+    } else if (typeof doc.files[0] === 'string') {
+      fileName = doc.files[0].split('/').pop();
+    }
+  }
   cardBody.innerHTML = `
     <div class="d-flex align-items-center mb-3">
       <div class="document-icon ${doc.iconColor} me-3">
         <i class="bi ${doc.iconClass}"></i>
       </div>
       <div>
-        <h5 class="card-title mb-1">${doc.subject}</h5>
+        <h5 class="card-title mb-1">${fileName || doc.subject}</h5>
         <p class="card-text small text-muted">${formatDate(doc.dateReceived)}</p>
       </div>
     </div>
@@ -243,11 +252,15 @@ function showDocumentDetail(doc) {
   fileIconContainer.innerHTML = `<div class="file-preview"><i class="bi ${doc.iconClass} ${doc.iconColor}"></i></div>`;
 
   // Set filename below the icon
-  let fileName = '';
+  let detailFileName = '';
   if (doc.files && doc.files.length > 0) {
-    fileName = doc.files[0].split('/').pop();
+    if (typeof doc.files[0] === 'object' && doc.files[0].original) {
+      detailFileName = doc.files[0].original;
+    } else if (typeof doc.files[0] === 'string') {
+      detailFileName = doc.files[0].split('/').pop();
+    }
   }
-  document.getElementById("detailFileName").textContent = fileName;
+  document.getElementById("detailFileName").textContent = detailFileName;
 }
 
 // Show documents list

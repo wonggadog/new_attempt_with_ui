@@ -17,7 +17,7 @@ class CreateCommunicationFormsTable extends Migration
             $table->json('action_items')->nullable();
             $table->json('additional_actions')->nullable();
             $table->string('file_type')->nullable();
-            $table->json('files')->nullable();
+            $table->json('files')->nullable()->comment('Array of objects: [{"path": ..., "original": ...}]');
             $table->text('additional_notes')->nullable(); // New field
             $table->timestamps();
         });

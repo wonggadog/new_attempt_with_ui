@@ -59,7 +59,10 @@ class CommunicationFormController extends Controller
                 if ($request->hasFile('files')) {
                     foreach ($request->file('files') as $file) {
                         $path = $file->store('uploads');
-                        $uploadedFiles[] = $path;
+                        $uploadedFiles[] = [
+                            'path' => $path,
+                            'original' => $file->getClientOriginalName(),
+                        ];
 
                         if ($recipient->google_drive_connected) {
                             try {
@@ -81,7 +84,7 @@ class CommunicationFormController extends Controller
                     $recipientName,
                     Auth::user()->name,
                     $request->input('attention'),
-                    $uploadedFiles[0] ?? 'No file',
+                    $uploadedFiles[0]['path'] ?? 'No file',
                     implode(', ', $request->input('action_items', [])),
                     implode(', ', $request->input('additional_actions', [])),
                     $request->input('additional_notes', 'No notes')
@@ -139,20 +142,30 @@ class CommunicationFormController extends Controller
 
         // Transform the data to match the structure expected by the JavaScript
         $documents = $receivedDocuments->map(function ($document) {
+            $files = collect($document->files)->map(function ($file) {
+                if (is_array($file) && isset($file['path'], $file['original'])) {
+                    return $file;
+                } elseif (is_string($file)) {
+                    // Backward compatibility: if only path is stored
+                    return ['path' => $file, 'original' => basename($file)];
+                }
+                return null;
+            })->filter()->values()->toArray();
             return [
                 'id' => $document->id,
                 'sender' => $document->from,
-                'senderEmail' => '', // Add sender email if available
-                'subject' => $document->file_type, // Use file type as subject or customize as needed
+                'senderEmail' => '',
+                'subject' => $document->file_type,
                 'fileType' => $document->file_type,
-                'iconClass' => $this->getFileIconClass($document->file_type), // Helper function to map file type to icon
-                'iconColor' => $this->getFileIconColor($document->file_type), // Helper function to map file type to color
+                'iconClass' => $this->getFileIconClass($document->file_type),
+                'iconColor' => $this->getFileIconColor($document->file_type),
                 'dateReceived' => $document->created_at->toIso8601String(),
                 'action' => $document->action_items ? implode(', ', $document->action_items) : 'No action required',
                 'additionalAction' => $document->additional_actions ? implode(', ', $document->additional_actions) : '',
                 'notes' => $document->additional_notes ?? 'No notes',
-                'isStarred' => false, // Add logic for starred documents if needed
-                'isUrgent' => false, // Add logic for urgent documents if needed
+                'isStarred' => false,
+                'isUrgent' => false,
+                'files' => $files,
             ];
         });
 
