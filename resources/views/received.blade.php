@@ -276,7 +276,7 @@
               <div class="d-flex justify-content-between">
                 <button class="btn btn-outline">Mark as Complete</button>
                 <div>
-                  <button class="btn btn-outline me-2">Forward</button>
+                  <button class="btn btn-outline me-2" id="forwardButton">Forward</button>
                   <button class="btn btn-primary">Take Action</button>
                 </div>
               </div>
@@ -301,5 +301,36 @@
 
   <!-- Custom JavaScript -->
   <script src="{{ asset('js/received_docs_script.js') }}"></script>
+
+  <!-- Forward Modal -->
+  <div class="modal fade" id="forwardModal" tabindex="-1" aria-labelledby="forwardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="forwardModalLabel">Forward Document</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="forwardForm">
+            <div class="mb-3">
+              <label for="forwardRecipient" class="form-label">Select Recipient</label>
+              <select class="form-select" id="forwardRecipient" required>
+                <option value="">Select a user</option>
+                <!-- Options will be populated by JS -->
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="forwardNote" class="form-label">Optional Note</label>
+              <textarea class="form-control" id="forwardNote" rows="3" placeholder="Add a note (optional)"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="forwardSubmitBtn">Forward</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

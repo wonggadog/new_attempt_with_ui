@@ -358,3 +358,69 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+// --- Forwarding Logic ---
+let currentForwardDocId = null;
+
+// Open forward modal and populate dropdown
+const forwardButton = document.getElementById('forwardButton');
+if (forwardButton) {
+  forwardButton.addEventListener('click', function() {
+    // Store the current document ID
+    const docId = documentDetail.querySelector('[data-doc-id]')?.getAttribute('data-doc-id') || (window.currentDetailDocId || null);
+    currentForwardDocId = docId;
+    // Fetch all users for dropdown
+    fetch('/admin_controls/users')
+      .then(res => res.json())
+      .then(data => {
+        const dropdown = document.getElementById('forwardRecipient');
+        dropdown.innerHTML = '<option value="">Select a user</option>';
+        if (data.success && Array.isArray(data.users)) {
+          data.users.forEach(user => {
+            // Exclude current user and current recipient
+            if (user.name !== currentUserName && user.name !== document.getElementById('detailSender').textContent) {
+              const option = document.createElement('option');
+              option.value = user.name;
+              option.textContent = user.name;
+              dropdown.appendChild(option);
+            }
+          });
+        }
+        // Show modal
+        const forwardModal = new bootstrap.Modal(document.getElementById('forwardModal'));
+        forwardModal.show();
+      });
+  });
+}
+
+// Handle forward form submission
+const forwardSubmitBtn = document.getElementById('forwardSubmitBtn');
+if (forwardSubmitBtn) {
+  forwardSubmitBtn.addEventListener('click', function() {
+    const recipient = document.getElementById('forwardRecipient').value;
+    const note = document.getElementById('forwardNote').value;
+    if (!recipient) {
+      alert('Please select a recipient.');
+      return;
+    }
+    fetch(`/forward/${currentForwardDocId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+      },
+      body: JSON.stringify({ recipient, note }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert('Document forwarded successfully!');
+          // Optionally close modal
+          bootstrap.Modal.getInstance(document.getElementById('forwardModal')).hide();
+        } else {
+          alert(data.message || 'Failed to forward document.');
+        }
+      })
+      .catch(() => alert('Failed to forward document.'));
+  });
+}

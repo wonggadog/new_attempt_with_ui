@@ -251,4 +251,37 @@ class CommunicationFormController extends Controller
         }
         return \Storage::download($filePath, $originalName);
     }
+
+    /**
+     * Forward a document to another user (recipient only).
+     */
+    public function forward(Request $request, $formId)
+    {
+        $form = CommunicationForm::findOrFail($formId);
+        $user = Auth::user();
+        // Only the recipient can forward
+        if ($form->to !== $user->name) {
+            return response()->json(['success' => false, 'message' => 'You are not authorized to forward this document.'], 403);
+        }
+        $request->validate([
+            'recipient' => 'required|string|exists:users,name',
+            'note' => 'nullable|string',
+        ]);
+        $recipientName = $request->input('recipient');
+        $note = $request->input('note');
+        // Duplicate the form with new recipient and note
+        $newForm = CommunicationForm::create([
+            'to' => $recipientName,
+            'from' => $user->name,
+            'attention' => $form->attention,
+            'departments' => $form->departments,
+            'action_items' => $form->action_items,
+            'additional_actions' => $form->additional_actions,
+            'file_type' => $form->file_type,
+            'files' => $form->files,
+            'google_drive_file_ids' => $form->google_drive_file_ids,
+            'additional_notes' => $note ?? $form->additional_notes,
+        ]);
+        return response()->json(['success' => true, 'message' => 'Document forwarded successfully!']);
+    }
 }

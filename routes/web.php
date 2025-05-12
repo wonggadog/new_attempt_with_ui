@@ -103,6 +103,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/sent-tracking/timeline/{id}', [App\Http\Controllers\CommunicationFormController::class, 'sentDocumentTimeline'])->name('sent.tracking.timeline');
 
     Route::get('/download/{form}', [CommunicationFormController::class, 'download'])->name('communication-form.download');
+
+    Route::post('/forward/{form}', [CommunicationFormController::class, 'forward'])->name('communication-form.forward');
 });
 
 // Test route for CSS file
