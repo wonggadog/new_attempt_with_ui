@@ -32,7 +32,7 @@
                             <i class="bi bi-shield-lock me-2"></i>
                             Admin Controls
                         </a>
-                        <a href="#" class="nav-link active">
+                        <a href="{{ route('home') }}" class="nav-link">
                             <i class="bi bi-upload me-2"></i>
                             Upload Documents
                         </a>

@@ -32,7 +32,7 @@
               <i class="bi bi-shield-lock me-2"></i>
               Admin Controls
             </a>
-            <a href="{{ route('home') }}" class="nav-link"> 
+            <a href="{{ route('home') }}" class="nav-link">
               <i class="bi bi-upload me-2"></i>
               Upload Documents
             </a>
@@ -56,7 +56,7 @@
           <div class="avatar" data-user="current"></div>
           <div>
             <div class="fw-medium">{{ Auth::user()->name }}</div>
-            <!-- <div class="text-muted small">{{ Auth::user()->email }}</div>   COMMENTED IT FIRST TO ENSURE THE AVATAR STAYS AS A CIRCLE  -->
+            <!-- <div class="text-muted small">{{ Auth::user()->email }}</div> -->
           </div>
         </div>
       </div>

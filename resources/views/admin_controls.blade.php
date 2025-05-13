@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Main App Styles -->
+    <link href="css/styles.css" rel="stylesheet">
+    <!-- Admin Controls specific styles -->
     <link rel="stylesheet" href="{{ asset('css/admin_controls_styles.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
@@ -47,12 +54,64 @@
     </style>
 </head>
 <body>
-    <div class="container">
+  <div class="d-flex wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header d-flex align-items-center">
+        <i class="bi bi-file-text fs-4 me-2"></i>
+        <span class="fw-semibold">BUCS DocuManage</span>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="px-3 py-2">
+          <h6 class="sidebar-heading px-2 mb-2">Options</h6>
+          <div class="nav-items">
+            <a href="{{ route('dashboard') }}" class="nav-link">
+              <i class="bi bi-house-door me-2"></i>
+              Home
+            </a>
+            <a href="{{ route('admin_controls') }}" class="nav-link active">
+              <i class="bi bi-shield-lock me-2"></i>
+              Admin Controls
+            </a>
+            <a href="{{ route('home') }}" class="nav-link">
+              <i class="bi bi-upload me-2"></i>
+              Upload Documents
+            </a>
+            <a href="{{ route('received.documents') }}" class="nav-link">
+              <i class="bi bi-inbox me-2"></i>
+              Received Documents
+            </a>
+            <a href="{{ route('sent.tracking') }}" class="nav-link">
+              <i class="bi bi-send me-2"></i>
+              Sent Documents
+            </a>
+            <a href="{{ route('trash') }}" class="nav-link">
+              <i class="bi bi-trash me-2"></i>
+              Trash
+            </a>
+          </div>
+        </div>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="d-flex align-items-center gap-2">
+          <div class="avatar" data-user="current"></div>
+          <div>
+            <div class="fw-medium">{{ Auth::user()->name }}</div>
+            <!-- <div class="text-muted small">{{ Auth::user()->email }}</div> -->
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="d-flex flex-column flex-grow-1 main-content mt-4 px-4">
+      <!-- Move the existing container content here -->
+      <div class="container">
         <header>
-            <h1>Admin Dashboard</h1>
-            <nav class="admin-nav">
-                <a href="{{ route('admin.file-types.index') }}" class="nav-link">Manage File Types</a>
-            </nav>
+          <h1>Admin Dashboard</h1>
+          <nav class="admin-nav">
+            <a href="{{ route('admin.file-types.index') }}" class="nav-link">Manage File Types</a>
+          </nav>
         </header>
         
         <main>
@@ -157,7 +216,9 @@
                 </div>
             </section>
         </main>
+      </div>
     </div>
+  </div>
     
     <!-- Add a modal for editing user accounts -->
     <div class="modal" id="editUserModal" style="display: none;">

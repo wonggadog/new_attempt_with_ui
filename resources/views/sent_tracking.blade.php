@@ -15,55 +15,49 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <!-- Sidebar (Replaced with index.blade.php's nav-bar) -->
-            <aside class="col-md-3 col-lg-2 sidebar collapse d-md-block" id="sidebarMenu">
-                <div class="position-sticky">
-                    <!-- Sidebar Header -->
-                    <div class="sidebar-header d-flex align-items-center">
-                        <i class="bi bi-file-text fs-4 me-2"></i>
-                        <span class="fw-semibold">BUCS DocuManage</span>
-                    </div>
-
-                    <!-- Navigation Links -->
-                    <nav class="sidebar-nav">
-                        <div class="px-3 py-2">
-                            <h6 class="sidebar-heading px-2 mb-2">Options</h6>
-                            <div class="nav-items">
-                                <a href="{{ route('dashboard') }}" class="nav-link">
-                                    <i class="bi bi-house-door me-2"></i>
-                                    Home
-                                </a>
-                                <a href="{{ route('admin_controls') }}" class="nav-link">
-                                    <i class="bi bi-shield-lock me-2"></i>
-                                    Admin Controls
-                                </a>
-                                <a href="{{ route('home') }}" class="nav-link">
-                                    <i class="bi bi-upload me-2"></i>
-                                    Upload Documents
-                                </a>
-                                <a href="{{ route('received.documents') }}" class="nav-link">
-                                    <i class="bi bi-inbox me-2"></i>
-                                    Received Documents
-                                </a>
-                                <a href="{{ route('sent.tracking') }}" class="nav-link active">
-                                    <i class="bi bi-send me-2"></i>
-                                    Sent Documents
-                                </a>
-                                <a href="{{ route('trash') }}" class="nav-link">
-                                    <i class="bi bi-trash me-2"></i>
-                                    Trash
-                                </a>
-                            </div>
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-header d-flex align-items-center">
+                    <i class="bi bi-file-text fs-4 me-2"></i>
+                    <span class="fw-semibold">BUCS DocuManage</span>
+                </div>
+                <nav class="sidebar-nav">
+                    <div class="px-3 py-2">
+                        <h6 class="sidebar-heading px-2 mb-2">Options</h6>
+                        <div class="nav-items">
+                            <a href="{{ route('dashboard') }}" class="nav-link">
+                                <i class="bi bi-house-door me-2"></i>
+                                Home
+                            </a>
+                            <a href="{{ route('admin_controls') }}" class="nav-link">
+                                <i class="bi bi-shield-lock me-2"></i>
+                                Admin Controls
+                            </a>
+                            <a href="{{ route('home') }}" class="nav-link">
+                                <i class="bi bi-upload me-2"></i>
+                                Upload Documents
+                            </a>
+                            <a href="{{ route('received.documents') }}" class="nav-link">
+                                <i class="bi bi-inbox me-2"></i>
+                                Received Documents
+                            </a>
+                            <a href="{{ route('sent.tracking') }}" class="nav-link active">
+                                <i class="bi bi-send me-2"></i>
+                                Sent Documents
+                            </a>
+                            <a href="{{ route('trash') }}" class="nav-link">
+                                <i class="bi bi-trash me-2"></i>
+                                Trash
+                            </a>
                         </div>
-                    </nav>
-
-                    <!-- Sidebar Footer -->
-                    <div class="sidebar-footer mt-auto">
-                        <div class="d-flex align-items-center gap-2">
-                            <div class="avatar" data-user="current"></div>
-                            <div>
-                                <div class="fw-medium">{{ Auth::user()->name }}</div>
-                            </div>
+                    </div>
+                </nav>
+                <div class="sidebar-footer">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="avatar" data-user="current"></div>
+                        <div>
+                            <div class="fw-medium">{{ Auth::user()->name }}</div>
+                            <!-- <div class="text-muted small">{{ Auth::user()->email }}</div> -->
                         </div>
                     </div>
                 </div>
