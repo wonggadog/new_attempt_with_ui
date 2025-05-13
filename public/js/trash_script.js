@@ -175,7 +175,10 @@ function restoreDocument(id) {
     if (confirm('Are you sure you want to restore this document?')) {
         fetch(`/api/trash/${id}/restore`, {
             method: 'POST',
-            headers: { 'X-CSRF-TOKEN': window.Laravel?.csrfToken || document.querySelector('meta[name="csrf-token"]').content }
+            headers: {
+                'X-CSRF-TOKEN': window.Laravel?.csrfToken || document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
+            }
         })
         .then(res => res.json())
         .then(() => fetchTrashedDocuments());
@@ -187,7 +190,10 @@ function deleteDocumentPermanently(id) {
     if (confirm('Are you sure you want to permanently delete this document? This action cannot be undone.')) {
         fetch(`/api/trash/${id}/force`, {
             method: 'DELETE',
-            headers: { 'X-CSRF-TOKEN': window.Laravel?.csrfToken || document.querySelector('meta[name="csrf-token"]').content }
+            headers: {
+                'X-CSRF-TOKEN': window.Laravel?.csrfToken || document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
+            }
         })
         .then(res => res.json())
         .then(() => fetchTrashedDocuments());
@@ -204,7 +210,10 @@ function emptyTrash() {
     if (confirm('Are you sure you want to permanently delete all items in the trash? This action cannot be undone.')) {
         fetch('/api/trash/empty', {
             method: 'DELETE',
-            headers: { 'X-CSRF-TOKEN': window.Laravel?.csrfToken || document.querySelector('meta[name="csrf-token"]').content }
+            headers: {
+                'X-CSRF-TOKEN': window.Laravel?.csrfToken || document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
+            }
         })
         .then(res => res.json())
         .then(() => fetchTrashedDocuments());
@@ -221,7 +230,10 @@ function restoreAllDocuments() {
     if (confirm('Are you sure you want to restore all documents?')) {
         fetch('/api/trash/restore-all', {
             method: 'POST',
-            headers: { 'X-CSRF-TOKEN': window.Laravel?.csrfToken || document.querySelector('meta[name="csrf-token"]').content }
+            headers: {
+                'X-CSRF-TOKEN': window.Laravel?.csrfToken || document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
+            }
         })
         .then(res => res.json())
         .then(() => fetchTrashedDocuments());
