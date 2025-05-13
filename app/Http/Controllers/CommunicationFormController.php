@@ -284,4 +284,122 @@ class CommunicationFormController extends Controller
         ]);
         return response()->json(['success' => true, 'message' => 'Document forwarded successfully!']);
     }
+
+    /**
+     * List trashed documents for the authenticated user (sent or received).
+     */
+    public function trashedDocuments()
+    {
+        $user = Auth::user();
+        $trashed = CommunicationForm::onlyTrashed()
+            ->where(function ($query) use ($user) {
+                $query->where('to', $user->name)
+                      ->orWhere('from', $user->name);
+            })
+            ->orderBy('deleted_at', 'desc')
+            ->get();
+
+        $documents = $trashed->map(function ($document) {
+            $files = collect($document->files)->map(function ($file) {
+                if (is_array($file) && isset($file['path'], $file['original'])) {
+                    return $file;
+                } elseif (is_string($file)) {
+                    return ['path' => $file, 'original' => basename($file)];
+                }
+                return null;
+            })->filter()->values()->toArray();
+            return [
+                'id' => $document->id,
+                'sender' => $document->from,
+                'recipient' => $document->to,
+                'subject' => $document->file_type,
+                'fileType' => $document->file_type,
+                'dateDeleted' => $document->deleted_at->toIso8601String(),
+                'files' => $files,
+                'notes' => $document->additional_notes ?? 'No notes',
+            ];
+        });
+        return response()->json(['documents' => $documents]);
+    }
+
+    /**
+     * Soft-delete (move to trash) a document.
+     */
+    public function moveToTrash($id)
+    {
+        $user = Auth::user();
+        $doc = CommunicationForm::where('id', $id)
+            ->where(function ($query) use ($user) {
+                $query->where('to', $user->name)
+                      ->orWhere('from', $user->name);
+            })->firstOrFail();
+        $doc->delete();
+        return response()->json(['success' => true]);
+    }
+
+    /**
+     * Restore a document from trash.
+     */
+    public function restoreFromTrash($id)
+    {
+        $user = Auth::user();
+        $doc = CommunicationForm::onlyTrashed()
+            ->where('id', $id)
+            ->where(function ($query) use ($user) {
+                $query->where('to', $user->name)
+                      ->orWhere('from', $user->name);
+            })->firstOrFail();
+        $doc->restore();
+        return response()->json(['success' => true]);
+    }
+
+    /**
+     * Permanently delete a document from trash.
+     */
+    public function forceDeleteFromTrash($id)
+    {
+        $user = Auth::user();
+        $doc = CommunicationForm::onlyTrashed()
+            ->where('id', $id)
+            ->where(function ($query) use ($user) {
+                $query->where('to', $user->name)
+                      ->orWhere('from', $user->name);
+            })->firstOrFail();
+        $doc->forceDelete();
+        return response()->json(['success' => true]);
+    }
+
+    /**
+     * Restore all trashed documents for the user.
+     */
+    public function restoreAllFromTrash()
+    {
+        $user = Auth::user();
+        $docs = CommunicationForm::onlyTrashed()
+            ->where(function ($query) use ($user) {
+                $query->where('to', $user->name)
+                      ->orWhere('from', $user->name);
+            })->get();
+        foreach ($docs as $doc) {
+            $doc->restore();
+        }
+        return response()->json(['success' => true]);
+    }
+
+    /**
+     * Permanently delete all trashed documents for the user.
+     */
+    public function emptyTrash()
+    {
+        $user = Auth::user();
+        $docs = CommunicationForm::onlyTrashed()
+            ->where(function ($query) use ($user) {
+                $query->where('to', $user->name)
+                      ->orWhere('from', $user->name);
+            })->get();
+        foreach ($docs as $doc) {
+            $doc->forceDelete();
+        }
+        return response()->json(['success' => true]);
+    }
 }

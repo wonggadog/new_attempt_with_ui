@@ -46,7 +46,7 @@
                             Sent Documents
                             <!-- <span class="badge rounded-pill ms-auto">24</span> -->
                         </a>
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('trash') }}" class="nav-link">
                             <i class="bi bi-trash me-2"></i>
                             Trash
                         </a>

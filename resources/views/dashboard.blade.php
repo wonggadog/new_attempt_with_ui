@@ -45,7 +45,7 @@
                   <i class="bi bi-send me-2"></i>
                   Sent Documents
                 </a>
-                <a href="#" class="nav-link">
+                <a href="{{ route('trash') }}" class="nav-link">
                   <i class="bi bi-trash me-2"></i>
                   Trash
                 </a>

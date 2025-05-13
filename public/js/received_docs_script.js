@@ -269,6 +269,41 @@ function showDocumentDetail(doc) {
       window.location.href = `/download/${doc.id}`;
     };
   }
+
+  // Make Delete button functional (always re-attach listener)
+  const deleteDetailBtn = document.getElementById('deleteDetailBtn');
+  if (deleteDetailBtn) {
+    // Remove previous listeners by replacing the node
+    const newBtn = deleteDetailBtn.cloneNode(true);
+    deleteDetailBtn.parentNode.replaceChild(newBtn, deleteDetailBtn);
+    newBtn.addEventListener('click', function() {
+      console.log('Delete clicked', doc.id); // DEBUG
+      if (!doc.id) return;
+      if (confirm('Are you sure you want to move this document to Trash?')) {
+        fetch(`/api/trash/${doc.id}/delete`, {
+          method: 'POST',
+          headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content }
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            showDocumentsList();
+            // Remove from documents array and re-render
+            const idx = documents.findIndex(d => d.id == doc.id);
+            if (idx !== -1) {
+              documents.splice(idx, 1);
+              renderPaginatedDocuments();
+            }
+          } else {
+            alert('Failed to delete document.');
+          }
+        });
+      }
+    });
+  }
+
+  // In showDocumentDetail, set window.currentDetailDocId = doc.id;
+  window.currentDetailDocId = doc.id;
 }
 
 // Show documents list

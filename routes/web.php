@@ -105,6 +105,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/download/{form}', [CommunicationFormController::class, 'download'])->name('communication-form.download');
 
     Route::post('/forward/{form}', [CommunicationFormController::class, 'forward'])->name('communication-form.forward');
+
+    // Route for the trash page
+    Route::get('/trash', function () {
+        return view('trash');
+    })->name('trash');
+
+    // Trash API routes
+    Route::get('/api/trash', [App\Http\Controllers\CommunicationFormController::class, 'trashedDocuments'])->name('api.trash.list');
+    Route::post('/api/trash/{id}/delete', [App\Http\Controllers\CommunicationFormController::class, 'moveToTrash'])->name('api.trash.move');
+    Route::post('/api/trash/{id}/restore', [App\Http\Controllers\CommunicationFormController::class, 'restoreFromTrash'])->name('api.trash.restore');
+    Route::delete('/api/trash/{id}/force', [App\Http\Controllers\CommunicationFormController::class, 'forceDeleteFromTrash'])->name('api.trash.forceDelete');
+    Route::post('/api/trash/restore-all', [App\Http\Controllers\CommunicationFormController::class, 'restoreAllFromTrash'])->name('api.trash.restoreAll');
+    Route::delete('/api/trash/empty', [App\Http\Controllers\CommunicationFormController::class, 'emptyTrash'])->name('api.trash.empty');
 });
 
 // Test route for CSS file

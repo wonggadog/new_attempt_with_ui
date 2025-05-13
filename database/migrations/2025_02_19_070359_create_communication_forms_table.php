@@ -20,6 +20,7 @@ class CreateCommunicationFormsTable extends Migration
             $table->json('files')->nullable()->comment('Array of objects: [{"path": ..., "original": ...}]');
             $table->text('additional_notes')->nullable(); // New field
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

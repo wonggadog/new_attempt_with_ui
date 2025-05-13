@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BUCS DocuManage</title>
   <!-- Bootstrap CSS -->
@@ -43,7 +44,7 @@
               <i class="bi bi-send me-2"></i>
               Sent Documents
             </a>
-            <a href="#" class="nav-link">
+            <a href="{{ route('trash') }}" class="nav-link">
               <i class="bi bi-trash me-2"></i>
               Trash
             </a>
@@ -169,7 +170,7 @@
               Back to Documents
             </button>
             <div class="d-flex gap-2">
-              <button class="btn btn-outline">
+              <button class="btn btn-outline" id="deleteDetailBtn">
                 <i class="bi bi-trash me-2"></i>
                 Delete
               </button>
