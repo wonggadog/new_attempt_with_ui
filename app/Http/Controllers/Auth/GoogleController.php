@@ -69,7 +69,7 @@ class GoogleController extends Controller
             if (!$user->google_drive_folder_id) {
                 $driveService = app(\App\Services\GoogleDriveService::class);
                 $driveService->setAccessToken($tokenArr);
-                $folderName = "DMS Documents - " . $user->name;
+                $folderName = "BUCS DocuManage - " . $user->name;
                 $folderId = $driveService->createFolder($folderName);
                 $user->setGoogleDriveFolderId($folderId);
             }
