@@ -13,6 +13,7 @@
     <link href="css/styles.css" rel="stylesheet">
     <!-- Trash-specific styles (optional, for trash content only) -->
     <link rel="stylesheet" href="css/trash_styles.css">
+    <link href="{{ asset('css/received_docs_styles.css') }}" rel="stylesheet">
 </head>
 <body>
     <div class="d-flex wrapper">

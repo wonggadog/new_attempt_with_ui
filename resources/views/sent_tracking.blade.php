@@ -6,114 +6,169 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BUCS DocuManage</title>
     <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <!-- Custom CSS -->
+    <link href="{{ asset('css/received_docs_styles.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="css/sent_tracking_styles.css">
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <nav class="col-md-3 col-lg-2 sidebar d-md-block bg-light">
-                <div class="sidebar-header d-flex align-items-center mb-4">
-                    <i class="bi bi-file-text fs-4 me-2"></i>
-                    <span class="fw-semibold">BUCS DocuManage</span>
-                </div>
-                <div class="sidebar-nav">
+    <div class="d-flex wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header d-flex align-items-center">
+                <i class="bi bi-file-text fs-4 me-2"></i>
+                <span class="fw-semibold">BUCS DocuManage</span>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="px-3 py-2">
                     <h6 class="sidebar-heading px-2 mb-2">Options</h6>
-                    <ul class="nav flex-column nav-items">
-                        <li class="nav-item"><a href="{{ route('dashboard') }}" class="nav-link"><i class="bi bi-house-door me-2"></i>Home</a></li>
-                        <li class="nav-item"><a href="{{ route('admin_controls') }}" class="nav-link"><i class="bi bi-shield-lock me-2"></i>Admin Controls</a></li>
-                        <li class="nav-item"><a href="{{ route('home') }}" class="nav-link"><i class="bi bi-upload me-2"></i>Upload Documents</a></li>
-                        <li class="nav-item"><a href="{{ route('received.documents') }}" class="nav-link"><i class="bi bi-inbox me-2"></i>Received Documents</a></li>
-                        <li class="nav-item"><a href="{{ route('sent.tracking') }}" class="nav-link active"><i class="bi bi-send me-2"></i>Sent Documents</a></li>
-                        <li class="nav-item"><a href="{{ route('trash') }}" class="nav-link"><i class="bi bi-trash me-2"></i>Trash</a></li>
-                    </ul>
-                </div>
-                <div class="sidebar-footer mt-auto pt-3 border-top">
-                    <div class="d-flex align-items-center gap-2">
-                        <div class="avatar" data-user="current"></div>
-                        <div>
-                            <div class="fw-medium">{{ Auth::user()->name }}</div>
-                            <!-- <div class="text-muted small">{{ Auth::user()->email }}</div> -->
-                        </div>
+                    <div class="nav-items">
+                        <a href="{{ route('dashboard') }}" class="nav-link">
+                            <i class="bi bi-house-door me-2"></i>
+                            Home
+                        </a>
+                        <a href="{{ route('admin_controls') }}" class="nav-link">
+                            <i class="bi bi-shield-lock me-2"></i>
+                            Admin Controls
+                        </a>
+                        <a href="{{ route('home') }}" class="nav-link">
+                            <i class="bi bi-upload me-2"></i>
+                            Upload Documents
+                        </a>
+                        <a href="{{ route('received.documents') }}" class="nav-link">
+                            <i class="bi bi-inbox me-2"></i>
+                            Received Documents
+                        </a>
+                        <a href="{{ route('sent.tracking') }}" class="nav-link">
+                            <i class="bi bi-send me-2"></i>
+                            Sent Documents
+                        </a>
+                        <a href="{{ route('trash') }}" class="nav-link">
+                            <i class="bi bi-trash me-2"></i>
+                            Trash
+                        </a>
                     </div>
                 </div>
             </nav>
-
-            <!-- Main Content -->
-            <main class="col-md-9 col-lg-10 ms-sm-auto px-md-4">
-
-                <div class="tracking-container">
-                    <h4 class="mb-4">My Sent Documents</h4>
-                    <div class="mb-3 d-flex flex-wrap gap-2 align-items-center">
-                        <input type="text" id="searchInput" class="form-control" placeholder="Search by recipient, subject, or type..." style="max-width: 250px;">
-                        <select id="statusFilter" class="form-select" style="max-width: 150px;">
-                            <option value="">All Statuses</option>
-                            <option value="sent">Sent</option>
-                            <option value="delivered">Delivered</option>
-                            <option value="read">Read</option>
-                            <option value="acknowledged">Acknowledged</option>
-                        </select>
-                        <select id="typeFilter" class="form-select" style="max-width: 150px;">
-                            <option value="">All Types</option>
-                            @foreach($documents->pluck('file_type')->unique() as $type)
-                                <option value="{{ $type }}">{{ $type }}</option>
-                            @endforeach
-                        </select>
-                        <input type="date" id="dateFilter" class="form-control" style="max-width: 180px;">
+            <div class="sidebar-footer">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="avatar" data-user="current"></div>
+                    <div>
+                        <div class="fw-medium">{{ Auth::user()->name }}</div>
                     </div>
-                    <table class="table table-hover table-bordered align-middle shadow-sm" id="sentDocsTable" style="background: #fff; border-radius: 8px; overflow: hidden;">
-                        <thead class="table-light">
-                            <tr>
-                                <th>To</th>
-                                <th>Subject</th>
-                                <th>Type</th>
-                                <th>Date Sent</th>
-                                <th>Status</th>
-                                <th>View Timeline</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($documents as $doc)
-                            <tr data-doc-id="{{ $doc->id }}" data-to="{{ strtolower($doc->to) }}" data-subject="{{ strtolower($doc->attention) }}" data-type="{{ strtolower($doc->file_type) }}" data-date="{{ $doc->created_at->format('Y-m-d') }}" data-status="{{ $doc->statuses->last() ? strtolower($doc->statuses->last()->status) : 'sent' }}">
-                                <td class="fw-semibold">{{ $doc->to }}</td>
-                                <td>{{ $doc->attention }}</td>
-                                <td><span class="badge bg-info text-dark">{{ $doc->file_type }}</span></td>
-                                <td>{{ $doc->created_at->format('M d, Y H:i') }}</td>
-                                <td>
-                                    @php $lastStatus = $doc->statuses->last(); @endphp
-                                    <span class="badge bg-{{ $lastStatus ? ($lastStatus->status === 'acknowledged' ? 'success' : ($lastStatus->status === 'read' ? 'primary' : ($lastStatus->status === 'delivered' ? 'warning text-dark' : 'secondary'))) : 'secondary' }}">
-                                        {{ $lastStatus ? ucfirst($lastStatus->status) : 'Sent' }}
-                                    </span>
-                                </td>
-                                <td>
-                                    <button class="btn btn-outline-primary btn-sm view-timeline-btn" data-doc-id="{{ $doc->id }}">View Timeline</button>
-                                </td>
-                                <td>
-                                    <button class="btn btn-outline-danger btn-sm delete-sent-btn" data-doc-id="{{ $doc->id }}">
-                                        <i class="bi bi-trash"></i> Delete
-                                    </button>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    <div id="timelinePanel" class="mt-4"></div>
-                    @if(method_exists($documents, 'links'))
-                        <div class="d-flex justify-content-end mt-2">
-                            {{ $documents->onEachSide(1)->links('pagination::bootstrap-4') }}
-                        </div>
-                    @endif
                 </div>
-            </main>
+            </div>
+        </aside>
+        <div class="d-flex flex-column flex-grow-1 main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="d-flex align-items-center justify-content-between w-100">
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-icon d-md-none me-2" id="sidebarToggle">
+                            <i class="bi bi-list"></i>
+                        </button>
+                        <div class="position-relative search-container">
+                            <i class="bi bi-search position-absolute search-icon"></i>
+                            <input type="search" class="form-control search-input" placeholder="Search" id="searchInput">
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                        <button class="btn btn-icon" id="themeToggle">
+                            <i class="bi bi-sun-fill" id="lightIcon"></i>
+                            <i class="bi bi-moon-fill d-none" id="darkIcon"></i>
+                        </button>
+                        <button class="btn btn-icon position-relative">
+                            <i class="bi bi-bell"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger rounded-circle">
+                                <span class="visually-hidden">New alerts</span>
+                            </span>
+                        </button>
+                        <div class="dropdown">
+                            <button class="btn btn-icon" id="avatarDropdown">
+                                <div class="avatar" data-user="current"></div>
+                            </button>
+                            <div class="dropdown-content" id="avatarDropdownContent">
+                                <a href="#">Profile</a>
+                                <a href="#">Settings</a>
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">Logout</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="tracking-container">
+                <h4 class="mb-4">My Sent Documents</h4>
+                <div class="mb-3 d-flex flex-wrap gap-2 align-items-center">
+                    <input type="text" id="searchInput" class="form-control" placeholder="Search by recipient, subject, or type..." style="max-width: 250px;">
+                    <select id="statusFilter" class="form-select" style="max-width: 150px;">
+                        <option value="">All Statuses</option>
+                        <option value="sent">Sent</option>
+                        <option value="delivered">Delivered</option>
+                        <option value="read">Read</option>
+                        <option value="acknowledged">Acknowledged</option>
+                    </select>
+                    <select id="typeFilter" class="form-select" style="max-width: 150px;">
+                        <option value="">All Types</option>
+                        @foreach($documents->pluck('file_type')->unique() as $type)
+                            <option value="{{ $type }}">{{ $type }}</option>
+                        @endforeach
+                    </select>
+                    <input type="date" id="dateFilter" class="form-control" style="max-width: 180px;">
+                </div>
+                <table class="table table-hover table-bordered align-middle shadow-sm" id="sentDocsTable" style="background: #fff; border-radius: 8px; overflow: hidden;">
+                    <thead class="table-light">
+                        <tr>
+                            <th>To</th>
+                            <th>Subject</th>
+                            <th>Type</th>
+                            <th>Date Sent</th>
+                            <th>Status</th>
+                            <th>View Timeline</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($documents as $doc)
+                        <tr data-doc-id="{{ $doc->id }}" data-to="{{ strtolower($doc->to) }}" data-subject="{{ strtolower($doc->attention) }}" data-type="{{ strtolower($doc->file_type) }}" data-date="{{ $doc->created_at->format('Y-m-d') }}" data-status="{{ $doc->statuses->last() ? strtolower($doc->statuses->last()->status) : 'sent' }}">
+                            <td class="fw-semibold">{{ $doc->to }}</td>
+                            <td>{{ $doc->attention }}</td>
+                            <td><span class="badge bg-info text-dark">{{ $doc->file_type }}</span></td>
+                            <td>{{ $doc->created_at->format('M d, Y H:i') }}</td>
+                            <td>
+                                @php $lastStatus = $doc->statuses->last(); @endphp
+                                <span class="badge bg-{{ $lastStatus ? ($lastStatus->status === 'acknowledged' ? 'success' : ($lastStatus->status === 'read' ? 'primary' : ($lastStatus->status === 'delivered' ? 'warning text-dark' : 'secondary'))) : 'secondary' }}">
+                                    {{ $lastStatus ? ucfirst($lastStatus->status) : 'Sent' }}
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-outline-primary btn-sm view-timeline-btn" data-doc-id="{{ $doc->id }}">View Timeline</button>
+                            </td>
+                            <td>
+                                <button class="btn btn-outline-danger btn-sm delete-sent-btn" data-doc-id="{{ $doc->id }}">
+                                    <i class="bi bi-trash"></i> Delete
+                                </button>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <div id="timelinePanel" class="mt-4"></div>
+                @if(method_exists($documents, 'links'))
+                    <div class="d-flex justify-content-end mt-2">
+                        {{ $documents->onEachSide(1)->links('pagination::bootstrap-4') }}
+                    </div>
+                @endif
+            </div>
         </div>
     </div>
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
     <script src="js/sent_tracking_script.js"></script>
     <script>

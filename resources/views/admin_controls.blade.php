@@ -12,6 +12,7 @@
     <link href="css/styles.css" rel="stylesheet">
     <!-- Admin Controls specific styles -->
     <link rel="stylesheet" href="{{ asset('css/admin_controls_styles.css') }}">
+    <link href="{{ asset('css/received_docs_styles.css') }}" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         /* Modal backdrop */
@@ -69,7 +70,7 @@
               <i class="bi bi-house-door me-2"></i>
               Home
             </a>
-            <a href="{{ route('admin_controls') }}" class="nav-link active">
+            <a href="{{ route('admin_controls') }}" class="nav-link">
               <i class="bi bi-shield-lock me-2"></i>
               Admin Controls
             </a>

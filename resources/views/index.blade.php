@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <!-- Custom CSS -->
     <link href="css/styles.css" rel="stylesheet">
+    <link href="{{ asset('css/received_docs_styles.css') }}" rel="stylesheet">
 </head>
 <body>
     <div class="d-flex wrapper">
@@ -39,12 +40,10 @@
                         <a href="{{ route('received.documents') }}" class="nav-link">
                             <i class="bi bi-inbox me-2"></i>
                             Received Documents
-                            <!-- <span class="badge rounded-pill ms-auto">24</span> -->
                         </a>
                         <a href="{{ route('sent.tracking') }}" class="nav-link">
                             <i class="bi bi-send me-2"></i>
                             Sent Documents
-                            <!-- <span class="badge rounded-pill ms-auto">24</span> -->
                         </a>
                         <a href="{{ route('trash') }}" class="nav-link">
                             <i class="bi bi-trash me-2"></i>
@@ -58,7 +57,6 @@
                     <div class="avatar" data-user="current"></div>
                     <div>
                         <div class="fw-medium">{{ Auth::user()->name }}</div>
-                        <!-- <div class="text-muted small">{{ Auth::user()->email }}</div>   COMMENTED IT FIRST TO ENSURE THE AVATAR STAYS AS A CIRCLE  -->
                     </div>
                 </div>
             </div>
@@ -76,7 +74,7 @@
                         </button>
                         <div class="position-relative search-container">
                             <i class="bi bi-search position-absolute search-icon"></i>
-                            <input type="search" class="form-control search-input" placeholder="Search">
+                            <input type="search" class="form-control search-input" placeholder="Search" id="searchInput">
                         </div>
                     </div>
                     
@@ -97,7 +95,7 @@
                         <!-- Avatar with Dropdown -->
                         <div class="dropdown">
                             <button class="btn btn-icon" id="avatarDropdown">
-                                <div class="avatar">AD</div>
+                                <div class="avatar" data-user="current"></div>
                             </button>
                             <div class="dropdown-content" id="avatarDropdownContent">
                                 <a href="#">Profile</a>

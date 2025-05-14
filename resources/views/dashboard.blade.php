@@ -4,8 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>BUCS DocuManage</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+<link href="{{ asset('css/received_docs_styles.css') }}" rel="stylesheet">
   <link rel="stylesheet" href="css/dashboard_styles.css" />
 </head>
 <body>
@@ -20,7 +21,7 @@
         <div class="px-3 py-2">
           <h6 class="sidebar-heading px-2 mb-2">Options</h6>
           <div class="nav-items">
-            <a href="{{ route('dashboard') }}" class="nav-link">
+            <a href="{{ route('dashboard') }}" class="nav-link active">
               <i class="bi bi-house-door me-2"></i>
               Home
             </a>
@@ -59,7 +60,47 @@
     </aside>
 
     <!-- Main Content -->
-    <div class="d-flex flex-column flex-grow-1 main-content mt-4 px-4">
+    <div class="d-flex flex-column flex-grow-1 main-content">
+      <!-- Header -->
+      <header class="header">
+        <div class="d-flex align-items-center justify-content-between w-100">
+          <div class="d-flex align-items-center">
+            <button class="btn btn-icon d-md-none me-2" id="sidebarToggle">
+              <i class="bi bi-list"></i>
+            </button>
+            <div class="position-relative search-container">
+              <i class="bi bi-search position-absolute search-icon"></i>
+              <input type="search" class="form-control search-input" placeholder="Search" id="searchInput">
+            </div>
+          </div>
+          <div class="d-flex align-items-center gap-3">
+            <button class="btn btn-icon" id="themeToggle">
+              <i class="bi bi-sun-fill" id="lightIcon"></i>
+              <i class="bi bi-moon-fill d-none" id="darkIcon"></i>
+            </button>
+            <button class="btn btn-icon position-relative">
+              <i class="bi bi-bell"></i>
+              <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger rounded-circle">
+                <span class="visually-hidden">New alerts</span>
+              </span>
+            </button>
+            <div class="dropdown">
+              <button class="btn btn-icon" id="avatarDropdown">
+                <div class="avatar" data-user="current"></div>
+              </button>
+              <div class="dropdown-content" id="avatarDropdownContent">
+                <a href="#">Profile</a>
+                <a href="#">Settings</a>
+                <form action="{{ route('logout') }}" method="POST">
+                  @csrf
+                  <button type="submit" class="dropdown-item">Logout</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
       <!-- Dashboard Content -->
       <div class="row flex-column flex-lg-row">
         <!-- Left Section: Greeting and History -->

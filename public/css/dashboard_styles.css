@@ -5,84 +5,6 @@ body {
     color: #333;
   }
   
-  /* Sidebar Styles */
-  .sidebar {
-    background-color: #f1f1f1;
-    min-height: 100vh;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px 15px;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .sidebar .position-sticky {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .sidebar-header {
-    color: #333;
-    font-weight: 600;
-  }
-  
-  .sidebar-title {
-    font-size: 12px;
-    color: #777;
-    margin-top: 20px;
-    font-weight: 600;
-  }
-  
-  .nav-link {
-    color: #555;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: all 0.3s;
-  }
-  
-  .nav-link:hover {
-    background-color: #f0f0f0;
-  }
-  
-  .nav-link.active {
-    background-color: #e7f0ff;
-    color: #0d6efd;
-    font-weight: 500;
-  }
-  
-  .user-profile {
-    margin-top: auto;
-    padding: 15px 0;
-    border-top: 1px solid #eee;
-  }
-  
-  .user-avatar {
-    width: 32px;
-    height: 32px;
-    background-color: #0d6efd;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 500;
-    font-size: 14px;
-  }
-  
-  .header-avatar {
-    margin-left: 10px;
-  }
-  
-  .user-name {
-    font-size: 14px;
-    font-weight: 500;
-  }
-  
-  .user-email {
-    font-size: 12px;
-    color: #777;
-  }
-  
   /* Main Content */
   .card img {
     height: 120px;
@@ -224,5 +146,61 @@ body {
     }
   
     /* Main Content */
+  }
+  
+  .sidebar .nav-link {
+    display: flex !important;
+    align-items: center !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+    font-size: 0.875rem !important;
+    border-radius: 0.5rem !important;
+    margin: 0 !important;
+    min-height: 40px !important;
+    box-sizing: border-box !important;
+  }
+  
+  .sidebar .nav-link.active {
+    background: #3578e5 !important;
+    color: #fff !important;
+  }
+  
+  .sidebar .nav-link i {
+    font-size: 1.2rem !important;
+    margin-right: 0.5rem !important;
+  }
+  
+  .sidebar-footer {
+    padding: 1rem 1.5rem !important;
+    border-top: 1px solid var(--border-color) !important;
+    margin-bottom: 0 !important;
+  }
+  
+  .sidebar-footer .fw-medium {
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
+  }
+  
+  .sidebar-footer .avatar {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 0.875rem !important;
+    margin-right: 0.5rem !important;
+  }
+  
+  .sidebar-footer .d-flex.align-items-center.gap-2 {
+    gap: 0.5rem !important;
+  }
+  
+  /* Ensure sidebar options spacing matches received-documents */
+  .sidebar .nav-items {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.25rem !important;
+    margin-top: 0.5rem !important;
   }
   
