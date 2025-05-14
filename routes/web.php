@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\GoogleDriveController;
 use App\Mail\MyEmail;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\DocumentReceived;
 
 Auth::routes();
 
@@ -127,7 +128,21 @@ Route::get('/test-css', function () {
 });
 
 Route::get('/test-email', function () {
-    $name = 'Test User';
-    Mail::to('aldiangeldioquino.wong@bicol-u.edu.ph')->send(new MyEmail($name));
-    return 'Test email sent! Check your Mailtrap inbox.';
+    // Get some real users from the database
+    $recipients = \App\Models\User::take(3)->get();
+    $sender = \App\Models\User::first();
+    
+    foreach ($recipients as $recipient) {
+        Mail::to($recipient->email)->send(new DocumentReceived(
+            $recipient->name,
+            $sender->name,
+            'Test Document Upload',
+            'test_document.pdf',
+            'For appropriate action, For compliance',
+            'Please review and sign',
+            'This is a test notification using the actual document notification system.'
+        ));
+    }
+    
+    return 'Test emails sent to: ' . $recipients->pluck('email')->implode(', ');
 });
