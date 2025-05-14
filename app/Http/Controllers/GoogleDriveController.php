@@ -35,7 +35,7 @@ class GoogleDriveController extends Controller
 
             // Create folder if not exists
             if (!$user->google_drive_folder_id) {
-                $folderName = "DMS Documents - " . $user->name;
+                $folderName = "BUCS DocuManage- " . $user->name;
                 $folderId = $this->driveService->createFolder($folderName);
                 $user->setGoogleDriveFolderId($folderId);
             }
