@@ -246,9 +246,6 @@
                       <i class="bi bi-download me-2"></i>
                       Download File
                     </button>
-                    <button class="btn btn-outline w-100">
-                      Preview Document
-                    </button>
                   </div>
                   
                   <div class="border rounded p-3 info-box">

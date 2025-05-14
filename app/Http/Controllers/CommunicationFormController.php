@@ -80,15 +80,19 @@ class CommunicationFormController extends Controller
                     }
                 }
 
-                Mail::to($recipient->email)->send(new DocumentReceived(
-                    $recipientName,
-                    Auth::user()->name,
-                    $request->input('attention'),
-                    $uploadedFiles[0]['path'] ?? 'No file',
-                    implode(', ', $request->input('action_items', [])),
-                    implode(', ', $request->input('additional_actions', [])),
-                    $request->input('additional_notes', 'No notes')
-                ));
+                try {
+                    Mail::to($recipient->email)->send(new DocumentReceived(
+                        $recipientName,
+                        Auth::user()->name,
+                        $request->input('attention'),
+                        $uploadedFiles[0]['path'] ?? 'No file',
+                        implode(', ', $request->input('action_items', [])),
+                        implode(', ', $request->input('additional_actions', [])),
+                        $request->input('additional_notes', 'No notes')
+                    ));
+                } catch (\Exception $e) {
+                    \Log::error('Mail send failed: ' . $e->getMessage());
+                }
 
                 CommunicationForm::create([
                     'to' => $recipientName,

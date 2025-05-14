@@ -187,6 +187,31 @@ function createDocumentCard(doc) {
   return col;
 }
 
+// Define action items that don't require a response
+const noResponseRequiredActions = [
+    'File/reference',
+    'Information/notation and return/dissemination'
+];
+
+// Function to check if action requires response
+function requiresResponse(action) {
+    return !noResponseRequiredActions.some(noResponseAction => 
+        action.toLowerCase().includes(noResponseAction.toLowerCase())
+    );
+}
+
+// Function to update Take Action button state
+function updateTakeActionButtonState(actions) {
+    const takeActionBtn = document.querySelector('.card-footer .btn-primary');
+    if (!takeActionBtn) return;
+
+    const requiresResponse = actions.some(action => requiresResponse(action));
+    takeActionBtn.disabled = !requiresResponse;
+    takeActionBtn.classList.toggle('btn-primary', requiresResponse);
+    takeActionBtn.classList.toggle('btn-secondary', !requiresResponse);
+    takeActionBtn.title = requiresResponse ? 'Take Action' : 'No response required for this action';
+}
+
 // Show document detail
 function showDocumentDetail(doc) {
   // Hide documents list and show detail view
@@ -304,6 +329,10 @@ function showDocumentDetail(doc) {
 
   // In showDocumentDetail, set window.currentDetailDocId = doc.id;
   window.currentDetailDocId = doc.id;
+
+  // Update Take Action button state based on actions
+  const actions = doc.action.split(',').map(action => action.trim());
+  updateTakeActionButtonState(actions);
 }
 
 // Show documents list

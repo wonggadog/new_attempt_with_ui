@@ -325,11 +325,16 @@ function handleFormSubmit(event) {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
         },
     })
-    .then(response => {
+    .then(async response => {
+        const contentType = response.headers.get("content-type");
         if (!response.ok) {
-            return response.json().then(err => {
+            if (contentType && contentType.includes("application/json")) {
+                const err = await response.json();
                 throw new Error(err.error || err.message || 'An error occurred while submitting the form.');
-            });
+            } else {
+                const text = await response.text();
+                throw new Error(text);
+            }
         }
         return response.json();
     })
@@ -342,8 +347,8 @@ function handleFormSubmit(event) {
         }
     })
     .catch(error => {
+        alert("Server error:\n" + error.message);
         console.error('Error:', error);
-        alert(error.message || 'Error submitting form. Please try again.');
     });
 }
 
