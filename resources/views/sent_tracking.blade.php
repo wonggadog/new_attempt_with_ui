@@ -41,7 +41,7 @@
                             <i class="bi bi-inbox me-2"></i>
                             Received Documents
                         </a>
-                        <a href="{{ route('sent.tracking') }}" class="nav-link">
+                        <a href="{{ route('sent.tracking') }}" class="nav-link active">
                             <i class="bi bi-send me-2"></i>
                             Sent Documents
                         </a>
