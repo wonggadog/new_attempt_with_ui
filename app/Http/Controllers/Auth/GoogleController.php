@@ -13,7 +13,10 @@ class GoogleController extends Controller
     public function redirectToGoogle()
     {
         return Socialite::driver('google')
-            ->scopes(['openid', 'profile', 'email'])
+            ->scopes([
+                'openid', 'profile', 'email',
+                'https://www.googleapis.com/auth/drive'
+            ])
             ->redirect();
     }
 
@@ -47,6 +50,28 @@ class GoogleController extends Controller
                 if (!$user->google_id) {
                     $user->update(['google_id' => $googleUser->getId()]);
                 }
+            }
+
+            // Store Google Drive tokens on login
+            $accessToken = $googleUser->token;
+            $refreshToken = $googleUser->refreshToken;
+            $tokenArr = [
+                'access_token' => $accessToken,
+                'refresh_token' => $refreshToken,
+                'expires_in' => $googleUser->expiresIn,
+            ];
+            $user->google_drive_token = json_encode($tokenArr);
+            $user->google_drive_refresh_token = $refreshToken;
+            $user->google_drive_connected = true;
+            $user->save();
+
+            // Create DMS Documents folder if not exists
+            if (!$user->google_drive_folder_id) {
+                $driveService = app(\App\Services\GoogleDriveService::class);
+                $driveService->setAccessToken($tokenArr);
+                $folderName = "DMS Documents - " . $user->name;
+                $folderId = $driveService->createFolder($folderName);
+                $user->setGoogleDriveFolderId($folderId);
             }
 
             // Log the user in
