@@ -275,7 +275,7 @@
                 <button class="btn btn-outline">Mark as Complete</button>
                 <div>
                   <button class="btn btn-outline me-2" id="forwardButton">Forward</button>
-                  <button class="btn btn-primary">Take Action</button>
+                  <button class="btn btn-primary" id="takeActionButton">Take Action</button>
                 </div>
               </div>
             </div>

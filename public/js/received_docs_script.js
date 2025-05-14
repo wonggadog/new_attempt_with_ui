@@ -189,27 +189,31 @@ function createDocumentCard(doc) {
 
 // Define action items that don't require a response
 const noResponseRequiredActions = [
-    'File/reference',
-    'Information/notation and return/dissemination'
+    'file/reference',
+    'information/notation and return/dissemination'
 ];
 
-// Function to check if action requires response
 function requiresResponse(action) {
-    return !noResponseRequiredActions.some(noResponseAction => 
-        action.toLowerCase().includes(noResponseAction.toLowerCase())
-    );
+    // Normalize: trim and lowercase
+    const normalized = action.trim().toLowerCase();
+    return !noResponseRequiredActions.includes(normalized);
 }
 
 // Function to update Take Action button state
 function updateTakeActionButtonState(actions) {
-    const takeActionBtn = document.querySelector('.card-footer .btn-primary');
+    const takeActionBtn = document.getElementById('takeActionButton');
     if (!takeActionBtn) return;
 
-    const requiresResponse = actions.some(action => requiresResponse(action));
-    takeActionBtn.disabled = !requiresResponse;
-    takeActionBtn.classList.toggle('btn-primary', requiresResponse);
-    takeActionBtn.classList.toggle('btn-secondary', !requiresResponse);
-    takeActionBtn.title = requiresResponse ? 'Take Action' : 'No response required for this action';
+    const atLeastOneRequiresResponse = actions.some(action => requiresResponse(action));
+    takeActionBtn.disabled = !atLeastOneRequiresResponse;
+    if (atLeastOneRequiresResponse) {
+        takeActionBtn.classList.add('btn-primary');
+        takeActionBtn.classList.remove('btn-secondary');
+    } else {
+        takeActionBtn.classList.remove('btn-primary');
+        takeActionBtn.classList.add('btn-secondary');
+    }
+    takeActionBtn.title = atLeastOneRequiresResponse ? 'Take Action' : 'No response required for this action';
 }
 
 // Show document detail
