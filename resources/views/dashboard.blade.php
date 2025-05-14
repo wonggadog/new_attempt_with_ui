@@ -102,103 +102,105 @@
       </header>
 
       <!-- Dashboard Content -->
-      <div class="row flex-column flex-lg-row">
-        <!-- Left Section: Greeting and History -->
-        <div class="col-lg-8 order-2 order-lg-1">
-          <h2 class="fw-bold">Good Morning {{ explode(' ', Auth::user()->name)[0] }}</h2>
-          <h5 class="text-muted mb-4">History</h5>
-          <!-- History Table -->
-          <div class="card shadow-sm mb-4">
-            <div class="card-header bg-white">
-              <div class="d-flex justify-content-between align-items-center">
-                <h6 class="mb-0 fw-bold">Recent Received Documents</h6>
-                <div class="input-group input-group-sm" style="width: 200px;">
-                  <input type="text" class="form-control" placeholder="Search documents...">
-                  <button class="btn btn-outline-secondary" type="button">
-                    <i class="bi bi-search"></i>
-                  </button>
+      <div class="content-area p-4">
+        <div class="row flex-column flex-lg-row">
+          <!-- Left Section: Greeting and History -->
+          <div class="col-lg-8 order-2 order-lg-1">
+            <h2 class="fw-bold">Good Morning {{ explode(' ', Auth::user()->name)[0] }}</h2>
+            <h5 class="text-muted mb-4">History</h5>
+            <!-- History Table -->
+            <div class="card shadow-sm mb-4">
+              <div class="card-header bg-white">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h6 class="mb-0 fw-bold">Recent Received Documents</h6>
+                  <div class="input-group input-group-sm" style="width: 200px;">
+                    <input type="text" class="form-control" placeholder="Search documents...">
+                    <button class="btn btn-outline-secondary" type="button">
+                      <i class="bi bi-search"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                      <tr>
+                        <th scope="col">Reference #</th>
+                        <th scope="col">Subject</th>
+                        <th scope="col">From</th>
+                        <th scope="col">Date Received</th>
+                        <th scope="col">Action</th>
+                        <th scope="col">Notes</th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="documents-table-body">
+                      @forelse ($paginator as $document)
+                      <tr>
+                          <td>{{ $document->id ?? '' }}</td>
+                          <td>{{ $document->file_type ?? '' }}</td>
+                          <td>{{ $document->from ?? '' }}</td>
+                          <td>{{ $document->created_at ? $document->created_at->format('Y-m-d H:i') : '' }}</td>
+                          <td>{{ $document->action_items ? implode(', ', $document->action_items) : 'No action required' }}</td>
+                          <td>{{ $document->additional_notes ?? 'No notes' }}</td>
+                          <td>
+                              <a href="#" class="btn btn-sm btn-primary">View</a>
+                          </td>
+                      </tr>
+                      @empty
+                      <tr>
+                          <td colspan="7" class="text-center">No received documents found.</td>
+                      </tr>
+                      @endforelse
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="card-footer bg-white">
+                <div class="d-flex justify-content-end align-items-center">
+                  <div class="pagination-container">
+                    {{ $paginator->links('pagination::bootstrap-4') }}
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="card-body p-0">
-              <div class="table-responsive">
-                <table class="table table-hover mb-0">
+          </div>
+
+          <!-- Right Section: Profile Card + Calendar -->
+          <div class="col-lg-4 order-1 order-lg-2 mb-4 mb-lg-0">
+            <!-- Profile Card -->
+            <div class="card mb-4 shadow-sm profile-id-card position-relative">
+              <img src="images/BICOL-UNIVERSITY.jpg" class="card-img-top" alt="Background Image">
+              <div class="profile-picture-box position-absolute">
+                <img src="images/russ.jpg" alt="Profile" class="img-thumbnail">
+              </div>
+              <div class="card-body text-start">
+                <h5 class="fw-bold mb-1">{{ Auth::user()->name }}</h5>
+                <p class="mb-1">Associate Dean</p>
+                <p class="mb-1">Professor IV</p>
+                <p class="mb-2">College of Science</p>
+              </div>
+            </div>
+
+            <!-- Calendar -->
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h6 class="fw-bold text-center" id="calendar-month-year">Loading...</h6>
+                <table class="table table-bordered text-center calendar-table mt-3">
                   <thead class="table-light">
                     <tr>
-                      <th scope="col">Reference #</th>
-                      <th scope="col">Subject</th>
-                      <th scope="col">From</th>
-                      <th scope="col">Date Received</th>
-                      <th scope="col">Action</th>
-                      <th scope="col">Notes</th>
-                      <th scope="col">Actions</th>
+                      <th>SUN</th><th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th><th>SAT</th>
                     </tr>
                   </thead>
-                  <tbody id="documents-table-body">
-                    @forelse ($paginator as $document)
-                    <tr>
-                        <td>{{ $document->id ?? '' }}</td>
-                        <td>{{ $document->file_type ?? '' }}</td>
-                        <td>{{ $document->from ?? '' }}</td>
-                        <td>{{ $document->created_at ? $document->created_at->format('Y-m-d H:i') : '' }}</td>
-                        <td>{{ $document->action_items ? implode(', ', $document->action_items) : 'No action required' }}</td>
-                        <td>{{ $document->additional_notes ?? 'No notes' }}</td>
-                        <td>
-                            <a href="#" class="btn btn-sm btn-primary">View</a>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="7" class="text-center">No received documents found.</td>
-                    </tr>
-                    @endforelse
+                  <tbody id="calendar-body">
+                    <!-- Calendar dynamically generated -->
                   </tbody>
                 </table>
-              </div>
-            </div>
-            <div class="card-footer bg-white">
-              <div class="d-flex justify-content-end align-items-center">
-                <div class="pagination-container">
-                  {{ $paginator->links('pagination::bootstrap-4') }}
+                <div class="mt-2 d-flex align-items-center justify-content-end">
+                  <span class="due-date-indicator me-2"></span>
+                  <small class="text-muted">Document Due Date</small>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Section: Profile Card + Calendar -->
-        <div class="col-lg-4 order-1 order-lg-2 mb-4 mb-lg-0">
-          <!-- Profile Card -->
-          <div class="card mb-4 shadow-sm profile-id-card position-relative">
-            <img src="images/BICOL-UNIVERSITY.jpg" class="card-img-top" alt="Background Image">
-            <div class="profile-picture-box position-absolute">
-              <img src="images/russ.jpg" alt="Profile" class="img-thumbnail">
-            </div>
-            <div class="card-body text-start">
-              <h5 class="fw-bold mb-1">{{ Auth::user()->name }}</h5>
-              <p class="mb-1">Associate Dean</p>
-              <p class="mb-1">Professor IV</p>
-              <p class="mb-2">College of Science</p>
-            </div>
-          </div>
-
-          <!-- Calendar -->
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <h6 class="fw-bold text-center" id="calendar-month-year">Loading...</h6>
-              <table class="table table-bordered text-center calendar-table mt-3">
-                <thead class="table-light">
-                  <tr>
-                    <th>SUN</th><th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th><th>SAT</th>
-                  </tr>
-                </thead>
-                <tbody id="calendar-body">
-                  <!-- Calendar dynamically generated -->
-                </tbody>
-              </table>
-              <div class="mt-2 d-flex align-items-center justify-content-end">
-                <span class="due-date-indicator me-2"></span>
-                <small class="text-muted">Document Due Date</small>
               </div>
             </div>
           </div>
