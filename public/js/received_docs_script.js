@@ -204,16 +204,11 @@ function updateTakeActionButtonState(actions) {
     const takeActionBtn = document.getElementById('takeActionButton');
     if (!takeActionBtn) return;
 
-    const atLeastOneRequiresResponse = actions.some(action => requiresResponse(action));
-    takeActionBtn.disabled = !atLeastOneRequiresResponse;
-    if (atLeastOneRequiresResponse) {
-        takeActionBtn.classList.add('btn-primary');
-        takeActionBtn.classList.remove('btn-secondary');
-    } else {
-        takeActionBtn.classList.remove('btn-primary');
-        takeActionBtn.classList.add('btn-secondary');
-    }
-    takeActionBtn.title = atLeastOneRequiresResponse ? 'Take Action' : 'No response required for this action';
+    // Always enable the button - we'll handle the action in the click handler
+    takeActionBtn.disabled = false;
+    takeActionBtn.classList.add('btn-primary');
+    takeActionBtn.classList.remove('btn-secondary');
+    takeActionBtn.title = 'Take Action';
 }
 
 // Show document detail
@@ -337,6 +332,24 @@ function showDocumentDetail(doc) {
   // Update Take Action button state based on actions
   const actions = doc.action.split(',').map(action => action.trim());
   updateTakeActionButtonState(actions);
+
+  // Add click handler for Take Action button
+  const takeActionBtn = document.getElementById('takeActionButton');
+  if (takeActionBtn) {
+    // Remove any existing listeners
+    const newBtn = takeActionBtn.cloneNode(true);
+    takeActionBtn.parentNode.replaceChild(newBtn, takeActionBtn);
+    
+    // Add new click handler
+    newBtn.addEventListener('click', function() {
+      // Store the current document ID
+      currentSendBackDocId = doc.id;
+      
+      // Show the send back modal
+      const sendBackModal = new bootstrap.Modal(document.getElementById('sendBackModal'));
+      sendBackModal.show();
+    });
+  }
 }
 
 // Show documents list
@@ -490,5 +503,45 @@ if (forwardSubmitBtn) {
         }
       })
       .catch(() => alert('Failed to forward document.'));
+  });
+}
+
+// --- Send Back Logic ---
+let currentSendBackDocId = null;
+
+// Handle send back form submission
+const sendBackSubmitBtn = document.getElementById('sendBackSubmitBtn');
+if (sendBackSubmitBtn) {
+  sendBackSubmitBtn.addEventListener('click', function() {
+    const fileInput = document.getElementById('sendBackFile');
+    const note = document.getElementById('sendBackNote').value;
+    
+    if (!fileInput.files.length) {
+      alert('Please select a file to upload.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', fileInput.files[0]);
+    formData.append('note', note);
+    formData.append('_token', document.querySelector('meta[name="csrf-token"]').content);
+
+    fetch(`/send-back/${currentSendBackDocId}`, {
+      method: 'POST',
+      body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        alert('Document sent back successfully!');
+        // Close modal
+        bootstrap.Modal.getInstance(document.getElementById('sendBackModal')).hide();
+        // Return to documents list
+        showDocumentsList();
+      } else {
+        alert(data.message || 'Failed to send back document.');
+      }
+    })
+    .catch(() => alert('Failed to send back document.'));
   });
 }

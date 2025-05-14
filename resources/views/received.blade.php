@@ -330,5 +330,34 @@
       </div>
     </div>
   </div>
+
+  <!-- Send Back Modal -->
+  <div class="modal fade" id="sendBackModal" tabindex="-1" aria-labelledby="sendBackModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="sendBackModalLabel">Send Back Document</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="sendBackForm">
+            <div class="mb-3">
+              <label for="sendBackFile" class="form-label">Upload New Document</label>
+              <input type="file" class="form-control" id="sendBackFile" required>
+              <small class="text-muted">This will replace the original document and send it back to the sender.</small>
+            </div>
+            <div class="mb-3">
+              <label for="sendBackNote" class="form-label">Optional Note</label>
+              <textarea class="form-control" id="sendBackNote" rows="3" placeholder="Add a note (optional)"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="sendBackSubmitBtn">Send Back</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

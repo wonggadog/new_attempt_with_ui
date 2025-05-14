@@ -104,7 +104,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/download/{form}', [CommunicationFormController::class, 'download'])->name('communication-form.download');
 
-    Route::post('/forward/{form}', [CommunicationFormController::class, 'forward'])->name('communication-form.forward');
+    Route::post('/forward/{id}', [CommunicationFormController::class, 'forward'])->name('forward');
+    Route::post('/send-back/{id}', [CommunicationFormController::class, 'sendBack'])->name('send-back');
 
     // Route for the trash page
     Route::get('/trash', function () {

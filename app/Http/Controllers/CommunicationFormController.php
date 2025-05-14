@@ -406,4 +406,79 @@ class CommunicationFormController extends Controller
         }
         return response()->json(['success' => true]);
     }
+
+    /**
+     * Handle sending back a document to the original sender.
+     */
+    public function sendBack(Request $request, $id)
+    {
+        try {
+            $document = CommunicationForm::findOrFail($id);
+            $originalSender = User::where('name', $document->from)->first();
+            
+            if (!$originalSender) {
+                return response()->json(['success' => false, 'message' => 'Original sender not found.'], 404);
+            }
+
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $path = $file->store('uploads');
+                $uploadedFile = [
+                    'path' => $path,
+                    'original' => $file->getClientOriginalName(),
+                ];
+
+                // Upload to Google Drive if sender is connected
+                $googleDriveFileId = null;
+                if ($originalSender->google_drive_connected) {
+                    try {
+                        $this->driveService->setAccessToken(json_decode($originalSender->google_drive_token, true));
+                        $googleDriveFileId = $this->driveService->uploadFile(
+                            $file->getPathname(),
+                            $file->getClientOriginalName(),
+                            $originalSender->google_drive_folder_id
+                        );
+                    } catch (\Exception $e) {
+                        \Log::error('Google Drive upload failed: ' . $e->getMessage());
+                    }
+                }
+
+                // Create new document for the sender
+                CommunicationForm::create([
+                    'to' => $originalSender->name,
+                    'from' => Auth::user()->name,
+                    'attention' => $document->attention,
+                    'departments' => $document->departments,
+                    'action_items' => $document->action_items,
+                    'additional_actions' => $document->additional_actions,
+                    'file_type' => '[Sent Back] ' . $document->file_type,
+                    'files' => [$uploadedFile],
+                    'google_drive_file_ids' => $googleDriveFileId ? [$googleDriveFileId] : [],
+                    'additional_notes' => $request->input('note', 'Document sent back with modifications.'),
+                ]);
+
+                // Send email notification
+                try {
+                    Mail::to($originalSender->email)->send(new DocumentReceived(
+                        $originalSender->name,
+                        Auth::user()->name,
+                        $document->attention,
+                        $uploadedFile['path'],
+                        implode(', ', $document->action_items),
+                        implode(', ', $document->additional_actions),
+                        $request->input('note', 'Document sent back with modifications.')
+                    ));
+                } catch (\Exception $e) {
+                    \Log::error('Mail send failed: ' . $e->getMessage());
+                }
+
+                return response()->json(['success' => true, 'message' => 'Document sent back successfully!']);
+            }
+
+            return response()->json(['success' => false, 'message' => 'No file uploaded.'], 400);
+        } catch (\Exception $e) {
+            \Log::error('Send back failed: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Failed to send back document.'], 500);
+        }
+    }
 }
