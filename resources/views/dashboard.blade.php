@@ -61,6 +61,12 @@
 
     <!-- Main Content -->
     <div class="d-flex flex-column flex-grow-1 main-content">
+      <!-- Success Message -->
+      @if(session('success'))
+        <div class="alert alert-success m-3">
+          {{ session('success') }}
+        </div>
+      @endif
       <!-- Header -->
       <header class="header">
         <div class="d-flex align-items-center justify-content-between w-100">
@@ -89,7 +95,7 @@
                 <div class="avatar" data-user="current"></div>
               </button>
               <div class="dropdown-content" id="avatarDropdownContent">
-                <a href="#">Profile</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#editProfileModal">Profile</a>
                 <a href="#">Settings</a>
                 <form action="{{ route('logout') }}" method="POST">
                   @csrf
@@ -173,12 +179,12 @@
             <div class="card mb-4 shadow-sm profile-id-card position-relative">
               <img src="images/BICOL-UNIVERSITY.jpg" class="card-img-top" alt="Background Image">
               <div class="profile-picture-box position-absolute">
-                <img src="images/russ.jpg" alt="Profile" class="img-thumbnail">
+                <img src="images/russ.jpg" alt="Profile" class="img-thumbnail" id="profilePicturePreview">
               </div>
               <div class="card-body text-start">
                 <h5 class="fw-bold mb-1">{{ Auth::user()->name }}</h5>
-                <p class="mb-1">Associate Dean</p>
-                <p class="mb-1">Professor IV</p>
+                <p class="mb-1">{{ Auth::user()->position ?: 'Position not set' }}</p>
+                <p class="mb-1">{{ Auth::user()->rank ?: 'Rank not set' }}</p>
                 <p class="mb-2">College of Science</p>
               </div>
             </div>
@@ -204,6 +210,70 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Profile Modal -->
+  <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold" id="editProfileModalLabel">Edit Profile</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body pt-3">
+          <div class="text-center mb-4">
+            <div class="position-relative d-inline-block">
+              <img src="images/russ.jpg" alt="Profile" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover;" id="profilePicturePreview">
+            </div>
+          </div>
+
+          <form id="profileForm" action="{{ route('profile.update') }}" method="POST">
+            @csrf
+            <div class="mb-3">
+              <label for="profileName" class="form-label text-muted small">Full Name</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-end-0">
+                  <i class="bi bi-person"></i>
+                </span>
+                <input type="text" class="form-control border-start-0 ps-0" id="profileName" name="name" 
+                       value="{{ Auth::user()->name }}" placeholder="Enter your full name">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="profilePosition" class="form-label text-muted small">Position</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-end-0">
+                  <i class="bi bi-briefcase"></i>
+                </span>
+                <input type="text" class="form-control border-start-0 ps-0" id="profilePosition" name="position" 
+                       value="{{ Auth::user()->position }}" placeholder="Enter your position">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="profileRank" class="form-label text-muted small">Academic Rank</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-end-0">
+                  <i class="bi bi-award"></i>
+                </span>
+                <input type="text" class="form-control border-start-0 ps-0" id="profileRank" name="rank" 
+                       value="{{ Auth::user()->rank }}" placeholder="Enter your academic rank">
+              </div>
+            </div>
+
+            <div id="profileUpdateSuccess" class="alert alert-success d-none" role="alert">
+              Profile updated successfully!
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+              <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
