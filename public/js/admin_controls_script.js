@@ -33,8 +33,12 @@ document.addEventListener("DOMContentLoaded", function() {
     // Event Listeners
     elements.form.addEventListener("submit", handleFormSubmit);
     elements.tableBody.addEventListener("click", handleTableClick);
-    elements.departmentFilter.addEventListener("change", handleFilterChange);
-    elements.clearFilters.addEventListener("click", clearFilters);
+    if (elements.departmentFilter) {
+        elements.departmentFilter.addEventListener("change", handleFilterChange);
+    }
+    if (elements.clearFilters) {
+        elements.clearFilters.addEventListener("click", clearFilters);
+    }
 
     // Functions
     async function loadUsers() {
@@ -111,35 +115,46 @@ document.addEventListener("DOMContentLoaded", function() {
 
     async function handleFormSubmit(event) {
         event.preventDefault();
-        const userId = elements.form.dataset.editing;
-        const formData = getFormData();
-
-        if (!validateForm(formData)) return;
-
+        
         try {
             showLoading(true);
-            const response = await fetch(`/admin_controls/users/${userId}`, {
-                method: userId ? 'PUT' : 'POST',
+            
+            const formData = {
+                name: elements.name.value.trim(),
+                email: elements.email.value.trim(),
+                id_number: elements.idNumber.value.trim(),
+                department: elements.department.value,
+                password: elements.password.value
+            };
+
+            if (!validateForm(formData)) {
+                showLoading(false);
+                return;
+            }
+
+            const response = await fetch('/admin_controls/users', {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify(formData)
             });
 
             const data = await response.json();
 
-            if (response.ok) {
-                loadUsers();
-                showMessage(userId ? 'User updated successfully!' : 'User added successfully!', 'success');
-                elements.form.reset();
-                delete elements.form.dataset.editing;
-            } else {
-                showMessage(data.message || 'Error saving user', 'error');
+            if (!response.ok) {
+                throw new Error(data.message || 'Failed to create user');
             }
+
+            loadUsers();
+            showMessage('User added successfully!', 'success');
+            elements.form.reset();
+
         } catch (error) {
             console.error('Error:', error);
-            showMessage('Network error occurred', 'error');
+            showMessage(error.message || 'Network error occurred', 'error');
         } finally {
             showLoading(false);
         }
@@ -208,20 +223,23 @@ document.addEventListener("DOMContentLoaded", function() {
         elements.message.textContent = message;
         elements.message.className = `message ${type}`;
         elements.message.style.display = "block";
-        setTimeout(() => elements.message.style.display = "none", 3000);
+        setTimeout(() => elements.message.style.display = "none", 5000);
     }
 
     function showLoading(loading) {
-        const buttons = document.querySelectorAll('button:not(.btn-delete)');
-        buttons.forEach(btn => {
+        // Only target the form submission button and reset button
+        const formButtons = document.querySelectorAll('#userForm button');
+        formButtons.forEach(btn => {
             if (loading) {
-                btn.setAttribute('data-original-text', btn.textContent);
-                btn.innerHTML = '<span class="spinner"></span> ' + (btn.textContent.includes('Add') ? 'Adding...' : 'Loading...');
                 btn.disabled = true;
+                if (btn.type === 'submit') {
+                    btn.innerHTML = '<span class="spinner"></span> Adding...';
+                }
             } else {
-                const originalText = btn.getAttribute('data-original-text');
-                if (originalText) btn.textContent = originalText;
                 btn.disabled = false;
+                if (btn.type === 'submit') {
+                    btn.textContent = 'Add User';
+                }
             }
         });
     }

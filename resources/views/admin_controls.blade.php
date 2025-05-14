@@ -148,13 +148,13 @@
                             <option value="Registrar">Registrar</option>
                             <option value="Biology">Biology</option>
                             <option value="Chemistry">Chemistry</option>
-                            <option value="Computer_Science">Computer Science</option>
-                            <option value="Information_Technology">Information Technology</option>
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Information Technology">Information Technology</option>
                             <option value="Physics">Physics</option>
                             <option value="Meteorology">Meteorology</option>
                             <option value="Mathematics">Mathematics</option>
-                            <option value="Computer_Laboratory">Computer Laboratory</option>
-                            <option value="NatSci_Lab">NatSci Lab</option>
+                            <option value="Computer Laboratory">Computer Laboratory</option>
+                            <option value="NatSci Lab">NatSci Lab</option>
                             <option value="Others">Others</option>
                         </select>
                     </div>

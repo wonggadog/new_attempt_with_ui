@@ -39,26 +39,43 @@ class AdminControlsController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
-            'id_number' => 'required|string|unique:users',
-            'department' => 'required|string',
-            'password' => 'required|min:6'
-        ]);
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users',
+                'id_number' => 'required|string|unique:users',
+                'department' => 'required|string',
+                'password' => 'required|min:6'
+            ], [
+                'email.unique' => 'This email address is already in use.',
+                'id_number.unique' => 'This ID number is already in use.',
+                'password.min' => 'Password must be at least 6 characters long.'
+            ]);
 
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'id_number' => $validated['id_number'],
-            'department' => $validated['department'],
-            'password' => bcrypt($validated['password'])
-        ]);
+            $user = User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'id_number' => $validated['id_number'],
+                'department' => $validated['department'],
+                'password' => bcrypt($validated['password'])
+            ]);
 
-        return response()->json([
-            'success' => true,
-            'user' => $user
-        ]);
+            return response()->json([
+                'success' => true,
+                'user' => $user
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->errors()[array_key_first($e->errors())][0]
+            ], 422);
+        } catch (\Exception $e) {
+            \Log::error('Error creating user: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while creating the user. Please try again.'
+            ], 500);
+        }
     }
 
     public function update(Request $request, User $user)
