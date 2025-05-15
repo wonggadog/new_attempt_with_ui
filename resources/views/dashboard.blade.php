@@ -63,7 +63,7 @@
     <div class="d-flex flex-column flex-grow-1 main-content">
       <!-- Success Message -->
       @if(session('success'))
-        <div class="alert alert-success m-3">
+        <div class="alert alert-success m-3" id="profileSuccessAlert">
           {{ session('success') }}
         </div>
       @endif
@@ -282,6 +282,16 @@
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/dashboard_script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const alert = document.getElementById('profileSuccessAlert');
+      if (alert) {
+        setTimeout(() => {
+          alert.style.display = 'none';
+        }, 3000);
+      }
+    });
+  </script>
   <style>
   .pagination-container {
     display: flex;

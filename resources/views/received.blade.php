@@ -122,12 +122,6 @@
             <li class="nav-item" role="presentation">
               <button class="nav-link" id="unread-tab" data-bs-toggle="tab" data-bs-target="#unread-docs" type="button" role="tab" aria-controls="unread-docs" aria-selected="false">Unread</button>
             </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="starred-tab" data-bs-toggle="tab" data-bs-target="#starred-docs" type="button" role="tab" aria-controls="starred-docs" aria-selected="false">Starred</button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="urgent-tab" data-bs-toggle="tab" data-bs-target="#urgent-docs" type="button" role="tab" aria-controls="urgent-docs" aria-selected="false">Urgent</button>
-            </li>
           </ul>
           
           <!-- Tab Content -->
@@ -146,19 +140,6 @@
               </div>
             </div>
             
-            <!-- Starred Documents Tab -->
-            <div class="tab-pane fade" id="starred-docs" role="tabpanel" aria-labelledby="starred-tab">
-              <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="starredDocumentsContainer">
-                <!-- Starred document cards will be inserted here by JavaScript -->
-              </div>
-            </div>
-            
-            <!-- Urgent Documents Tab -->
-            <div class="tab-pane fade" id="urgent-docs" role="tabpanel" aria-labelledby="urgent-tab">
-              <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="urgentDocumentsContainer">
-                <!-- Urgent document cards will be inserted here by JavaScript -->
-              </div>
-            </div>
           </div>
         </div>
         
