@@ -179,7 +179,7 @@
             <div class="card mb-4 shadow-sm profile-id-card position-relative">
               <img src="images/BICOL-UNIVERSITY.jpg" class="card-img-top" alt="Background Image">
               <div class="profile-picture-box position-absolute">
-                <img src="images/russ.jpg" alt="Profile" class="img-thumbnail" id="profilePicturePreview">
+                <img src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) . '?v=' . (Auth::user()->updated_at->timestamp ?? time()) : asset('images/default-avatar.png') }}" alt="Profile" class="img-thumbnail" id="dashboardProfilePicture">
               </div>
               <div class="card-body text-start">
                 <h5 class="fw-bold mb-1">{{ Auth::user()->name }}</h5>
@@ -226,11 +226,13 @@
         <div class="modal-body pt-3">
           <div class="text-center mb-4">
             <div class="position-relative d-inline-block">
-              <img src="images/russ.jpg" alt="Profile" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover;" id="profilePicturePreview">
+              <img src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) . '?v=' . (Auth::user()->updated_at->timestamp ?? time()) : asset('images/default-avatar.png') }}" alt="Profile" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover;" id="profilePicturePreview">
+              <input type="file" class="form-control mt-2" name="profile_picture" id="profilePictureInput" accept="image/*" style="width: 200px; margin: 0 auto;">
+              <small class="text-muted">Click to select a new profile picture</small>
             </div>
           </div>
 
-          <form id="profileForm" action="{{ route('profile.update') }}" method="POST">
+          <form id="profileForm" action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
               <label for="profileName" class="form-label text-muted small">Full Name</label>
@@ -289,6 +291,17 @@
         setTimeout(() => {
           alert.style.display = 'none';
         }, 3000);
+      }
+    });
+
+    document.getElementById('profilePictureInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          document.getElementById('profilePicturePreview').src = evt.target.result;
+        }
+        reader.readAsDataURL(file);
       }
     });
   </script>
