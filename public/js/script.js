@@ -592,13 +592,12 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(fileTypes => {
             const fileTypeSection = document.getElementById('fileTypeSection');
-            fileTypeSection.innerHTML = ''; // Clear existing content
-
+            fileTypeSection.innerHTML = '';
             fileTypes.forEach(fileType => {
                 const div = document.createElement('div');
                 div.className = 'form-check mb-2';
                 div.innerHTML = `
-                    <input class="form-check-input" type="radio" name="file_type" id="fileType${fileType.id}" value="${fileType.id}" required>
+                    <input class="form-check-input" type="radio" name="fileType" id="fileType${fileType.id}" value="${fileType.name}" required>
                     <label class="form-check-label" for="fileType${fileType.id}">
                         ${fileType.name}
                     </label>

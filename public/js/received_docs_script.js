@@ -215,6 +215,7 @@ function createDocumentCard(doc) {
     </div>
     <div>
       <div class="mb-1"><span class="fw-medium">Action: </span>${doc.action}</div>
+      <p class="small text-muted">${doc.fileType ? doc.fileType : 'Unknown'} Document</p>
       <p class="card-text text-muted small mt-2">${doc.notes}</p>
     </div>
   `;
@@ -323,8 +324,8 @@ function showDocumentDetail(doc) {
     document.getElementById("detailNotes").textContent = doc.notes;
 
     // Set file information
-    document.getElementById("detailFileType").textContent = `${doc.fileType} Document`;
-    document.getElementById("detailInfoFileType").textContent = doc.fileType;
+    document.getElementById("detailFileType").textContent = `${doc.fileType ? doc.fileType : 'Unknown'} Document`;
+    document.getElementById("detailInfoFileType").textContent = doc.fileType ? doc.fileType : 'Unknown';
     document.getElementById("detailInfoDate").textContent = new Date(doc.dateReceived).toLocaleDateString();
 
     // Set file icon
