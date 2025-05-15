@@ -179,7 +179,7 @@
             <div class="card mb-4 shadow-sm profile-id-card position-relative">
               <img src="images/BICOL-UNIVERSITY.jpg" class="card-img-top" alt="Background Image">
               <div class="profile-picture-box position-absolute">
-                <img src="images/russ.jpg" alt="Profile" class="img-thumbnail" id="profilePicturePreview">
+                <img src="images/default-avatar.png" alt="Profile" class="img-thumbnail" id="profilePicturePreview">
               </div>
               <div class="card-body text-start">
                 <h5 class="fw-bold mb-1">{{ Auth::user()->name }}</h5>
@@ -226,7 +226,7 @@
         <div class="modal-body pt-3">
           <div class="text-center mb-4">
             <div class="position-relative d-inline-block">
-              <img src="images/russ.jpg" alt="Profile" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover;" id="profilePicturePreview">
+              <img src="images/default-avatar.png" alt="Profile" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover;" id="profilePicturePreview">
             </div>
           </div>
 
