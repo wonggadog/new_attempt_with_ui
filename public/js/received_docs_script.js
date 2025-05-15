@@ -130,27 +130,27 @@ function renderPaginatedDocuments() {
 // Render all documents
 function renderDocuments(documentsToRender = documents) {
   // Clear containers
-  allDocumentsContainer.innerHTML = "";
-  starredDocumentsContainer.innerHTML = "";
-  urgentDocumentsContainer.innerHTML = "";
+  if (allDocumentsContainer) allDocumentsContainer.innerHTML = "";
+  if (starredDocumentsContainer) starredDocumentsContainer.innerHTML = "";
+  if (urgentDocumentsContainer) urgentDocumentsContainer.innerHTML = "";
 
   // Check if documents array is valid
   if (!Array.isArray(documentsToRender) || documentsToRender.length === 0) {
-    allDocumentsContainer.innerHTML = '<p class="text-muted">No documents found.</p>';
+    if (allDocumentsContainer) allDocumentsContainer.innerHTML = '<p class="text-muted">No documents found.</p>';
     return;
   }
 
   // Render documents in each container
   documentsToRender.forEach((doc) => {
     const docCard = createDocumentCard(doc);
-    allDocumentsContainer.appendChild(docCard);
+    if (allDocumentsContainer) allDocumentsContainer.appendChild(docCard);
 
-    if (doc.isStarred) {
+    if (doc.isStarred && starredDocumentsContainer) {
       const starredCard = createDocumentCard(doc);
       starredDocumentsContainer.appendChild(starredCard);
     }
 
-    if (doc.isUrgent) {
+    if (doc.isUrgent && urgentDocumentsContainer) {
       const urgentCard = createDocumentCard(doc);
       urgentDocumentsContainer.appendChild(urgentCard);
     }
