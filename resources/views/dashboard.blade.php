@@ -106,7 +106,7 @@
         <div class="row flex-column flex-lg-row">
           <!-- Left Section: Greeting and History -->
           <div class="col-lg-8 order-2 order-lg-1">
-            <h2 class="fw-bold">Good Morning {{ explode(' ', Auth::user()->name)[0] }}</h2>
+            <h2 class="fw-bold">Good day, {{ explode(' ', Auth::user()->name)[0] }}!</h2>
             <h5 class="text-muted mb-4">History</h5>
             <!-- History Table -->
             <div class="card shadow-sm mb-4">
