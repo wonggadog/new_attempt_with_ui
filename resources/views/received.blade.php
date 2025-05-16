@@ -252,7 +252,7 @@
             </div>
             <div class="card-footer">
               <div class="d-flex justify-content-between">
-                <button class="btn btn-outline">Mark as Complete</button>
+                <button class="btn btn-outline btn-mark-complete" data-doc-id="{{ $document->id }}">Mark as Complete</button>
                 <div>
                   <button class="btn btn-outline me-2" id="forwardButton">Forward</button>
                   <button class="btn btn-primary" id="takeActionButton">Take Action</button>

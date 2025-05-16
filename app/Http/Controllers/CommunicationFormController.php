@@ -483,4 +483,15 @@ class CommunicationFormController extends Controller
             return response()->json(['success' => false, 'message' => 'Failed to send back document.'], 500);
         }
     }
+
+    public function markAsComplete($id)
+    {
+        $user = Auth::user();
+        $doc = CommunicationForm::where('id', $id)
+            ->where('to', $user->name)
+            ->firstOrFail();
+        $dueDate = $doc->due_date;
+        $doc->delete();
+        return response()->json(['success' => true, 'due_date' => $dueDate]);
+    }
 }

@@ -123,6 +123,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
     Route::post('/profile/update', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+
+    Route::post('/received-documents/mark-complete/{id}', [App\Http\Controllers\CommunicationFormController::class, 'markAsComplete'])->name('received.markComplete');
 });
 
 // Test route for CSS file

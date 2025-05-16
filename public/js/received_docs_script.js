@@ -117,6 +117,32 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
       console.log('Send back submit button not found');
   }
+
+  document.querySelectorAll('.btn-mark-complete').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const docId = this.getAttribute('data-doc-id');
+      fetch(`/received-documents/mark-complete/${docId}`, {
+        method: 'POST',
+        headers: {
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+          'Accept': 'application/json',
+        },
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          // Remove row from table
+          const row = document.querySelector(`tr[data-doc-id='${docId}']`);
+          if (row) row.remove();
+          // Remove due date from calendar
+          if (window.documentDueDates) {
+            window.documentDueDates = window.documentDueDates.filter(date => date !== data.due_date);
+            if (typeof updateCalendar === 'function') updateCalendar();
+          }
+        }
+      });
+    });
+  });
 });
 
 // Render paginated documents
