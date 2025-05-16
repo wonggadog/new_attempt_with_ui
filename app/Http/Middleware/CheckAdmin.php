@@ -9,7 +9,7 @@ class CheckAdmin
 {
     public function handle($request, Closure $next)
     {
-        if (!Auth::check() || !Auth::user()->is_admin) {
+        if (!Auth::check() || Auth::user()->department !== 'Admin') {
             abort(403, 'Unauthorized. Admins only.');
         }
         return $next($request);

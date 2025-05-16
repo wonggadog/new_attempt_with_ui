@@ -15,6 +15,10 @@ use App\Mail\DocumentReceived;
 
 Auth::routes();
 
+Route::get('/test-middleware', function() {
+    return \App\Http\Middleware\CheckAdmin::class;
+});
+
 // Google Authentication Routes
 Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
 Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('auth.google.callback');

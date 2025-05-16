@@ -143,6 +143,33 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   });
+
+  // Add event listener for the detail view's Mark as Complete button
+  const markAsCompleteDetailBtn = document.getElementById('markAsCompleteDetail');
+  if (markAsCompleteDetailBtn) {
+    markAsCompleteDetailBtn.addEventListener('click', function() {
+      const docId = window.currentDetailDocId;
+      if (!docId) return;
+      fetch(`/received-documents/mark-complete/${docId}`, {
+        method: 'POST',
+        headers: {
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+          'Accept': 'application/json',
+        },
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          // Optionally hide the detail view and refresh the list
+          showDocumentsList();
+          if (window.documentDueDates) {
+            window.documentDueDates = window.documentDueDates.filter(date => date !== data.due_date);
+            if (typeof updateCalendar === 'function') updateCalendar();
+          }
+        }
+      });
+    });
+  }
 });
 
 // Render paginated documents
