@@ -170,6 +170,50 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+
+  // Add event listener for sending a comment
+  const sendCommentBtn = document.getElementById('sendCommentBtn');
+  if (sendCommentBtn) {
+      sendCommentBtn.addEventListener('click', function() {
+          const commentBox = document.getElementById('commentBox');
+          const comment = commentBox.value.trim();
+          if (!comment) {
+              alert('Please enter a comment.');
+              return;
+          }
+          if (!window.currentDetailDocId) {
+              alert('No document selected.');
+              return;
+          }
+          fetch(`/received-documents/${window.currentDetailDocId}/comment`, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+              },
+              body: JSON.stringify({ comment }),
+          })
+          .then(res => res.json())
+          .then(data => {
+              if (data.success) {
+                  alert('Comment sent to sender via email!');
+                  commentBox.value = '';
+              } else {
+                  alert(data.message || 'Failed to send comment.');
+              }
+          })
+          .catch(() => alert('Failed to send comment.'));
+      });
+  }
+
+  // Deep-linking: open detail view if URL has a hash (e.g., #123)
+  if (window.location.hash) {
+    const docId = window.location.hash.replace('#', '');
+    const doc = documents.find(d => d.id == docId);
+    if (doc) {
+      showDocumentDetail(doc);
+    }
+  }
 });
 
 // Render paginated documents
@@ -312,12 +356,22 @@ function updateTakeActionButtonState(actions) {
         return;
     }
 
-    console.log('Updating Take Action button state');
-    // Always enable the button - we'll handle the action in the click handler
-    takeActionBtn.disabled = false;
-    takeActionBtn.classList.add('btn-primary');
-    takeActionBtn.classList.remove('btn-secondary');
-    takeActionBtn.title = 'Take Action';
+    // Determine if any action requires a response
+    const needsResponse = actions.some(action => requiresResponse(action));
+
+    if (needsResponse) {
+        // Enable and style as primary (blue)
+        takeActionBtn.disabled = false;
+        takeActionBtn.classList.add('btn-primary');
+        takeActionBtn.classList.remove('btn-secondary');
+        takeActionBtn.title = 'Take Action';
+    } else {
+        // Disable and style as secondary (gray)
+        takeActionBtn.disabled = true;
+        takeActionBtn.classList.remove('btn-primary');
+        takeActionBtn.classList.add('btn-secondary');
+        takeActionBtn.title = 'No action required';
+    }
 }
 
 // Show document detail
@@ -557,72 +611,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
-
-// --- Forwarding Logic ---
-let currentForwardDocId = null;
-
-// Open forward modal and populate dropdown
-const forwardButton = document.getElementById('forwardButton');
-if (forwardButton) {
-    forwardButton.addEventListener('click', function() {
-        // Store the current document ID
-        const docId = documentDetail.querySelector('[data-doc-id]')?.getAttribute('data-doc-id') || (window.currentDetailDocId || null);
-        currentForwardDocId = docId;
-        // Fetch all users for dropdown
-        fetch('/admin_controls/users')
-            .then(res => res.json())
-            .then(data => {
-                const dropdown = document.getElementById('forwardRecipient');
-                dropdown.innerHTML = '<option value="">Select a user</option>';
-                if (data.success && Array.isArray(data.users)) {
-                    data.users.forEach(user => {
-                        // Exclude current user and current recipient
-                        if (user.name !== currentUserName && user.name !== document.getElementById('detailSender').textContent) {
-                            const option = document.createElement('option');
-                            option.value = user.name;
-                            option.textContent = user.name;
-                            dropdown.appendChild(option);
-                        }
-                    });
-                }
-                // Show modal
-                const forwardModal = new bootstrap.Modal(document.getElementById('forwardModal'));
-                forwardModal.show();
-            });
-    });
-}
-
-// Handle forward form submission
-const forwardSubmitBtn = document.getElementById('forwardSubmitBtn');
-if (forwardSubmitBtn) {
-    forwardSubmitBtn.addEventListener('click', function() {
-        const recipient = document.getElementById('forwardRecipient').value;
-        const note = document.getElementById('forwardNote').value;
-        if (!recipient) {
-            alert('Please select a recipient.');
-            return;
-        }
-        fetch(`/forward/${currentForwardDocId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-            },
-            body: JSON.stringify({ recipient, note }),
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Document forwarded successfully!');
-                    // Optionally close modal
-                    bootstrap.Modal.getInstance(document.getElementById('forwardModal')).hide();
-                } else {
-                    alert(data.message || 'Failed to forward document.');
-                }
-            })
-            .catch(() => alert('Failed to forward document.'));
-    });
-}
 
 // --- Send Back Logic ---
 let currentSendBackDocId = null;

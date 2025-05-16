@@ -56,7 +56,7 @@
             </nav>
             <div class="sidebar-footer">
                 <div class="d-flex align-items-center gap-2">
-                    <div class="avatar" data-user="current"></div>
+                    <div class="avatar" data-user="current">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</div>
                     <div>
                         <div class="fw-medium">{{ Auth::user()->name }}</div>
                         <!-- <div class="text-muted small">{{ Auth::user()->email }}</div> -->
@@ -114,6 +114,38 @@
             </div>
         </div>
     </div>
+    <div class="dropdown">
+        <button class="btn btn-icon avatar-dropdown-btn" id="avatarDropdown">
+            <div class="avatar" data-user="current">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</div>
+        </button>
+        <div class="dropdown-content" id="avatarDropdownContent">
+            <a href="#" data-bs-toggle="modal" data-bs-target="#editProfileModal">Profile</a>
+            <a href="/settings">Settings</a>
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="dropdown-item">Logout</button>
+            </form>
+        </div>
+    </div>
     <script src="js/trash_script.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.avatar-dropdown-btn').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const dropdown = btn.nextElementSibling;
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+        document.addEventListener('click', function(e) {
+            document.querySelectorAll('.avatar-dropdown-btn').forEach(function(btn) {
+                const dropdown = btn.nextElementSibling;
+                if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
 </body>
 </html>

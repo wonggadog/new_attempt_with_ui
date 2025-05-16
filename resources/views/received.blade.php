@@ -53,7 +53,7 @@
       </nav>
       <div class="sidebar-footer">
         <div class="d-flex align-items-center gap-2">
-          <div class="avatar" data-user="current"></div>
+          <div class="avatar" data-user="current">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</div>
           <div>
             <div class="fw-medium">{{ Auth::user()->name }}</div>
             <!-- <div class="text-muted small">{{ Auth::user()->email }}</div> -->
@@ -84,21 +84,13 @@
               <i class="bi bi-sun-fill" id="lightIcon"></i>
               <i class="bi bi-moon-fill d-none" id="darkIcon"></i>
             </button>
-            <button class="btn btn-icon position-relative">
-              <i class="bi bi-bell"></i>
-              <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger rounded-circle">
-                <span class="visually-hidden">New alerts</span>
-              </span>
-            </button>
-            
-            <!-- Avatar with Dropdown -->
             <div class="dropdown">
-              <button class="btn btn-icon" id="avatarDropdown">
-                <div class="avatar" data-user="current"></div>
+              <button class="btn btn-icon avatar-dropdown-btn" id="avatarDropdown">
+                <div class="avatar" data-user="current">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</div>
               </button>
               <div class="dropdown-content" id="avatarDropdownContent">
-                <a href="#">Profile</a>
-                <a href="#">Settings</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#editProfileModal">Profile</a>
+                <a href="/settings">Settings</a>
                 <form action="{{ route('logout') }}" method="POST">
                   @csrf
                   <button type="submit" class="dropdown-item">Logout</button>
@@ -205,9 +197,9 @@
                   
                   <div>
                     <h3 class="fs-5 fw-medium mb-3">Add Comment</h3>
-                    <textarea class="form-control custom-textarea mb-2" rows="4" placeholder="Type your comment here..."></textarea>
+                    <textarea class="form-control custom-textarea mb-2" rows="4" placeholder="Type your comment here..." id="commentBox"></textarea>
                     <div class="d-flex justify-content-end">
-                      <button class="btn btn-primary">
+                      <button class="btn btn-primary" id="sendCommentBtn">
                         <i class="bi bi-chat-square-text me-2"></i>
                         Send Comment
                       </button>
@@ -254,7 +246,6 @@
               <div class="d-flex justify-content-between">
                 <button class="btn btn-outline btn-mark-complete" data-doc-id="" id="markAsCompleteDetail">Mark as Complete</button>
                 <div>
-                  <button class="btn btn-outline me-2" id="forwardButton">Forward</button>
                   <button class="btn btn-primary" id="takeActionButton">Take Action</button>
                 </div>
               </div>
@@ -280,37 +271,6 @@
 
   <!-- Custom JavaScript -->
   <script src="{{ asset('js/received_docs_script.js') }}"></script>
-
-  <!-- Forward Modal -->
-  <div class="modal fade" id="forwardModal" tabindex="-1" aria-labelledby="forwardModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="forwardModalLabel">Forward Document</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form id="forwardForm">
-            <div class="mb-3">
-              <label for="forwardRecipient" class="form-label">Select Recipient</label>
-              <select class="form-select" id="forwardRecipient" required>
-                <option value="">Select a user</option>
-                <!-- Options will be populated by JS -->
-              </select>
-            </div>
-            <div class="mb-3">
-              <label for="forwardNote" class="form-label">Optional Note</label>
-              <textarea class="form-control" id="forwardNote" rows="3" placeholder="Add a note (optional)"></textarea>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" id="forwardSubmitBtn">Forward</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- Send Back Modal -->
   <div class="modal fade" id="sendBackModal" tabindex="-1" aria-labelledby="sendBackModalLabel" aria-hidden="true">
@@ -340,5 +300,26 @@
       </div>
     </div>
   </div>
+
+  <!-- Add this JS at the end of the file to enable dropdown on all pages -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.avatar-dropdown-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const dropdown = btn.nextElementSibling;
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+    document.addEventListener('click', function(e) {
+      document.querySelectorAll('.avatar-dropdown-btn').forEach(function(btn) {
+        const dropdown = btn.nextElementSibling;
+        if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
+          dropdown.style.display = 'none';
+        }
+      });
+    });
+  });
+  </script>
 </body>
 </html>

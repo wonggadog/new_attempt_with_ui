@@ -226,5 +226,25 @@ body {
     color: #fff !important;
     border-radius: 50%;
     font-weight: bold;
+    width: 38px;
+    height: 38px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 1.1rem;
+    padding: 0;
+  }
+  
+  .due-date-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: #dc3545;
+    color: #fff;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin: 0 auto;
   }
   

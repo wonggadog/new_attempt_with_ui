@@ -54,7 +54,7 @@
             </nav>
             <div class="sidebar-footer">
                 <div class="d-flex align-items-center gap-2">
-                    <div class="avatar" data-user="current"></div>
+                    <div class="avatar" data-user="current">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</div>
                     <div>
                         <div class="fw-medium">{{ Auth::user()->name }}</div>
                     </div>
@@ -79,19 +79,13 @@
                             <i class="bi bi-sun-fill" id="lightIcon"></i>
                             <i class="bi bi-moon-fill d-none" id="darkIcon"></i>
                         </button>
-                        <button class="btn btn-icon position-relative">
-                            <i class="bi bi-bell"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger rounded-circle">
-                                <span class="visually-hidden">New alerts</span>
-                            </span>
-                        </button>
                         <div class="dropdown">
-                            <button class="btn btn-icon" id="avatarDropdown">
-                                <div class="avatar" data-user="current"></div>
+                            <button class="btn btn-icon avatar-dropdown-btn" id="avatarDropdown">
+                                <div class="avatar" data-user="current">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</div>
                             </button>
                             <div class="dropdown-content" id="avatarDropdownContent">
-                                <a href="#">Profile</a>
-                                <a href="#">Settings</a>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#editProfileModal">Profile</a>
+                                <a href="/settings">Settings</a>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
                                     <button type="submit" class="dropdown-item">Logout</button>
@@ -219,6 +213,21 @@
         statusFilter.addEventListener('change', filterTable);
         typeFilter.addEventListener('change', filterTable);
         dateFilter.addEventListener('change', filterTable);
+        document.querySelectorAll('.avatar-dropdown-btn').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const dropdown = btn.nextElementSibling;
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+        document.addEventListener('click', function(e) {
+            document.querySelectorAll('.avatar-dropdown-btn').forEach(function(btn) {
+                const dropdown = btn.nextElementSibling;
+                if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.style.display = 'none';
+                }
+            });
+        });
     });
     </script>
     <style>

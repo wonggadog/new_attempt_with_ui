@@ -129,6 +129,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/update', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
 
     Route::post('/received-documents/mark-complete/{id}', [App\Http\Controllers\CommunicationFormController::class, 'markAsComplete'])->name('received.markComplete');
+    Route::post('/received-documents/{id}/comment', [CommunicationFormController::class, 'sendComment'])->name('received.comment');
 });
 
 // Test route for CSS file
@@ -155,3 +156,7 @@ Route::get('/test-email', function () {
     
     return 'Test emails sent to: ' . $recipients->pluck('email')->implode(', ');
 });
+
+Route::get('/settings', function () {
+    return view('settings');
+})->name('settings');

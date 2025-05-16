@@ -201,7 +201,11 @@ function updateCalendar() {
     }
     const isToday = day === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear();
     const isDueDate = checkIfDueDate(day, currentMonth, currentYear); // Check if this day is a due date
-    calendarHTML += `<td class="${isToday ? 'today' : ''} ${isDueDate ? 'due-date' : ''}">${day}</td>`;
+    let cellContent = day;
+    if (isDueDate) {
+      cellContent = `<span class='due-date-circle'>${day}</span>`;
+    }
+    calendarHTML += `<td class="${isToday ? 'today' : ''} ${isDueDate ? 'due-date' : ''}">${cellContent}</td>`;
   }
 
   let totalCells = totalDays + startingDay;

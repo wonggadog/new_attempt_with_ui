@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Services\GoogleDriveService;
 use App\Mail\DocumentReceived;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\DocumentCommented;
 
 class CommunicationFormController extends Controller
 {
@@ -493,5 +494,34 @@ class CommunicationFormController extends Controller
         $dueDate = $doc->due_date;
         $doc->delete();
         return response()->json(['success' => true, 'due_date' => $dueDate]);
+    }
+
+    /**
+     * Handle sending a comment on a received document to the sender via email.
+     */
+    public function sendComment(Request $request, $id)
+    {
+        $request->validate([
+            'comment' => 'required|string',
+        ]);
+        $form = CommunicationForm::findOrFail($id);
+        $sender = User::where('name', $form->from)->first();
+        $receiver = Auth::user();
+        if (!$sender || !$sender->email) {
+            return response()->json(['success' => false, 'message' => 'Sender not found or has no email.'], 404);
+        }
+        try {
+            \Mail::to($sender->email)->send(new DocumentCommented(
+                $sender->name,
+                $receiver->name,
+                $form->file_type,
+                $form->files[0]['original'] ?? 'No file',
+                $request->input('comment')
+            ));
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            \Log::error('Comment email failed: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Failed to send comment email.']);
+        }
     }
 }
