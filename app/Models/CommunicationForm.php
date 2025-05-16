@@ -20,6 +20,7 @@ class CommunicationForm extends Model
         'additional_notes',
         'file_type',
         'files',
+        'due_date',
     ];
 
     // Cast JSON fields to arrays

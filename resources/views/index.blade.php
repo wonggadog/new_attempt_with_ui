@@ -222,6 +222,21 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Due Date Selector -->
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="fs-5 fw-medium"><i class="bi bi-calendar-event me-2"></i>Document Due Date</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group mb-0">
+                                        <label for="dueDate" class="form-label">Select Due Date:</label>
+                                        <input type="date" class="form-control" id="dueDate" name="due_date" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Form Actions -->

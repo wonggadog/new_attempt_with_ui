@@ -214,3 +214,17 @@ body {
     margin-top: 0.5rem !important;
   }
   
+  .calendar-table td.today {
+    background-color: #007bff !important;
+    color: #fff !important;
+    border-radius: 50%;
+    font-weight: bold;
+  }
+  
+  .calendar-table td.due-date {
+    background-color: #dc3545 !important;
+    color: #fff !important;
+    border-radius: 50%;
+    font-weight: bold;
+  }
+  

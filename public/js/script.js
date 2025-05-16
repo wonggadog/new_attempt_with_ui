@@ -257,7 +257,7 @@ function handleFormSubmit(event) {
     event.preventDefault();
 
     const formData = {
-        to: document.getElementById('userTo').value.split(',').map(name => name.trim()), // Split names by commas
+        to: document.getElementById('userTo').value.split(',').map(name => name.trim()),
         attention: document.getElementById('userAttention').value,
         departments: Array.from(document.querySelectorAll('#departmentSection input[type="checkbox"]:checked'))
             .map(box => {
@@ -289,6 +289,7 @@ function handleFormSubmit(event) {
         fileType: document.querySelector('input[name="fileType"]:checked')?.value || '',
         files: document.getElementById('fileInput').files,
         additionalNotes: document.getElementById('additionalNotes').value,
+        dueDate: document.getElementById('dueDate').value,
     };
 
     const formDataToSend = new FormData();
@@ -311,6 +312,7 @@ function handleFormSubmit(event) {
 
     formDataToSend.append('file_type', formData.fileType);
     formDataToSend.append('additional_notes', formData.additionalNotes);
+    formDataToSend.append('due_date', formData.dueDate);
 
     for (let i = 0; i < formData.files.length; i++) {
         formDataToSend.append('files[]', formData.files[i]);

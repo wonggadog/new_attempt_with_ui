@@ -136,6 +136,7 @@
                         <th scope="col">Subject</th>
                         <th scope="col">From</th>
                         <th scope="col">Date Received</th>
+                        <th scope="col">Due Date</th>
                         <th scope="col">Action</th>
                         <th scope="col">Notes</th>
                         <th scope="col">Actions</th>
@@ -148,6 +149,7 @@
                           <td>{{ $document->file_type ?? '' }}</td>
                           <td>{{ $document->from ?? '' }}</td>
                           <td>{{ $document->created_at ? $document->created_at->format('Y-m-d H:i') : '' }}</td>
+                          <td>{{ $document->due_date ?? 'No due date' }}</td>
                           <td>{{ $document->action_items ? implode(', ', $document->action_items) : 'No action required' }}</td>
                           <td>{{ $document->additional_notes ?? 'No notes' }}</td>
                           <td>
@@ -281,6 +283,9 @@
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    window.documentDueDates = @json($allDueDates);
+  </script>
   <script src="js/dashboard_script.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -302,6 +307,14 @@
         reader.readAsDataURL(file);
       }
     });
+
+    @php
+        // Collect due dates for received documents (assuming $paginator contains them)
+        $dueDates = collect($paginator)->pluck('due_date')->filter()->map(function($date) {
+            return \Carbon\Carbon::parse($date)->format('Y-m-d');
+        })->values();
+    @endphp
+    window.documentDueDates = @json($dueDates);
   </script>
   <style>
   .pagination-container {

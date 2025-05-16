@@ -47,6 +47,7 @@ class CommunicationFormController extends Controller
             'files' => 'nullable|array',
             'files.*' => 'file|max:10240', // Max file size 10MB
             'additional_notes' => 'nullable|string',
+            'due_date' => 'nullable|date',
         ]);
 
         $uploadedFiles = [];
@@ -105,6 +106,7 @@ class CommunicationFormController extends Controller
                     'files' => $uploadedFiles,
                     'google_drive_file_ids' => $googleDriveFileIds,
                     'additional_notes' => $request->input('additional_notes'),
+                    'due_date' => $request->input('due_date'),
                 ]);
             }
         }

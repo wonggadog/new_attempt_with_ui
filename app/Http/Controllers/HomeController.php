@@ -40,15 +40,25 @@ class HomeController extends Controller
                 'subject' => $document->file_type,
                 'fileType' => $document->file_type,
                 'dateReceived' => $document->created_at->format('Y-m-d H:i'),
+                'due_date' => $document->due_date,
                 'action' => $document->action_items ? implode(', ', $document->action_items) : 'No action required',
                 'additionalAction' => $document->additional_actions ? implode(', ', $document->additional_actions) : '',
                 'notes' => $document->additional_notes ?? 'No notes',
             ];
         });
 
+        $allDueDates = \App\Models\CommunicationForm::where('to', $user->name)
+            ->pluck('due_date')
+            ->filter()
+            ->map(function($date) {
+                return \Carbon\Carbon::parse($date)->format('Y-m-d');
+            })
+            ->values();
+
         return view('dashboard', [
             'documents' => $documents,
-            'paginator' => $receivedDocuments
+            'paginator' => $receivedDocuments,
+            'allDueDates' => $allDueDates,
         ]);
     }
 }

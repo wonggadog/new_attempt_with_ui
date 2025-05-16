@@ -54,8 +54,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // Populate the documents table
   // populateDocumentsTable(documents)
 
-  // Generate calendar with due dates
-  generateCalendar(new Date())
+  // Ensure calendar elements exist before updating
+  if (document.getElementById('calendar-month-year') && document.getElementById('calendar-body')) {
+    updateCalendar();
+  } else {
+    console.error('Calendar elements not found in the DOM.');
+  }
 
   // Sidebar toggle functionality
   toggleButton.addEventListener("click", () => {
@@ -167,95 +171,50 @@ function populateDocumentsTable(documents) {
  * @param {Date} date - The month to display
  * @param {Array} documents - Array of document objects with due dates
  */
-function generateCalendar(date, documents = []) {
-  const monthYearEl = document.getElementById("calendar-month-year")
-  const calendarBody = document.getElementById("calendar-body")
+function updateCalendar() {
+  const today = new Date();
+  const currentMonth = today.getMonth();
+  const currentYear = today.getFullYear();
+  const firstDay = new Date(currentYear, currentMonth, 1);
+  const lastDay = new Date(currentYear, currentMonth + 1, 0);
+  const startingDay = firstDay.getDay();
+  const totalDays = lastDay.getDate();
+  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-  const year = date.getFullYear()
-  const month = date.getMonth()
-  const firstDay = new Date(year, month, 1).getDay()
-  const daysInMonth = new Date(year, month + 1, 0).getDate()
-  const today = new Date()
-
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ]
-  monthYearEl.textContent = `${monthNames[month].toUpperCase()} ${year}`
-
-  calendarBody.innerHTML = ""
-  let row = document.createElement("tr")
-
-  // Empty cells before the first day
-  for (let i = 0; i < firstDay; i++) {
-    row.appendChild(document.createElement("td"))
+  const monthYearElement = document.getElementById('calendar-month-year');
+  const calendarBodyElement = document.getElementById('calendar-body');
+  if (!monthYearElement || !calendarBodyElement) {
+    console.error('Calendar elements not found in the DOM.');
+    return;
   }
 
-  // Get all due dates for the current month
-  const dueDatesMap = {}
-  documents.forEach((doc) => {
-    if (doc.dueDate.getMonth() === month && doc.dueDate.getFullYear() === year) {
-      const day = doc.dueDate.getDate()
-      dueDatesMap[day] = doc
-    }
-  })
+  monthYearElement.textContent = monthNames[currentMonth] + ' ' + currentYear;
 
-  // Create calendar days
-  for (let day = 1; day <= daysInMonth; day++) {
-    if (row.children.length === 7) {
-      calendarBody.appendChild(row)
-      row = document.createElement("tr")
-    }
-
-    const cell = document.createElement("td")
-
-    // Check if this day is a due date
-    if (dueDatesMap[day]) {
-      // Create a container for the day to position the marker
-      const dayContainer = document.createElement("div")
-      dayContainer.className = "position-relative"
-
-      // Add the day number
-      const dayNumber = document.createElement("span")
-      dayNumber.textContent = day
-
-      // Add the due date marker
-      const marker = document.createElement("span")
-      marker.className = "due-date-marker"
-
-      // Add elements to the container
-      dayContainer.appendChild(dayNumber)
-      dayContainer.appendChild(marker)
-
-      // Add the container to the cell
-      cell.appendChild(dayContainer)
-      cell.className = "due-date-cell"
-    } else {
-      cell.textContent = day
-    }
-
-    // Highlight today's date
-    if (today.getDate() === day && today.getMonth() === month && today.getFullYear() === year) {
-      cell.classList.add("today")
-    }
-
-    row.appendChild(cell)
+  let calendarHTML = '<tr>';
+  for (let i = 0; i < startingDay; i++) {
+    calendarHTML += '<td></td>';
   }
 
-  if (row.children.length) {
-    while (row.children.length < 7) {
-      row.appendChild(document.createElement("td"))
+  for (let day = 1; day <= totalDays; day++) {
+    if ((day + startingDay - 1) % 7 === 0) {
+      calendarHTML += '</tr><tr>';
     }
-    calendarBody.appendChild(row)
+    const isToday = day === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear();
+    const isDueDate = checkIfDueDate(day, currentMonth, currentYear); // Check if this day is a due date
+    calendarHTML += `<td class="${isToday ? 'today' : ''} ${isDueDate ? 'due-date' : ''}">${day}</td>`;
   }
+
+  let totalCells = totalDays + startingDay;
+  while (totalCells % 7 !== 0) {
+    calendarHTML += '<td></td>';
+    totalCells++;
+  }
+  calendarHTML += '</tr>';
+  calendarBodyElement.innerHTML = calendarHTML;
+}
+
+function checkIfDueDate(day, month, year) {
+  if (!window.documentDueDates) return false;
+  const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+  return window.documentDueDates.includes(dateStr);
 }

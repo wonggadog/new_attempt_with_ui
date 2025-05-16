@@ -18,6 +18,7 @@ class CreateCommunicationFormsTable extends Migration
             $table->json('additional_actions')->nullable();
             $table->string('file_type')->nullable();
             $table->json('files')->nullable()->comment('Array of objects: [{"path": ..., "original": ...}]');
+            $table->date('due_date')->nullable(); // Add due_date column after files
             $table->text('additional_notes')->nullable(); // New field
             $table->timestamps();
             $table->softDeletes();
