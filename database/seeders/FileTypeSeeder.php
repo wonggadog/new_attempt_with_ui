@@ -12,7 +12,8 @@ class FileTypeSeeder extends Seeder
             'Memos',
             'Reports',
             'Financial Documents',
-            'Student Records'
+            'Student Records',
+            'Other'
         ];
 
         foreach ($fileTypes as $type) {
