@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <!-- Custom CSS -->
     <link href="css/styles.css" rel="stylesheet">
+    <link href="css/date-sm.css" rel="stylesheet">
     <link href="{{ asset('css/received_docs_styles.css') }}" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{ asset('images/bucslogo1.png') }}">
 </head>
@@ -202,38 +203,40 @@
                             </div>
                         </div>
 
-                        <!-- Document Upload Section -->
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="fs-5 fw-medium"><i class="bi bi-upload me-2"></i>Document Upload</h3>
+                        <!-- Document Upload and Due Date Side by Side -->
+                        <div class="row g-4 align-items-stretch">
+                            <div class="col-md-8">
+                                <div class="card h-100">
+                                    <div class="card-header">
+                                        <h3 class="fs-5 fw-medium"><i class="bi bi-upload me-2"></i>Document Upload</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="file-upload-container">
+                                            <div class="file-upload" onclick="document.getElementById('fileInput').click()">
+                                                <i class="bi bi-cloud-upload upload-icon"></i>
+                                                <p id="fileLabel">Upload a File<br><small>Drag and drop files here</small></p>
+                                                <input type="file" id="fileInput" accept=".pdf, .jpg, .png" required style="display: none;">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="card-body">
-                                    <div class="file-upload-container">
-                                        <div class="file-upload" onclick="document.getElementById('fileInput').click()">
-                                            <i class="bi bi-cloud-upload upload-icon"></i>
-                                            <p id="fileLabel">Upload a File<br><small>Drag and drop files here</small></p>
-                                            <input type="file" id="fileInput" accept=".pdf, .jpg, .png" required style="display: none;">
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card h-100">
+                                    <div class="card-header">
+                                        <h3 class="fs-5 fw-medium"><i class="bi bi-calendar-event me-2"></i>Document Due Date</h3>
+                                    </div>
+                                    <div class="card-body d-flex flex-column justify-content-center">
+                                        <div class="form-group mb-0">
+                                            <label for="dueDate" class="form-label">Select Due Date:</label>
+                                            <input type="date" class="form-control form-control-sm" id="dueDate" name="due_date" required min="{{ date('Y-m-d') }}">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- End Document Upload and Due Date Side by Side -->
 
-                        <!-- Due Date Selector -->
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="fs-5 fw-medium"><i class="bi bi-calendar-event me-2"></i>Document Due Date</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="form-group mb-0">
-                                        <label for="dueDate" class="form-label">Select Due Date:</label>
-                                        <input type="date" class="form-control" id="dueDate" name="due_date" required min="{{ date('Y-m-d') }}">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- Form Actions -->

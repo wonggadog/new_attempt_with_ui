@@ -1,0 +1,17 @@
+/* Make the date input and its calendar popup smaller */
+input[type="date"].form-control-sm {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.5rem;
+    height: 2rem;
+    max-width: 250px;
+}
+
+/* Try to target the calendar popup for Chromium browsers */
+input[type="date"].form-control-sm::-webkit-calendar-picker-indicator {
+    zoom: 0.8;
+}
+
+/* For Firefox, reduce the font size of the date input */
+input[type="date"].form-control-sm {
+    font-size: 0.85rem;
+}
