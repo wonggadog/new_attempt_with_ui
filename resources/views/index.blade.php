@@ -224,7 +224,7 @@
                                 <div class="card-body">
                                     <div class="form-group mb-0">
                                         <label for="dueDate" class="form-label">Select Due Date:</label>
-                                        <input type="date" class="form-control" id="dueDate" name="due_date" required>
+                                        <input type="date" class="form-control" id="dueDate" name="due_date" required min="{{ date('Y-m-d') }}">
                                     </div>
                                 </div>
                             </div>
@@ -287,6 +287,16 @@
                 }
             });
         });
+
+        var dueDateInput = document.getElementById('dueDate');
+        if (dueDateInput) {
+            var today = new Date();
+            var yyyy = today.getFullYear();
+            var mm = String(today.getMonth() + 1).padStart(2, '0');
+            var dd = String(today.getDate()).padStart(2, '0');
+            var minDate = yyyy + '-' + mm + '-' + dd;
+            dueDateInput.setAttribute('min', minDate);
+        }
     });
     </script>
 </body>
