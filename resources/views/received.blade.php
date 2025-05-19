@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
   <!-- Custom CSS -->
   <link href="{{ asset('css/received_docs_styles.css') }}" rel="stylesheet">
+  <link rel="icon" type="image/png" href="{{ asset('images/bucslogo1.png') }}">
 </head>
 <body>
   <div class="d-flex wrapper">

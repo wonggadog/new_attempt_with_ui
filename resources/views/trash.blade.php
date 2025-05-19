@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trash - Deleted Documents</title>
+    <title>BUCS DocuManage</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -14,6 +14,7 @@
     <!-- Trash-specific styles (optional, for trash content only) -->
     <link rel="stylesheet" href="css/trash_styles.css">
     <link href="{{ asset('css/received_docs_styles.css') }}" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ asset('images/bucslogo1.png') }}">
 </head>
 <body>
     <div class="d-flex wrapper">

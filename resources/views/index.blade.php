@@ -12,6 +12,7 @@
     <!-- Custom CSS -->
     <link href="css/styles.css" rel="stylesheet">
     <link href="{{ asset('css/received_docs_styles.css') }}" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ asset('images/bucslogo1.png') }}">
 </head>
 <body>
     <div class="d-flex wrapper">
