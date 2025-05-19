@@ -54,7 +54,11 @@
       </nav>
       <div class="sidebar-footer">
         <div class="d-flex align-items-center gap-2">
-          <div class="avatar" data-user="current">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</div>
+          @if(Auth::user()->profile_picture && file_exists(public_path('storage/' . Auth::user()->profile_picture)))
+            <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" alt="Profile Picture" class="avatar" style="object-fit:cover; width:40px; height:40px; border-radius:50%; cursor:pointer;" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+          @else
+            <img src="{{ asset('images/default-avatar.png') }}" alt="Profile Picture" class="avatar" style="object-fit:cover; width:40px; height:40px; border-radius:50%; cursor:pointer;" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+          @endif
           <div>
             <div class="fw-medium">{{ Auth::user()->name }}</div>
             <!-- <div class="text-muted small">{{ Auth::user()->email }}</div> -->
