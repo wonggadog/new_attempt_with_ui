@@ -96,7 +96,7 @@ class CommunicationFormController extends Controller
                     \Log::error('Mail send failed: ' . $e->getMessage());
                 }
 
-                CommunicationForm::create([
+                $form = CommunicationForm::create([
                     'to' => $recipientName,
                     'from' => Auth::user()->name,
                     'attention' => $request->input('attention'),
@@ -109,6 +109,8 @@ class CommunicationFormController extends Controller
                     'additional_notes' => $request->input('additional_notes'),
                     'due_date' => $request->input('due_date'),
                 ]);
+                // Always create the initial 'sent' status for the new form
+                $form->statuses()->create(['status' => 'sent']);
             }
         }
 
