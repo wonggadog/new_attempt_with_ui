@@ -377,6 +377,22 @@ function updateTakeActionButtonState(actions) {
 // Show document detail
 function showDocumentDetail(doc) {
     console.log('Showing document detail:', doc);
+
+    // Mark document as read
+    fetch(`/api/documents/${doc.id}/mark-as-read`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    }).then(response => {
+        if (!response.ok) {
+            console.error('Failed to mark document as read');
+        }
+    }).catch(error => {
+        console.error('Error marking document as read:', error);
+    });
+
     // Hide documents list and show detail view
     documentsList.classList.add("d-none");
     documentDetail.classList.remove("d-none");

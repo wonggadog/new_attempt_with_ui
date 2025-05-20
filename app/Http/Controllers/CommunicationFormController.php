@@ -534,4 +534,25 @@ class CommunicationFormController extends Controller
             return response()->json(['success' => false, 'message' => 'Failed to send comment email.']);
         }
     }
+
+    /**
+     * Mark a document as read.
+     */
+    public function markAsRead($id)
+    {
+        $document = CommunicationForm::findOrFail($id);
+
+        // Check if the authenticated user is the recipient
+        if ($document->to !== Auth::user()->name) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        // Add 'Read' status if not already present
+        $hasReadStatus = $document->statuses()->where('status', 'read')->exists();
+        if (!$hasReadStatus) {
+            $document->statuses()->create(['status' => 'read']);
+        }
+
+        return response()->json(['success' => true, 'message' => 'Document marked as read.']);
+    }
 }
