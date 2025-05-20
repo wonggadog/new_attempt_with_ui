@@ -555,4 +555,25 @@ class CommunicationFormController extends Controller
 
         return response()->json(['success' => true, 'message' => 'Document marked as read.']);
     }
+
+    /**
+     * Mark a document as acknowledged.
+     */
+    public function markAsAcknowledged($id)
+    {
+        $document = CommunicationForm::findOrFail($id);
+
+        // Check if the authenticated user is the recipient
+        if ($document->to !== Auth::user()->name) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        // Add 'Acknowledged' status if not already present
+        $hasAcknowledgedStatus = $document->statuses()->where('status', 'acknowledged')->exists();
+        if (!$hasAcknowledgedStatus) {
+            $document->statuses()->create(['status' => 'acknowledged']);
+        }
+
+        return response()->json(['success' => true, 'message' => 'Document marked as acknowledged.']);
+    }
 }

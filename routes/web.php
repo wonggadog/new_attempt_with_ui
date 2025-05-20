@@ -132,6 +132,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/received-documents/{id}/comment', [CommunicationFormController::class, 'sendComment'])->name('received.comment');
 
     Route::post('/api/documents/{id}/mark-as-read', [CommunicationFormController::class, 'markAsRead'])->name('documents.markAsRead');
+    Route::post('/api/documents/{id}/mark-as-acknowledged', [CommunicationFormController::class, 'markAsAcknowledged'])->name('documents.markAsAcknowledged');
 });
 
 // Test route for CSS file

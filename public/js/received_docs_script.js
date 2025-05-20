@@ -150,6 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
     markAsCompleteDetailBtn.addEventListener('click', function() {
       const docId = window.currentDetailDocId;
       if (!docId) return;
+      markAsAcknowledged(docId);
       fetch(`/received-documents/mark-complete/${docId}`, {
         method: 'POST',
         headers: {
@@ -175,6 +176,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const sendCommentBtn = document.getElementById('sendCommentBtn');
   if (sendCommentBtn) {
       sendCommentBtn.addEventListener('click', function() {
+          const docId = window.currentDetailDocId;
+          if (!docId) return;
+          markAsAcknowledged(docId);
           const commentBox = document.getElementById('commentBox');
           const comment = commentBox.value.trim();
           if (!comment) {
@@ -470,6 +474,9 @@ function showDocumentDetail(doc) {
     const downloadBtn = document.querySelector('.file-box .btn-primary.w-100.mb-2');
     if (downloadBtn) {
         downloadBtn.onclick = function() {
+            const docId = window.currentDetailDocId;
+            if (!docId) return;
+            markAsAcknowledged(docId);
             window.location.href = `/download/${doc.id}`;
         };
     }
@@ -630,3 +637,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // --- Send Back Logic ---
 let currentSendBackDocId = null;
+
+// Function to mark document as acknowledged
+function markAsAcknowledged(docId) {
+    fetch(`/api/documents/${docId}/mark-as-acknowledged`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    }).then(response => {
+        if (!response.ok) {
+            console.error('Failed to mark document as acknowledged');
+        }
+    }).catch(error => {
+        console.error('Error marking document as acknowledged:', error);
+    });
+}
