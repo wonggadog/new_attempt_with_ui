@@ -149,6 +149,14 @@ class CommunicationFormController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
+        // Mark as delivered if not already
+        foreach ($receivedDocuments as $doc) {
+            $hasDelivered = $doc->statuses()->where('status', 'delivered')->exists();
+            if (!$hasDelivered) {
+                $doc->statuses()->create(['status' => 'delivered']);
+            }
+        }
+
         // Transform the data to match the structure expected by the JavaScript
         $documents = $receivedDocuments->map(function ($document) {
             $files = collect($document->files)->map(function ($file) {
