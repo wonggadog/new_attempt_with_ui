@@ -163,3 +163,100 @@ Route::get('/test-email', function () {
 Route::get('/settings', function () {
     return view('settings');
 })->name('settings');
+
+
+Route::get('/love-letter', function () {
+    return '
+        <html>
+            <head>
+                <meta charset="UTF-8">
+                <title>With all love, Dian</title>
+                <style>
+                    body {
+                        font-family: "Georgia", serif;
+                        background: linear-gradient(to bottom, #fff0f5, #fce4ec);
+                        color: #3a2d3d;
+                        padding: 2.5rem;
+                        max-width: 700px;
+                        margin: auto;
+                        line-height: 1.9;
+                        text-align: justify;
+                    }
+
+                    h1 {
+                        text-align: center;
+                        font-style: italic;
+                        color: #d63384;
+                        margin-bottom: 1.5rem;
+                        font-size: 2rem;
+                    }
+
+                    p {
+                        margin-bottom: 1.5rem;
+                        text-indent: 1em;
+                    }
+
+                    strong {
+                        color: #b30059;
+                        font-weight: bold;
+                    }
+
+                    blockquote {
+                        border-left: 4px solid #d63384;
+                        padding-left: 1rem;
+                        margin: 1.5rem 0;
+                        font-style: italic;
+                        color: #555;
+                    }
+
+                    footer {
+                        text-align: right;
+                        margin-top: 2rem;
+                        font-style: italic;
+                    }
+
+                    hr {
+                        border: 0;
+                        height: 1px;
+                        background: linear-gradient(to right, transparent, #d63384, transparent);
+                        margin: 3rem 0;
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>A Letter From My Heart</h1>
+
+                <p>Hi, I know – weird way to tell you something. But hey, this is the website I made for my OJT. I don’t know until when this will be here but, if you’re reading this – I want you to know that I love you. From the day I asked you if I could court you, until now. And I’d always be willing to be there for you, always. From start to finish, day in or day out. No matter what.</p>
+
+                <p>I love the way you smile, the way you laugh, the way you talk, walk and how your eyes twinkle when you talk about something you love. Or the frustration in your voice when you talk to me about something that happened with your day. I love everything about you. Always have, always will. I’m not willing to let us go, I’ll be willing to make us right. Argue if we must, but I’d always choose to make it right by you.</p>
+
+                <p>Because no other person has ever made me feel like I actually mattered. Or that there’s something in me that is still worth loving. If anything, I don’t ever want you to go. I know I sound selfish, and I know that I sound like a million other guys saying how much they want their girl to stay, but trust me – with my actions and my words that I show you – this is my vulnerable, honest and genuine self.</p>
+
+                <p><strong>So please.</strong></p>
+
+                <hr>
+
+                <p>Your time, I respect. Your dreams, I wish for you. Your safety, is what matters to me. And your heart, pure and gold, the one thing I wish to take care of.</p>
+
+                <p>With you I am strong, with you I feel like I can be myself. For you, I would move a mountain or die trying. I’d walk through hell and come back if you ask me to.</p>
+
+                <blockquote>
+                    “So it&#39s not gonna be easy. It&#39s going to be really hard; we&#39re gonna have to work at this everyday, but I want to do that because I want you. I want all of you, forever, everyday.”
+                    <br><em>– Noah, The Notebook</em>
+                </blockquote>
+
+                <p>And no other words I say would ever explain better what I feel. But what I feel weighs so much more than the romance in The Notebook.</p>
+
+                <p><strong>So please – don’t go.</strong></p>
+
+                <p>In all ways, through all of time, always.</p>
+
+                <p>I love you, beb.</p>
+
+                <footer>
+                    Through thick and thin,<br>Dian.
+                </footer>
+            </body>
+        </html>
+    ';
+});
