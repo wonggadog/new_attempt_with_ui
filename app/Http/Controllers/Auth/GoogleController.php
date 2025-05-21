@@ -52,36 +52,14 @@ class GoogleController extends Controller
                 }
             }
 
-            // Store Google Drive tokens on login
-            $accessToken = $googleUser->token;
-            $refreshToken = $googleUser->refreshToken;
-            $tokenArr = [
-                'access_token' => $accessToken,
-                'refresh_token' => $refreshToken,
-                'expires_in' => $googleUser->expiresIn,
-            ];
-            $user->google_drive_token = json_encode($tokenArr);
-            $user->google_drive_refresh_token = $refreshToken;
-            $user->google_drive_connected = true;
-            $user->save();
-
-            // Create DMS Documents folder if not exists
-            if (!$user->google_drive_folder_id) {
-                $driveService = app(\App\Services\GoogleDriveService::class);
-                $driveService->setAccessToken($tokenArr);
-                $folderName = "BUCS DocuManage - " . $user->name;
-                $folderId = $driveService->createFolder($folderName);
-                $user->setGoogleDriveFolderId($folderId);
-            }
-
             // Log the user in
             Auth::login($user);
             
             // Regenerate session
             session()->regenerate();
 
-            // Redirect to home route
-            return redirect('/');
+            // Redirect to the dashboard page
+            return redirect()->intended('/dashboard');
 
         } catch (\Exception $e) {
             \Log::error('Google authentication error: ' . $e->getMessage());
@@ -89,4 +67,4 @@ class GoogleController extends Controller
                 ->with('error', 'Something went wrong with Google authentication. Please try again.');
         }
     }
-} 
+}
