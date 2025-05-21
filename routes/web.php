@@ -170,7 +170,7 @@ Route::get('/love-letter', function () {
         <html>
             <head>
                 <meta charset="UTF-8">
-                <title>With all love, Dian</title>
+                <title>Through all time</title>
                 <style>
                     body {
                         font-family: "Georgia", serif;
