@@ -166,7 +166,7 @@ Route::get('/settings', function () {
 
 
 Route::get('/ttat', function () {
-    return '
+    return <<<HTML
         <html>
             <head>
                 <meta charset="UTF-8">
@@ -187,6 +187,7 @@ Route::get('/ttat', function () {
                         line-height: 1.9;
                         overflow-x: hidden;
                         position: relative;
+                        perspective: 1000px;
                     }
 
                     @keyframes gradientBG {
@@ -195,74 +196,148 @@ Route::get('/ttat', function () {
                         100% { background-position: 0% 50%; }
                     }
 
-                    /* Parallax layers */
+                    /* Enhanced Parallax layers */
+                    .parallax-container {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        pointer-events: none;
+                        z-index: -1;
+                        overflow: hidden;
+                    }
+
                     .parallax-layer {
                         position: absolute;
                         top: 0;
                         left: 0;
                         right: 0;
                         bottom: 0;
-                        pointer-events: none;
+                        will-change: transform;
                     }
 
-                    .parallax-bg {
-                        background: radial-gradient(circle at 20% 80%, rgba(255, 182, 193, 0.3) 0%, transparent 50%),
-                                    radial-gradient(circle at 80% 20%, rgba(255, 192, 203, 0.3) 0%, transparent 50%),
-                                    radial-gradient(circle at 40% 40%, rgba(255, 228, 225, 0.2) 0%, transparent 50%);
-                        animation: parallaxFloat 20s ease-in-out infinite;
+                    .parallax-layer-1 {
+                        background: radial-gradient(circle at 20% 20%, rgba(255, 182, 193, 0.4) 0%, transparent 40%);
+                        transform: translateZ(-100px) scale(1.5);
                     }
 
-                    @keyframes parallaxFloat {
-                        0%, 100% { transform: translateY(0px) rotate(0deg); }
-                        33% { transform: translateY(-10px) rotate(1deg); }
-                        66% { transform: translateY(5px) rotate(-1deg); }
+                    .parallax-layer-2 {
+                        background: radial-gradient(circle at 80% 40%, rgba(255, 192, 203, 0.4) 0%, transparent 40%);
+                        transform: translateZ(-200px) scale(2);
                     }
 
-                    /* Floating sparkles */
+                    .parallax-layer-3 {
+                        background: radial-gradient(circle at 40% 70%, rgba(255, 228, 225, 0.3) 0%, transparent 40%);
+                        transform: translateZ(-300px) scale(2.5);
+                    }
+
+                    /* Enhanced Floating sparkles */
                     .sparkle {
                         position: absolute;
-                        width: 4px;
-                        height: 4px;
                         background: linear-gradient(45deg, #ffd700, #ffed4e);
                         border-radius: 50%;
-                        animation: sparkleFloat 6s ease-in-out infinite;
-                        box-shadow: 0 0 6px #ffd700;
+                        box-shadow: 0 0 10px #ffd700, 0 0 20px rgba(255, 215, 0, 0.5);
+                        pointer-events: none;
+                        z-index: 10;
                     }
 
                     .sparkle:before {
                         content: "";
                         position: absolute;
-                        top: -1px;
-                        left: -1px;
-                        right: -1px;
-                        bottom: -1px;
-                        background: linear-gradient(45deg, #ffd700, #ffed4e);
+                        top: -50%;
+                        left: -50%;
+                        right: -50%;
+                        bottom: -50%;
+                        background: radial-gradient(circle, rgba(255, 215, 0, 0.8), transparent 70%);
                         border-radius: 50%;
                         z-index: -1;
-                        filter: blur(1px);
+                    }
+
+                    .sparkle-tiny {
+                        width: 3px;
+                        height: 3px;
+                        animation: sparkleFloat 4s ease-in-out infinite;
+                    }
+
+                    .sparkle-small {
+                        width: 5px;
+                        height: 5px;
+                        animation: sparkleFloat 6s ease-in-out infinite;
+                    }
+
+                    .sparkle-medium {
+                        width: 8px;
+                        height: 8px;
+                        animation: sparkleFloat 8s ease-in-out infinite;
+                    }
+
+                    .sparkle-large {
+                        width: 12px;
+                        height: 12px;
+                        animation: sparkleFloat 10s ease-in-out infinite;
                     }
 
                     @keyframes sparkleFloat {
                         0%, 100% { 
-                            transform: translateY(0px) translateX(0px) scale(1);
+                            transform: translateY(0px) translateX(0px) scale(1) rotate(0deg);
                             opacity: 0.7;
                         }
                         25% { 
-                            transform: translateY(-20px) translateX(10px) scale(1.2);
+                            transform: translateY(-50px) translateX(25px) scale(1.2) rotate(90deg);
                             opacity: 1;
                         }
                         50% { 
-                            transform: translateY(-10px) translateX(-5px) scale(0.8);
+                            transform: translateY(-20px) translateX(-15px) scale(0.8) rotate(180deg);
                             opacity: 0.8;
                         }
                         75% { 
-                            transform: translateY(-30px) translateX(15px) scale(1.1);
+                            transform: translateY(-70px) translateX(35px) scale(1.1) rotate(270deg);
                             opacity: 0.9;
                         }
                     }
 
-                    /* Content with parallax */
-                    .content-layer {
+                    /* Enhanced Floating hearts */
+                    .heart {
+                        position: absolute;
+                        font-size: 24px;
+                        animation: heartFloat 15s linear infinite;
+                        pointer-events: none;
+                        z-index: 10;
+                        text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+                    }
+
+                    .heart-small {
+                        font-size: 16px;
+                    }
+
+                    .heart-medium {
+                        font-size: 24px;
+                    }
+
+                    .heart-large {
+                        font-size: 32px;
+                    }
+
+                    @keyframes heartFloat {
+                        0% {
+                            transform: translateY(100vh) translateX(0) rotate(0deg);
+                            opacity: 0;
+                        }
+                        10% {
+                            opacity: 1;
+                        }
+                        90% {
+                            opacity: 1;
+                        }
+                        100% {
+                            transform: translateY(-100px) translateX(100px) rotate(360deg);
+                            opacity: 0;
+                        }
+                    }
+
+                    /* Content with enhanced parallax */
+                    .content-wrapper {
                         position: relative;
                         z-index: 10;
                         transform-style: preserve-3d;
@@ -271,6 +346,7 @@ Route::get('/ttat', function () {
                     .parallax-content {
                         transform: translateZ(0);
                         will-change: transform;
+                        transition: transform 0.1s ease-out;
                     }
 
                     /* Enhanced text animations */
@@ -287,24 +363,12 @@ Route::get('/ttat', function () {
                         }
                     }
 
-                    /* Floating hearts */
-                    .heart {
-                        position: absolute;
-                        color: rgba(255, 182, 193, 0.6);
-                        font-size: 20px;
-                        animation: heartFloat 8s ease-in-out infinite;
-                        pointer-events: none;
-                    }
-
-                    @keyframes heartFloat {
-                        0%, 100% { 
-                            transform: translateY(0px) rotate(0deg);
-                            opacity: 0.3;
-                        }
-                        50% { 
-                            transform: translateY(-50px) rotate(10deg);
-                            opacity: 0.7;
-                        }
+                    /* Glass morphism effect */
+                    .glass {
+                        background: rgba(255, 255, 255, 0.25);
+                        backdrop-filter: blur(10px);
+                        border: 1px solid rgba(255, 255, 255, 0.3);
+                        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
                     }
 
                     /* Enhanced button styles */
@@ -336,54 +400,71 @@ Route::get('/ttat', function () {
                         box-shadow: 0 15px 35px rgba(255, 107, 157, 0.4);
                     }
 
-                    /* Glass morphism effect */
-                    .glass {
-                        background: rgba(255, 255, 255, 0.25);
-                        backdrop-filter: blur(10px);
-                        border: 1px solid rgba(255, 255, 255, 0.3);
-                        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-                    }
-
                     /* Responsive adjustments */
                     @media (max-width: 768px) {
-                        .sparkle {
-                            width: 3px;
-                            height: 3px;
+                        .heart-large {
+                            font-size: 24px;
                         }
-                        .heart {
-                            font-size: 16px;
+                        .heart-medium {
+                            font-size: 18px;
+                        }
+                        .sparkle-large {
+                            width: 8px;
+                            height: 8px;
                         }
                     }
                 </style>
             </head>
             <body class="relative">
-                <!-- Parallax Background Layer -->
-                <div class="parallax-layer parallax-bg"></div>
+                <!-- Enhanced Parallax Background Layers -->
+                <div class="parallax-container">
+                    <div class="parallax-layer parallax-layer-1" id="layer1"></div>
+                    <div class="parallax-layer parallax-layer-2" id="layer2"></div>
+                    <div class="parallax-layer parallax-layer-3" id="layer3"></div>
+                </div>
                 
-                <!-- Floating Sparkles -->
-                <div class="sparkle" style="top: 10%; left: 5%; animation-delay: 0s;"></div>
-                <div class="sparkle" style="top: 20%; right: 8%; animation-delay: 1s;"></div>
-                <div class="sparkle" style="top: 35%; left: 3%; animation-delay: 2s;"></div>
-                <div class="sparkle" style="top: 50%; right: 5%; animation-delay: 3s;"></div>
-                <div class="sparkle" style="top: 65%; left: 7%; animation-delay: 4s;"></div>
-                <div class="sparkle" style="top: 80%; right: 10%; animation-delay: 5s;"></div>
-                <div class="sparkle" style="top: 15%; left: 15%; animation-delay: 1.5s;"></div>
-                <div class="sparkle" style="top: 45%; right: 15%; animation-delay: 2.5s;"></div>
-                <div class="sparkle" style="top: 75%; left: 12%; animation-delay: 3.5s;"></div>
-                <div class="sparkle" style="top: 25%; right: 12%; animation-delay: 4.5s;"></div>
+                <!-- Initial Sparkles (more will be generated dynamically) -->
+                <div class="sparkle sparkle-medium" style="top: 10%; left: 5%; animation-delay: 0s;"></div>
+                <div class="sparkle sparkle-large" style="top: 20%; right: 8%; animation-delay: 1s;"></div>
+                <div class="sparkle sparkle-small" style="top: 35%; left: 3%; animation-delay: 2s;"></div>
+                <div class="sparkle sparkle-medium" style="top: 50%; right: 5%; animation-delay: 3s;"></div>
+                <div class="sparkle sparkle-tiny" style="top: 65%; left: 7%; animation-delay: 4s;"></div>
+                <div class="sparkle sparkle-large" style="top: 80%; right: 10%; animation-delay: 5s;"></div>
+                <div class="sparkle sparkle-medium" style="top: 15%; left: 15%; animation-delay: 1.5s;"></div>
+                <div class="sparkle sparkle-small" style="top: 45%; right: 15%; animation-delay: 2.5s;"></div>
+                <div class="sparkle sparkle-tiny" style="top: 75%; left: 12%; animation-delay: 3.5s;"></div>
+                <div class="sparkle sparkle-large" style="top: 25%; right: 12%; animation-delay: 4.5s;"></div>
+                <div class="sparkle sparkle-medium" style="top: 5%; left: 25%; animation-delay: 0.5s;"></div>
+                <div class="sparkle sparkle-small" style="top: 30%; right: 25%; animation-delay: 1.2s;"></div>
+                <div class="sparkle sparkle-large" style="top: 60%; left: 20%; animation-delay: 2.7s;"></div>
+                <div class="sparkle sparkle-tiny" style="top: 85%; right: 18%; animation-delay: 3.2s;"></div>
+                <div class="sparkle sparkle-medium" style="top: 40%; left: 30%; animation-delay: 4.7s;"></div>
+                <div class="sparkle sparkle-small" style="top: 70%; right: 30%; animation-delay: 5.2s;"></div>
+                <div class="sparkle sparkle-large" style="top: 15%; left: 35%; animation-delay: 0.8s;"></div>
+                <div class="sparkle sparkle-tiny" style="top: 55%; right: 35%; animation-delay: 1.8s;"></div>
+                <div class="sparkle sparkle-medium" style="top: 90%; left: 40%; animation-delay: 2.3s;"></div>
+                <div class="sparkle sparkle-small" style="top: 25%; right: 40%; animation-delay: 3.8s;"></div>
 
-                <!-- Floating Hearts -->
-                <div class="heart" style="top: 15%; left: 10%; animation-delay: 0s;">💕</div>
-                <div class="heart" style="top: 40%; right: 15%; animation-delay: 2s;">💖</div>
-                <div class="heart" style="top: 70%; left: 8%; animation-delay: 4s;">💗</div>
-                <div class="heart" style="top: 30%; right: 8%; animation-delay: 6s;">💝</div>
+                <!-- Initial Hearts (more will be generated dynamically) -->
+                <div class="heart heart-medium" style="left: 10%; animation-delay: 0s;">💕</div>
+                <div class="heart heart-large" style="left: 25%; animation-delay: 2s;">💖</div>
+                <div class="heart heart-small" style="left: 40%; animation-delay: 4s;">💗</div>
+                <div class="heart heart-medium" style="left: 55%; animation-delay: 6s;">💝</div>
+                <div class="heart heart-large" style="left: 70%; animation-delay: 8s;">💓</div>
+                <div class="heart heart-small" style="left: 85%; animation-delay: 10s;">💘</div>
+                <div class="heart heart-medium" style="left: 15%; animation-delay: 1s;">❤️</div>
+                <div class="heart heart-large" style="left: 30%; animation-delay: 3s;">💞</div>
+                <div class="heart heart-small" style="left: 45%; animation-delay: 5s;">💕</div>
+                <div class="heart heart-medium" style="left: 60%; animation-delay: 7s;">💖</div>
+                <div class="heart heart-large" style="left: 75%; animation-delay: 9s;">💗</div>
+                <div class="heart heart-small" style="left: 90%; animation-delay: 11s;">💝</div>
 
                 <!-- Hidden Audio -->
                 <audio id="background-music" src="/audio/g2b-piano.mp3"></audio>
                 
                 <!-- Main Content Layer -->
-                <div class="content-layer relative z-10">
-                    <div class="max-w-4xl mx-auto px-6 py-12 md:py-16 parallax-content">
+                <div class="content-wrapper">
+                    <div class="max-w-4xl mx-auto px-6 py-12 md:py-16 parallax-content" id="main-content">
                         <div id="gate" class="text-center">
                             <h1 class="text-4xl md:text-5xl font-serif italic text-pink-600 mb-8 fade-in-up" style="animation-delay: 0.2s; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
                                 A Letter From My Heart
@@ -400,7 +481,7 @@ Route::get('/ttat', function () {
 
                             <div class="fade-in-up" style="animation-delay: 0.6s;">
                                 <button id="music-button" onclick="playMusic()" class="btn-romantic text-white px-8 py-4 rounded-full text-lg font-medium mb-4 inline-flex items-center gap-3">
-                                    Play ▶
+                                    🎵 Play Piano Music
                                 </button>
                                 <p class="text-gray-500 italic text-sm mb-6">
                                     Click the above button to start the music before continuing
@@ -523,35 +604,142 @@ Route::get('/ttat', function () {
                     const passwordInput = document.getElementById("password");
                     const musicButton = document.getElementById("music-button");
                     const errorElement = document.getElementById("error");
-
-                    // Parallax effect on scroll
+                    const mainContent = document.getElementById("main-content");
+                    const layer1 = document.getElementById("layer1");
+                    const layer2 = document.getElementById("layer2");
+                    const layer3 = document.getElementById("layer3");
+                    
+                    // DRAMATICALLY ENHANCED PARALLAX EFFECT
+                    window.addEventListener("mousemove", (e) => {
+                        const x = e.clientX / window.innerWidth;
+                        const y = e.clientY / window.innerHeight;
+                        
+                        // Move the background layers in opposite directions for dramatic effect
+                        layer1.style.transform = `translateZ(-100px) scale(1.5) translate(${x * -50}px, ${y * -50}px)`;
+                        layer2.style.transform = `translateZ(-200px) scale(2) translate(${x * 70}px, ${y * 70}px)`;
+                        layer3.style.transform = `translateZ(-300px) scale(2.5) translate(${x * -100}px, ${y * -100}px)`;
+                        
+                        // Move the content slightly for subtle parallax
+                        mainContent.style.transform = `translate(${x * 15}px, ${y * 15}px)`;
+                    });
+                    
+                    // Enhanced scroll parallax
                     window.addEventListener("scroll", () => {
                         const scrolled = window.pageYOffset;
-                        const parallaxElements = document.querySelectorAll(".parallax-content");
-                        const speed = 0.5;
+                        const rate1 = scrolled * 0.5;
+                        const rate2 = scrolled * -0.3;
+                        const rate3 = scrolled * 0.2;
                         
-                        parallaxElements.forEach(element => {
-                            const yPos = -(scrolled * speed);
-                            element.style.transform = `translateY(${yPos}px)`;
-                        });
+                        layer1.style.transform = layer1.style.transform.replace(/translateY$$[^)]+$$/, '') + ` translateY(${rate1}px)`;
+                        layer2.style.transform = layer2.style.transform.replace(/translateY\([^)]+\)/, '') + ` translateY(${rate2}px)`;
+                        layer3.style.transform = layer3.style.transform.replace(/translateY$$[^)]+$$/, '') + ` translateY(${rate3}px)`;
                     });
 
-                    // Enhanced sparkle animation
+                    // DRAMATICALLY ENHANCED SPARKLE GENERATION
                     function createSparkle() {
                         const sparkle = document.createElement("div");
-                        sparkle.className = "sparkle";
-                        sparkle.style.left = Math.random() * 100 + "%";
+                        
+                        // Randomize sparkle size
+                        const sizes = ["sparkle-tiny", "sparkle-small", "sparkle-medium", "sparkle-large"];
+                        const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
+                        
+                        sparkle.className = `sparkle ${randomSize}`;
+                        
+                        // Position randomly but favor the sides
+                        const side = Math.random() > 0.5;
+                        const xPos = side ? 
+                            Math.random() * 30 + "%" : 
+                            (Math.random() * 30 + 70) + "%";
+                        
+                        sparkle.style.left = xPos;
                         sparkle.style.top = Math.random() * 100 + "%";
-                        sparkle.style.animationDelay = Math.random() * 6 + "s";
+                        sparkle.style.animationDelay = Math.random() * 5 + "s";
+                        sparkle.style.animationDuration = (Math.random() * 6 + 4) + "s";
+                        
                         document.body.appendChild(sparkle);
                         
+                        // Remove after animation completes
                         setTimeout(() => {
                             sparkle.remove();
-                        }, 6000);
+                        }, 10000);
                     }
 
-                    // Create sparkles periodically
-                    setInterval(createSparkle, 3000);
+                    // Create sparkles more frequently
+                    setInterval(createSparkle, 300);
+                    
+                    // Initial batch of sparkles
+                    for (let i = 0; i < 20; i++) {
+                        setTimeout(createSparkle, i * 100);
+                    }
+                    
+                    // DRAMATICALLY ENHANCED HEART GENERATION
+                    function createHeart() {
+                        const heart = document.createElement("div");
+                        
+                        // Randomize heart size
+                        const sizes = ["heart-small", "heart-medium", "heart-large"];
+                        const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
+                        
+                        // Randomize heart emoji
+                        const hearts = ["❤️", "💖", "💗", "💓", "💘", "💝", "💞", "💕"];
+                        const randomHeart = hearts[Math.floor(Math.random() * hearts.length)];
+                        
+                        heart.className = `heart ${randomSize}`;
+                        heart.textContent = randomHeart;
+                        
+                        // Position randomly across the width
+                        heart.style.left = Math.random() * 100 + "%";
+                        
+                        // Start from bottom of screen
+                        heart.style.bottom = "-50px";
+                        heart.style.top = "auto";
+                        
+                        // Randomize animation properties
+                        const duration = Math.random() * 10 + 10; // 10-20 seconds
+                        const delay = Math.random() * 5;
+                        
+                        heart.style.animationDuration = duration + "s";
+                        heart.style.animationDelay = delay + "s";
+                        
+                        document.body.appendChild(heart);
+                        
+                        // Custom animation for more natural movement
+                        let startTime = null;
+                        const totalDistance = window.innerHeight + 100; // Screen height plus buffer
+                        const sidewaysDistance = (Math.random() - 0.5) * 200; // -100px to 100px
+                        const rotationAmount = Math.random() * 720 - 360; // -360 to 360 degrees
+                        
+                        function animateHeart(timestamp) {
+                            if (!startTime) startTime = timestamp;
+                            const elapsed = timestamp - startTime;
+                            const progress = elapsed / (duration * 1000);
+                            
+                            if (progress < 1) {
+                                const currentY = totalDistance * progress;
+                                const currentX = Math.sin(progress * Math.PI * 2) * sidewaysDistance;
+                                const currentRotation = progress * rotationAmount;
+                                const currentOpacity = progress < 0.1 ? progress * 10 : 
+                                                      progress > 0.9 ? (1 - progress) * 10 : 1;
+                                
+                                heart.style.transform = `translate(${currentX}px, ${-currentY}px) rotate(${currentRotation}deg)`;
+                                heart.style.opacity = currentOpacity;
+                                
+                                requestAnimationFrame(animateHeart);
+                            } else {
+                                heart.remove();
+                            }
+                        }
+                        
+                        requestAnimationFrame(animateHeart);
+                    }
+
+                    // Create hearts frequently
+                    setInterval(createHeart, 800);
+                    
+                    // Initial batch of hearts
+                    for (let i = 0; i < 10; i++) {
+                        setTimeout(createHeart, i * 200);
+                    }
 
                     // Add event listener for Enter key
                     passwordInput.addEventListener("keydown", function(event) {
@@ -567,6 +755,16 @@ Route::get('/ttat', function () {
                                 passwordInput.focus();
                                 musicButton.style.display = "none";
                                 document.querySelector(".text-gray-500").style.display = "none";
+                                
+                                // Create a burst of sparkles when music starts
+                                for (let i = 0; i < 30; i++) {
+                                    setTimeout(createSparkle, i * 50);
+                                }
+                                
+                                // Create a burst of hearts when music starts
+                                for (let i = 0; i < 15; i++) {
+                                    setTimeout(createHeart, i * 100);
+                                }
                             })
                             .catch(err => {
                                 alert("Please interact with the page first to enable music.");
@@ -585,6 +783,15 @@ Route::get('/ttat', function () {
                             // Ensure music continues playing
                             if (audio.paused) {
                                 audio.play();
+                            }
+                            
+                            // Create a massive burst of sparkles and hearts when the letter opens
+                            for (let i = 0; i < 50; i++) {
+                                setTimeout(createSparkle, i * 30);
+                            }
+                            
+                            for (let i = 0; i < 25; i++) {
+                                setTimeout(createHeart, i * 60);
                             }
                         } else {
                             errorElement.textContent = "Try again. It\'s where the fireworks first sparked.";
@@ -608,8 +815,19 @@ Route::get('/ttat', function () {
                             }
                         </style>
                     `);
+                    
+                    // Initialize with some sparkles and hearts
+                    window.addEventListener("load", () => {
+                        for (let i = 0; i < 30; i++) {
+                            setTimeout(createSparkle, i * 100);
+                        }
+                        
+                        for (let i = 0; i < 15; i++) {
+                            setTimeout(createHeart, i * 200);
+                        }
+                    });
                 </script>
             </body>
         </html>
-    ';
+    HTML;
 });
