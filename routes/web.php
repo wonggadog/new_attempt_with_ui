@@ -172,8 +172,9 @@ Route::get('/ttat', function () {
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>Through thick and thin</title>
+                <script src="https://cdn.tailwindcss.com"></script>
                 <style>
-                    /* Animated Gradient Background */
+                    /* Custom animations and effects */
                     body {
                         font-family: "Georgia", serif;
                         margin: 0;
@@ -181,219 +182,376 @@ Route::get('/ttat', function () {
                         min-height: 100vh;
                         background: linear-gradient(-45deg, #ffecf2, #ffe6eb, #ffe0f0, #fde5ff);
                         background-size: 400% 400%;
-                        animation: gradientBG 10s ease infinite;
+                        animation: gradientBG 15s ease infinite;
                         color: #3a2d3d;
                         line-height: 1.9;
-                        text-align: justify;
+                        overflow-x: hidden;
+                        position: relative;
                     }
+
                     @keyframes gradientBG {
                         0% { background-position: 0% 50%; }
                         50% { background-position: 100% 50%; }
                         100% { background-position: 0% 50%; }
                     }
-                    .container {
-                        max-width: 700px;
-                        margin: auto;
-                        padding: 3rem 2rem;
+
+                    /* Parallax layers */
+                    .parallax-layer {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        pointer-events: none;
                     }
-                    h1 {
-                        text-align: center;
-                        font-style: italic;
-                        color: #d63384;
-                        margin-bottom: 1.5rem;
-                        font-size: 2rem;
-                        text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+
+                    .parallax-bg {
+                        background: radial-gradient(circle at 20% 80%, rgba(255, 182, 193, 0.3) 0%, transparent 50%),
+                                    radial-gradient(circle at 80% 20%, rgba(255, 192, 203, 0.3) 0%, transparent 50%),
+                                    radial-gradient(circle at 40% 40%, rgba(255, 228, 225, 0.2) 0%, transparent 50%);
+                        animation: parallaxFloat 20s ease-in-out infinite;
                     }
-                    p {
-                        margin-bottom: 1.5rem;
-                        text-indent: 1em;
-                        opacity: 0;
-                        transform: translateY(20px);
-                        animation: fadeInUp 1s ease forwards;
+
+                    @keyframes parallaxFloat {
+                        0%, 100% { transform: translateY(0px) rotate(0deg); }
+                        33% { transform: translateY(-10px) rotate(1deg); }
+                        66% { transform: translateY(5px) rotate(-1deg); }
                     }
-                    /* Delay each paragraph slightly */
-                    p:nth-child(1) { animation-delay: 0.2s; }
-                    p:nth-child(2) { animation-delay: 0.4s; }
-                    p:nth-child(3) { animation-delay: 0.6s; }
-                    p:nth-child(4) { animation-delay: 0.8s; }
-                    p:nth-child(5) { animation-delay: 1s; }
-                    p:nth-child(6) { animation-delay: 1.2s; }
-                    p:nth-child(7) { animation-delay: 1.4s; }
-                    p:nth-child(8) { animation-delay: 1.6s; }
-                    p:nth-child(9) { animation-delay: 1.8s; }
-                    p:nth-child(10) { animation-delay: 2s; }
-                    p:nth-child(11) { animation-delay: 2.2s; }
-                    p:nth-child(12) { animation-delay: 2.4s; }
-                    p:nth-child(13) { animation-delay: 2.6s; }
-                    p:nth-child(14) { animation-delay: 2.8s; }
-                    p:nth-child(15) { animation-delay: 3s; }
-                    strong {
-                        color: #b30059;
-                        font-weight: bold;
+
+                    /* Floating sparkles */
+                    .sparkle {
+                        position: absolute;
+                        width: 4px;
+                        height: 4px;
+                        background: linear-gradient(45deg, #ffd700, #ffed4e);
+                        border-radius: 50%;
+                        animation: sparkleFloat 6s ease-in-out infinite;
+                        box-shadow: 0 0 6px #ffd700;
                     }
-                    blockquote {
-                        border-left: 4px solid #d63384;
-                        padding-left: 1rem;
-                        margin: 1.5rem 0;
-                        font-style: italic;
-                        color: #555;
-                        background-color: rgba(255, 255, 255, 0.3);
-                        padding: 1rem;
-                        border-radius: 0 8px 8px 0;
+
+                    .sparkle:before {
+                        content: "";
+                        position: absolute;
+                        top: -1px;
+                        left: -1px;
+                        right: -1px;
+                        bottom: -1px;
+                        background: linear-gradient(45deg, #ffd700, #ffed4e);
+                        border-radius: 50%;
+                        z-index: -1;
+                        filter: blur(1px);
                     }
-                    footer {
-                        text-align: right;
-                        margin-top: 2rem;
-                        font-style: italic;
-                        opacity: 0;
-                        animation: fadeInUp 1s ease forwards;
-                        animation-delay: 3.2s;
-                    }
-                    hr {
-                        border: 0;
-                        height: 1px;
-                        background: linear-gradient(to right, transparent, #d63384, transparent);
-                        margin: 3rem 0;
-                        opacity: 0;
-                        animation: fadeInUp 1s ease forwards;
-                        animation-delay: 1s;
-                    }
-                    #letter {
-                        display: none;
-                    }
-                    .center {
-                        text-align: center;
-                        margin-top: 2rem;
-                    }
-                    input[type="text"] {
-                        padding: 0.75rem 1rem;
-                        width: 80%;
-                        max-width: 300px;
-                        margin-top: 1rem;
-                        font-size: 1rem;
-                        border-radius: 8px;
-                        border: 1px solid #ffb3c8;
-                        background-color: rgba(255, 255, 255, 0.8);
-                        box-shadow: 0 2px 10px rgba(214, 51, 132, 0.1);
-                        transition: all 0.3s ease;
-                    }
-                    input[type="text"]:focus {
-                        outline: none;
-                        border-color: #d63384;
-                        box-shadow: 0 2px 15px rgba(214, 51, 132, 0.2);
-                    }
-                    button {
-                        margin-top: 1rem;
-                        padding: 0.75rem 1.75rem;
-                        font-size: 1rem;
-                        border: none;
-                        background-color: #ff8fab;
-                        color: white;
-                        border-radius: 50px;
-                        cursor: pointer;
-                        transition: all 0.3s ease;
-                        box-shadow: 0 4px 10px rgba(214, 51, 132, 0.2);
-                    }
-                    button:hover {
-                        background-color: #ff6f91;
-                        transform: translateY(-3px);
-                        box-shadow: 0 6px 15px rgba(214, 51, 132, 0.3);
-                    }
-                    #error {
-                        color: #d63384;
-                        margin-top: 1rem;
-                        font-style: italic;
-                    }
-                    #music-button {
-                        background-color: #d63384;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        margin: 0 auto;
-                    }
-                    #music-button:hover {
-                        background-color: #c2185b;
-                    }
-                    .note {
-                        color: #888;
-                        font-size: 0.9rem;
-                        margin-top: 0.5rem;
-                        font-style: italic;
-                    }
-                    /* Fade In Animation */
-                    @keyframes fadeInUp {
-                        from {
-                            opacity: 0;
-                            transform: translateY(20px);
+
+                    @keyframes sparkleFloat {
+                        0%, 100% { 
+                            transform: translateY(0px) translateX(0px) scale(1);
+                            opacity: 0.7;
                         }
+                        25% { 
+                            transform: translateY(-20px) translateX(10px) scale(1.2);
+                            opacity: 1;
+                        }
+                        50% { 
+                            transform: translateY(-10px) translateX(-5px) scale(0.8);
+                            opacity: 0.8;
+                        }
+                        75% { 
+                            transform: translateY(-30px) translateX(15px) scale(1.1);
+                            opacity: 0.9;
+                        }
+                    }
+
+                    /* Content with parallax */
+                    .content-layer {
+                        position: relative;
+                        z-index: 10;
+                        transform-style: preserve-3d;
+                    }
+
+                    .parallax-content {
+                        transform: translateZ(0);
+                        will-change: transform;
+                    }
+
+                    /* Enhanced text animations */
+                    .fade-in-up {
+                        opacity: 0;
+                        transform: translateY(30px) translateZ(0);
+                        animation: fadeInUp 1.2s ease forwards;
+                    }
+
+                    @keyframes fadeInUp {
                         to {
                             opacity: 1;
-                            transform: translateY(0);
+                            transform: translateY(0) translateZ(0);
                         }
                     }
+
+                    /* Floating hearts */
+                    .heart {
+                        position: absolute;
+                        color: rgba(255, 182, 193, 0.6);
+                        font-size: 20px;
+                        animation: heartFloat 8s ease-in-out infinite;
+                        pointer-events: none;
+                    }
+
+                    @keyframes heartFloat {
+                        0%, 100% { 
+                            transform: translateY(0px) rotate(0deg);
+                            opacity: 0.3;
+                        }
+                        50% { 
+                            transform: translateY(-50px) rotate(10deg);
+                            opacity: 0.7;
+                        }
+                    }
+
+                    /* Enhanced button styles */
+                    .btn-romantic {
+                        background: linear-gradient(135deg, #ff8fab, #ff6b9d);
+                        box-shadow: 0 8px 25px rgba(255, 107, 157, 0.3);
+                        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                        position: relative;
+                        overflow: hidden;
+                    }
+
+                    .btn-romantic:before {
+                        content: "";
+                        position: absolute;
+                        top: 0;
+                        left: -100%;
+                        width: 100%;
+                        height: 100%;
+                        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+                        transition: left 0.5s;
+                    }
+
+                    .btn-romantic:hover:before {
+                        left: 100%;
+                    }
+
+                    .btn-romantic:hover {
+                        transform: translateY(-5px) scale(1.05);
+                        box-shadow: 0 15px 35px rgba(255, 107, 157, 0.4);
+                    }
+
+                    /* Glass morphism effect */
+                    .glass {
+                        background: rgba(255, 255, 255, 0.25);
+                        backdrop-filter: blur(10px);
+                        border: 1px solid rgba(255, 255, 255, 0.3);
+                        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+                    }
+
                     /* Responsive adjustments */
                     @media (max-width: 768px) {
-                        .container {
-                            padding: 2rem 1.5rem;
+                        .sparkle {
+                            width: 3px;
+                            height: 3px;
                         }
-                        h1 {
-                            font-size: 1.75rem;
-                        }
-                        p {
-                            font-size: 0.95rem;
+                        .heart {
+                            font-size: 16px;
                         }
                     }
                 </style>
             </head>
-            <body>
+            <body class="relative">
+                <!-- Parallax Background Layer -->
+                <div class="parallax-layer parallax-bg"></div>
+                
+                <!-- Floating Sparkles -->
+                <div class="sparkle" style="top: 10%; left: 5%; animation-delay: 0s;"></div>
+                <div class="sparkle" style="top: 20%; right: 8%; animation-delay: 1s;"></div>
+                <div class="sparkle" style="top: 35%; left: 3%; animation-delay: 2s;"></div>
+                <div class="sparkle" style="top: 50%; right: 5%; animation-delay: 3s;"></div>
+                <div class="sparkle" style="top: 65%; left: 7%; animation-delay: 4s;"></div>
+                <div class="sparkle" style="top: 80%; right: 10%; animation-delay: 5s;"></div>
+                <div class="sparkle" style="top: 15%; left: 15%; animation-delay: 1.5s;"></div>
+                <div class="sparkle" style="top: 45%; right: 15%; animation-delay: 2.5s;"></div>
+                <div class="sparkle" style="top: 75%; left: 12%; animation-delay: 3.5s;"></div>
+                <div class="sparkle" style="top: 25%; right: 12%; animation-delay: 4.5s;"></div>
+
+                <!-- Floating Hearts -->
+                <div class="heart" style="top: 15%; left: 10%; animation-delay: 0s;">💕</div>
+                <div class="heart" style="top: 40%; right: 15%; animation-delay: 2s;">💖</div>
+                <div class="heart" style="top: 70%; left: 8%; animation-delay: 4s;">💗</div>
+                <div class="heart" style="top: 30%; right: 8%; animation-delay: 6s;">💝</div>
+
                 <!-- Hidden Audio -->
                 <audio id="background-music" src="/audio/g2b-piano.mp3"></audio>
-                <div class="container">
-                    <div id="gate">
-                        <h1>A Letter From My Heart</h1>
-                        <p><center>This webpage won&#39;t be here for long. So please take the time to try it out.<center></p>
-                        <p>You know that I&#39;m the only guy who&#39;d make a webpage just to tell you how he feels and show you how serious he is for you. What&#39;s the one place you will ever really think of — the first place that comes to your mind when you think of me?</p>
-                        <div class="center">
-                            <button id="music-button" onclick="playMusic()">🎵 Play Piano Music</button>
-                            <p class="note">Click the above button to start the music before continuing</p>
-                            <br>
-                            <input type="text" id="password" placeholder="Enter the password..." disabled />
-                            <br>
-                            <button onclick="checkPassword()">Open</button>
-                            <p id="error"></p>
+                
+                <!-- Main Content Layer -->
+                <div class="content-layer relative z-10">
+                    <div class="max-w-4xl mx-auto px-6 py-12 md:py-16 parallax-content">
+                        <div id="gate" class="text-center">
+                            <h1 class="text-4xl md:text-5xl font-serif italic text-pink-600 mb-8 fade-in-up" style="animation-delay: 0.2s; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
+                                A Letter From My Heart
+                            </h1>
+                            
+                            <div class="glass rounded-2xl p-8 mb-8 fade-in-up" style="animation-delay: 0.4s;">
+                                <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+                                    This webpage won&#39;t be here for long. So please take the time to try it out.
+                                </p>
+                                <p class="text-lg text-gray-700 leading-relaxed">
+                                    You know who I am. You know that I&#39;m the only guy who&#39;d make a webpage just to tell you something. What&#39;s the one place you will ever really think of — the first place that comes to your mind when you think of me?
+                                </p>
+                            </div>
+
+                            <div class="fade-in-up" style="animation-delay: 0.6s;">
+                                <button id="music-button" onclick="playMusic()" class="btn-romantic text-white px-8 py-4 rounded-full text-lg font-medium mb-4 inline-flex items-center gap-3">
+                                    🎵 Play Piano Music
+                                </button>
+                                <p class="text-gray-500 italic text-sm mb-6">
+                                    Click the above button to start the music before continuing
+                                </p>
+                                
+                                <div class="glass rounded-xl p-6 max-w-md mx-auto">
+                                    <input type="text" id="password" placeholder="Enter the password..." disabled 
+                                           class="w-full px-4 py-3 rounded-lg border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent bg-white/80 text-center text-lg" />
+                                    <button onclick="checkPassword()" class="btn-romantic text-white px-6 py-3 rounded-full mt-4 font-medium">
+                                        Open My Heart
+                                    </button>
+                                    <p id="error" class="text-pink-600 mt-3 italic"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="letter" class="hidden">
+                            <h1 class="text-4xl md:text-5xl font-serif italic text-pink-600 mb-12 text-center fade-in-up" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
+                                A Letter From My Heart
+                            </h1>
+
+                            <div class="space-y-8">
+                                <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 0.2s;">
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8">
+                                        Hi, I know – weird way to tell you something. But hey, this is the website I made for my OJT. I don&#39;t know until when this will be here but, if you&#39;re reading this – I want you to know that I love you. From the day I asked you if I could court you, until now. And I&#39;d always be willing to be there for you, always. From start to finish, day in or day out. No matter what.
+                                    </p>
+                                </div>
+
+                                <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 0.4s;">
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8">
+                                        I love the way you smile, the way you laugh, the way you talk, walk and how your eyes twinkle when you talk about something you love. Or the frustration in your voice when you talk to me about something that happened with your day. I love everything about you. Always have, always will. I&#39;m not willing to let us go, I&#39;ll be willing to make us right. Argue if we must, but I&#39;d always choose to make it right by you.
+                                    </p>
+                                </div>
+
+                                <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 0.6s;">
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8">
+                                        Because no other person has ever made me feel like I actually mattered. Or that there&#39;s something in me that is still worth loving. If anything, I don&#39;t ever want you to go. I know I sound selfish, and I know that I sound like a million other guys saying how much they want their girl to stay, but trust me – with my actions and my words that I show you – this is my vulnerable, honest and genuine self.
+                                    </p>
+                                </div>
+
+                                <div class="text-center fade-in-up" style="animation-delay: 0.8s;">
+                                    <p class="text-2xl font-bold text-pink-800">So please.</p>
+                                </div>
+
+                                <div class="w-full h-px bg-gradient-to-r from-transparent via-pink-500 to-transparent my-12 fade-in-up" style="animation-delay: 1s;"></div>
+
+                                <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 1.2s;">
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8">
+                                        Your time, I respect. Your dreams, I wish for you. Your safety, is what matters to me. And your heart, pure and gold, the one thing I wish to take care of.
+                                    </p>
+                                </div>
+
+                                <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 1.4s;">
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8">
+                                        With you I am strong, with you I feel like I can be myself. For you, I would move a mountain or die trying. I&#39;d walk through hell and come back if you ask me to.
+                                    </p>
+                                </div>
+
+                                <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 1.6s;">
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8">
+                                        If anything, the small moments we share, be it when we call at night, or when we talk about each other&#39;s day, you don&#39;t know how much that means to me. Well, all that I&#39;m getting at, is, we&#39;ve been going at it good and well. I enjoy your company, you enjoy mine. We share laughter, happiness, even sadness, frustration, and all stuff like that.
+                                    </p>
+                                </div>
+
+                                <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 1.8s;">
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8">
+                                        I&#39;m sorry for crossing a line I shouldn&#39;t have by asking you or by pushing you to the limit. I really didn&#39;t mean to. Please let me make it up to you, and please give us a chance. I really, really don&#39;t want to lose you. But I respect that you want some breathing room and space. I totally do. Just, please give us a chance.
+                                    </p>
+                                </div>
+
+                                <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 2s;">
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8">
+                                        And if I&#39;ll have to wait for a while &#39;til time and fate decides that we can start over again, be it from the bottom up, I&#39;ll be there patiently waiting for that time to come. You&#39;ll always have a spot in my heart, beb. And my heart will never, ever be closed off for you.
+                                    </p>
+                                </div>
+
+                                <div class="glass rounded-2xl p-8 bg-gradient-to-r from-pink-50 to-purple-50 border-pink-300 fade-in-up" style="animation-delay: 2.2s;">
+                                    <blockquote class="text-lg italic text-gray-600 border-l-4 border-pink-500 pl-6">
+                                        "So it&#39;s not gonna be easy. It&#39;s going to be really hard; we&#39;re gonna have to work at this everyday, but I want to do that because I want you. I want all of you, forever, everyday."
+                                        <br><em class="text-sm mt-2 block">– Noah, The Notebook</em>
+                                    </blockquote>
+                                </div>
+
+                                <div class="text-center space-y-6 fade-in-up" style="animation-delay: 2.4s;">
+                                    <p class="text-xl font-bold text-pink-800">Meeting you was nothing short of magic. And I don&#39;t want to let that magic go. So if it&#39;ll take me days, weeks or months waiting for you.</p>
+                                    <p class="text-xl font-bold text-pink-800">Then I&#39;ll gladly love you still. For being with you is not just a moment of bliss, but a happiness, a joy, and a feeling of freedom.</p>
+                                </div>
+
+                                <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 2.6s;">
+                                    <p class="text-lg leading-relaxed text-gray-700 text-center">
+                                        In all ways, through all of time, always.
+                                    </p>
+                                </div>
+
+                                <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 2.8s;">
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8">
+                                        I love you, beb. Now go listen to how I play "Got to Believe in Magic."
+                                    </p>
+                                </div>
+
+                                <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 3s;">
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8">
+                                        Because what I feel for you? The odds of us meeting? It&#39;s like a miracle of magic. And I&#39;m not going to let that go.
+                                    </p>
+                                </div>
+
+                                <footer class="text-right mt-12 italic text-gray-600 fade-in-up" style="animation-delay: 3.2s;">
+                                    <div class="glass rounded-xl p-6 inline-block">
+                                        Through thick and thin,<br>
+                                        <span class="text-pink-600 font-semibold">Dian.</span>
+                                    </div>
+                                </footer>
+                            </div>
                         </div>
                     </div>
-                    <div id="letter">
-                        <h1>A Letter From My Heart</h1>
-                        <p>Hi, I know – weird way to tell you something. But hey, this is the website I made for my OJT. I don&#39;t know until when this will be here but, if you&#39;re reading this – I want you to know that I love you. From the day I asked you if I could court you, until now. And I&#39;d always be willing to be there for you, always. From start to finish, day in or day out. No matter what.</p>
-                        <p>I love the way you smile, the way you laugh, the way you talk, walk and how your eyes twinkle when you talk about something you love. Or the frustration in your voice when you talk to me about something that happened with your day. I love everything about you. Always have, always will. I&#39;m not willing to let us go, I&#39;ll be willing to make us right. Argue if we must, but I&#39;d always choose to make it right by you.</p>
-                        <p>Because no other person has ever made me feel like I actually mattered. Or that there&#39;s something in me that is still worth loving. If anything, I don&#39;t ever want you to go. I know I sound selfish, and I know that I sound like a million other guys saying how much they want their girl to stay, but trust me – with my actions and my words that I show you – this is my vulnerable, honest and genuine self.</p>
-                        <p><strong>So please.</strong></p>
-                        <hr>
-                        <p>Your time, I respect. Your dreams, I wish for you. Your safety, is what matters to me. And your heart, pure and gold, the one thing I wish to take care of.</p>
-                        <p>With you I am strong, with you I feel like I can be myself. For you, I would move a mountain or die trying. I&#39;d walk through hell and come back if you ask me to.</p>
-                        <p>If anything, the small moments we share, be it when we call at night, or when we talk about each other&#39s day, you don&#39t know how much that means to me. Well, all that I&#39;m getting at, is, we&#39;ve been going at it good and well. I enjoy your company, you enjoy mine. We share laughter, happiness, even sadness, frustration, and all stuff like that.</p>
-                        <p>I&#39;m sorry for crossing a line I shouldn&#39;t have by asking you or by pushing you to the limit. I really didn&#39;t mean to. Please let me make it up to you, and please give us a chance. I really, really don&#39;t want to lose you. But I respect that you want some breathing room and space. I totally do. Just, please give us a chance.</p>
-
-                        <!-- ✨ New Paragraph Added Here ✨ -->
-                        <p>And if I&#39;ll have to wait for a while &#39;til time and fate decides that we can start over again, be it from the bottom up, I&#39;ll be there patiently waiting for that time to come. You&#39;ll always have a spot in my heart, beb. And my heart will never, ever be closed off for you.</p>
-
-                        <p><strong>Meeting you was nothing short of magic. And I don&#39t want to let that magic go. SO if it&#39ll take me days, weeks or months waiting for you.</strong></p>
-                        <p><strong>Then I&#39ll gladly love you still. For being with you is not just a moment of bliss, but a happiness, a joy, and a feeling of freedom.</strong></p>
-                        <p>In all ways, through all of time, always.</p>
-                        <p>I love you, beb. Now go listen to how I play "Got to Believe in Magic."</p>
-                        <p>Because what I feel for you? The odds of us meeting? It&#39;s like a miracle of magic. And I&#39;m not going to let that go.</p>
-                        <footer>
-                            Through thick and thin,<br>Dian.
-                        </footer>
-                    </div>
                 </div>
+
                 <script>
                     const audio = document.getElementById("background-music");
                     const passwordInput = document.getElementById("password");
                     const musicButton = document.getElementById("music-button");
-                    const musicNote = document.querySelector(".note");
                     const errorElement = document.getElementById("error");
+
+                    // Parallax effect on scroll
+                    window.addEventListener("scroll", () => {
+                        const scrolled = window.pageYOffset;
+                        const parallaxElements = document.querySelectorAll(".parallax-content");
+                        const speed = 0.5;
+                        
+                        parallaxElements.forEach(element => {
+                            const yPos = -(scrolled * speed);
+                            element.style.transform = `translateY(${yPos}px)`;
+                        });
+                    });
+
+                    // Enhanced sparkle animation
+                    function createSparkle() {
+                        const sparkle = document.createElement("div");
+                        sparkle.className = "sparkle";
+                        sparkle.style.left = Math.random() * 100 + "%";
+                        sparkle.style.top = Math.random() * 100 + "%";
+                        sparkle.style.animationDelay = Math.random() * 6 + "s";
+                        document.body.appendChild(sparkle);
+                        
+                        setTimeout(() => {
+                            sparkle.remove();
+                        }, 6000);
+                    }
+
+                    // Create sparkles periodically
+                    setInterval(createSparkle, 3000);
 
                     // Add event listener for Enter key
                     passwordInput.addEventListener("keydown", function(event) {
@@ -405,11 +563,10 @@ Route::get('/ttat', function () {
                     function playMusic() {
                         audio.play()
                             .then(() => {
-                                // Enable input once music starts
                                 passwordInput.disabled = false;
                                 passwordInput.focus();
                                 musicButton.style.display = "none";
-                                musicNote.style.display = "none";
+                                document.querySelector(".text-gray-500").style.display = "none";
                             })
                             .catch(err => {
                                 alert("Please interact with the page first to enable music.");
