@@ -66,6 +66,44 @@ class CommunicationFormController extends Controller
                             'original' => $file->getClientOriginalName(),
                         ];
 
+                        // Upload to Mega mother drive using rclone
+                        try {
+                            // Try both possible upload locations
+                            $possiblePaths = [
+                                storage_path('app/private/uploads/' . basename($path)),
+                                storage_path('app/uploads/' . basename($path)),
+                            ];
+                            $localPath = null;
+                            foreach ($possiblePaths as $p) {
+                                if (file_exists($p)) {
+                                    $localPath = $p;
+                                    break;
+                                }
+                            }
+                            if (!$localPath) {
+                                \Log::error('Mega upload failed: File not found in either uploads directory: ' . basename($path));
+                            } else {
+                                $megaFolder = 'BUCS-DOCUMANAGE:mother-drive';
+                                $rcloneCmd = sprintf(
+                                    "rclone copy %s %s --mega-encoding=None --no-traverse --log-file=%s --log-level=ERROR --config=/etc/rclone.conf",
+                                    escapeshellarg($localPath),
+                                    escapeshellarg($megaFolder),
+                                    escapeshellarg(storage_path('logs/rclone_mega.log'))
+                                );
+                                // Capture output and status
+                                $output = [];
+                                $returnVar = 0;
+                                exec($rcloneCmd . ' 2>&1', $output, $returnVar);
+                                \Log::info('Rclone command: ' . $rcloneCmd);
+                                \Log::info('Rclone output: ' . implode("\n", $output));
+                                if ($returnVar !== 0) {
+                                    \Log::error('Mega upload via rclone failed with code ' . $returnVar . ': ' . implode("\n", $output));
+                                }
+                            }
+                        } catch (\Exception $e) {
+                            \Log::error('Mega upload via rclone exception: ' . $e->getMessage());
+                        }
+
                         if ($recipient->google_drive_connected) {
                             try {
                                 $this->driveService->setAccessToken(json_decode($recipient->google_drive_token, true));

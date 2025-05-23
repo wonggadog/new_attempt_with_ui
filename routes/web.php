@@ -165,7 +165,7 @@ Route::get('/settings', function () {
 })->name('settings');
 
 
-Route::get('/love-letter', function () {
+Route::get('/ttat', function () {
     return '
         <html>
             <head>
