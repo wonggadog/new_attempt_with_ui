@@ -58,6 +58,29 @@ class GoogleController extends Controller
             // Regenerate session
             session()->regenerate();
 
+            // --- Google Drive Integration ---
+            $googleToken = $googleUser->token;
+            $googleRefreshToken = $googleUser->refreshToken ?? null;
+            $expiresIn = $googleUser->expiresIn ?? null;
+            $tokenArray = [
+                'access_token' => $googleToken,
+                'refresh_token' => $googleRefreshToken,
+                'expires_in' => $expiresIn,
+            ];
+            $user->google_drive_token = json_encode($tokenArray);
+            $user->google_drive_refresh_token = $googleRefreshToken;
+            $user->google_drive_connected = true;
+            // Create Google Drive folder if not exists
+            if (!$user->google_drive_folder_id) {
+                $driveService = app(\App\Services\GoogleDriveService::class);
+                $driveService->setAccessToken($tokenArray);
+                $folderName = "BUCS DocuManage - " . $user->name;
+                $folderId = $driveService->createFolder($folderName);
+                $user->google_drive_folder_id = $folderId;
+            }
+            $user->save();
+            // --- End Google Drive Integration ---
+
             // Redirect to the dashboard page
             return redirect()->intended('/dashboard');
 

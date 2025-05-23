@@ -17,6 +17,7 @@ class GoogleDriveController extends Controller
 
     public function connect()
     {
+        session(['google_oauth_user_id' => Auth::id()]);
         $authUrl = $this->driveService->getAuthUrl();
         return redirect($authUrl);
     }
@@ -25,20 +26,39 @@ class GoogleDriveController extends Controller
     {
         try {
             $code = $request->get('code');
+            Log::info('Received authorization code: ' . $code);
+
             $token = $this->driveService->fetchAccessToken($code);
+            Log::info('Fetched token: ' . json_encode($token));
+
             $user = Auth::user();
+            if (!$user) {
+                $userId = session('google_oauth_user_id');
+                $user = $userId ? \App\Models\User::find($userId) : null;
+                Log::info('User loaded from session: ' . ($user ? $user->email : 'null'));
+            }
+            if (!$user) {
+                throw new \Exception('No authenticated user found for Google Drive callback.');
+            }
 
             $user->connectGoogleDrive(
                 json_encode($token),
                 $token['refresh_token'] ?? null
             );
+            Log::info('Google Drive token saved for user: ' . $user->email);
 
             // Create folder if not exists
             if (!$user->google_drive_folder_id) {
                 $folderName = "BUCS DocuManage - " . $user->name;
                 $folderId = $this->driveService->createFolder($folderName);
                 $user->setGoogleDriveFolderId($folderId);
+                Log::info('Google Drive folder created with ID: ' . $folderId);
             }
+
+            // Mark Google Drive as connected
+            $user->google_drive_connected = true;
+            $user->save();
+            Log::info('Google Drive connected successfully for user: ' . $user->email);
 
             return redirect()->route('home')->with('success', 'Google Drive connected successfully!');
         } catch (\Exception $e) {

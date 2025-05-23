@@ -109,10 +109,14 @@ class GoogleDriveService
     public function fetchAccessToken($code)
     {
         try {
+            Log::info('Fetching access token with code: ' . $code);
             $token = $this->client->fetchAccessTokenWithAuthCode($code);
+            Log::info('Fetched token: ' . json_encode($token));
+
             if (isset($token['error'])) {
                 throw new \Exception("OAuth error: " . $token['error']);
             }
+
             return $token;
         } catch (\Exception $e) {
             Log::error('Google Drive token fetch failed: ' . $e->getMessage());
