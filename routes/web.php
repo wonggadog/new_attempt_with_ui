@@ -400,7 +400,7 @@ Route::get('/ttat', function () {
 
                             <div class="fade-in-up" style="animation-delay: 0.6s;">
                                 <button id="music-button" onclick="playMusic()" class="btn-romantic text-white px-8 py-4 rounded-full text-lg font-medium mb-4 inline-flex items-center gap-3">
-                                    🎵 Play Piano Music
+                                    Play ▶
                                 </button>
                                 <p class="text-gray-500 italic text-sm mb-6">
                                     Click the above button to start the music before continuing
