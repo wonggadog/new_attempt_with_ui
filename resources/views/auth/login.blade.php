@@ -66,7 +66,7 @@
                                 <img src="{{ asset('images/googlelogo.png') }}" alt="Google Logo" class="google-icon">
                                 Sign in with Google
                             </a>
-                            <a href="#" class="bu-icto">Bicol University---ICTO</a>
+                            <a href="#" class="bu-icto">Bicol University ICTO</a>
                         </div>
                     </div>
                 </div>

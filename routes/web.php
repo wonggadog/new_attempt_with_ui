@@ -372,14 +372,13 @@ Route::get('/ttat', function () {
                         <hr>
                         <p>Your time, I respect. Your dreams, I wish for you. Your safety, is what matters to me. And your heart, pure and gold, the one thing I wish to take care of.</p>
                         <p>With you I am strong, with you I feel like I can be myself. For you, I would move a mountain or die trying. I&#39;d walk through hell and come back if you ask me to.</p>
+                        <p>If anything, the small moments we share, be it when we call at night, or when we talk about each other&#39s day, you don&#39t know how much that means to me. Well, all that I&#39;m getting at, is, we&#39;ve been going at it good and well. I enjoy your company, you enjoy mine. We share laughter, happiness, even sadness, frustration, and all stuff like that.</p>
                         <p>I&#39;m sorry for crossing a line I shouldn&#39;t have by asking you or by pushing you to the limit. I really didn&#39;t mean to. Please let me make it up to you, and please give us a chance. I really, really don&#39;t want to lose you. But I respect that you want some breathing room and space. I totally do. Just, please give us a chance.</p>
-                        <p>If anything, the small moments we share, be it when we call at night, or when we talk about each other&#39;s day, you don&#39;t know how much that means to me. Well, all that I&#39;m getting at, is, we&#39;ve been going at it good and well. I enjoy your company, you enjoy mine. We share laughter, happiness, even sadness, frustration, and all stuff like that.</p>
-                        <blockquote>
-                            "So it&#39;s not gonna be easy. It&#39;s going to be really hard; we&#39;re gonna have to work at this everyday, but I want to do that because I want you. I want all of you, forever, everyday."
-                            <br><em>– Noah, The Notebook</em>
-                        </blockquote>
-                        <p>And no other words I say would ever explain better what I feel. But what I feel weighs so much more than the romance in The Notebook.</p>
-                        <p><strong>So please – don&#39;t go.</strong></p>
+
+                        <!-- ✨ New Paragraph Added Here ✨ -->
+                        <p>And if I&#39;ll have to wait for a while &#39;til time and fate decides that we can start over again, be it from the bottom up, I&#39;ll be there patiently waiting for that time to come. You&#39;ll always have a spot in my heart, beb. And my heart will never, ever be closed off for you.</p>
+
+                        <p><strong>So please – don't go.</strong></p>
                         <p>In all ways, through all of time, always.</p>
                         <p>I love you, beb. Now go listen to how I play "Got to Believe in Magic."</p>
                         <p>Because what I feel for you? The odds of us meeting? It&#39;s like a miracle of magic. And I&#39;m not going to let that go.</p>
@@ -394,12 +393,14 @@ Route::get('/ttat', function () {
                     const musicButton = document.getElementById("music-button");
                     const musicNote = document.querySelector(".note");
                     const errorElement = document.getElementById("error");
+
                     // Add event listener for Enter key
                     passwordInput.addEventListener("keydown", function(event) {
                         if (event.key === "Enter") {
                             checkPassword();
                         }
                     });
+
                     function playMusic() {
                         audio.play()
                             .then(() => {
@@ -414,12 +415,15 @@ Route::get('/ttat', function () {
                                 console.error("Autoplay prevented:", err);
                             });
                     }
+
                     function checkPassword() {
                         const correct = "Gabawan";
                         const input = passwordInput.value.trim();
+
                         if (input.toLowerCase() === correct.toLowerCase()) {
                             document.getElementById("gate").style.display = "none";
                             document.getElementById("letter").style.display = "block";
+
                             // Ensure music continues playing
                             if (audio.paused) {
                                 audio.play();
@@ -427,6 +431,7 @@ Route::get('/ttat', function () {
                         } else {
                             errorElement.textContent = "Try again. It\'s where the fireworks first sparked.";
                             errorElement.style.animation = "fadeInUp 0.5s ease forwards";
+
                             // Shake the input field for wrong password
                             passwordInput.style.animation = "none";
                             setTimeout(() => {
@@ -434,6 +439,7 @@ Route::get('/ttat', function () {
                             }, 10);
                         }
                     }
+
                     // Add shake animation for wrong password
                     document.head.insertAdjacentHTML("beforeend", `
                         <style>
