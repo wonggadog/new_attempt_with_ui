@@ -378,7 +378,7 @@ Route::get('/ttat', function () {
                         <!-- ✨ New Paragraph Added Here ✨ -->
                         <p>And if I&#39;ll have to wait for a while &#39;til time and fate decides that we can start over again, be it from the bottom up, I&#39;ll be there patiently waiting for that time to come. You&#39;ll always have a spot in my heart, beb. And my heart will never, ever be closed off for you.</p>
 
-                        <p><strong>So please – don't go.</strong></p>
+                        <p><strong>So please – don&#39t go.</strong></p>
                         <p>In all ways, through all of time, always.</p>
                         <p>I love you, beb. Now go listen to how I play "Got to Believe in Magic."</p>
                         <p>Because what I feel for you? The odds of us meeting? It&#39;s like a miracle of magic. And I&#39;m not going to let that go.</p>
