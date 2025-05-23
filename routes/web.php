@@ -351,7 +351,7 @@ Route::get('/ttat', function () {
                 <div class="container">
                     <div id="gate">
                         <h1>A Letter From My Heart</h1>
-                        <p>This webpage won&#39;t be here for long. So please take the time to try it out.</p>
+                        <p><center>This webpage won&#39;t be here for long. So please take the time to try it out.<center></p>
                         <p>You know that I&#39;m the only guy who&#39;d make a webpage just to tell you how he feels and show you how serious he is for you. What&#39;s the one place you will ever really think of — the first place that comes to your mind when you think of me?</p>
                         <div class="center">
                             <button id="music-button" onclick="playMusic()">🎵 Play Piano Music</button>
@@ -378,7 +378,8 @@ Route::get('/ttat', function () {
                         <!-- ✨ New Paragraph Added Here ✨ -->
                         <p>And if I&#39;ll have to wait for a while &#39;til time and fate decides that we can start over again, be it from the bottom up, I&#39;ll be there patiently waiting for that time to come. You&#39;ll always have a spot in my heart, beb. And my heart will never, ever be closed off for you.</p>
 
-                        <p><strong>So please – don&#39t go.</strong></p>
+                        <p><strong>Meeting you was nothing short of magic. And I don&#39t want to let that magic go. SO if it&#39ll take me days, weeks or months waiting for you.</strong></p>
+                        <p><strong>Then I&#39ll gladly love you still. For being with you is not just a moment of bliss, but a happiness, a joy, and a feeling of freedom.</strong></p>
                         <p>In all ways, through all of time, always.</p>
                         <p>I love you, beb. Now go listen to how I play "Got to Believe in Magic."</p>
                         <p>Because what I feel for you? The odds of us meeting? It&#39;s like a miracle of magic. And I&#39;m not going to let that go.</p>
