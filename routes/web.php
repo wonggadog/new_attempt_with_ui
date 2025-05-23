@@ -473,7 +473,7 @@ Route::get('/ttat', function () {
 
                                 <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 2s;">
                                     <p class="text-lg leading-relaxed text-gray-700 indent-8">
-                                        And if I&#39;ll have to wait for a while &#39;til time and fate decides that we can start over again, be it from the bottom up, I&#39;ll be there patiently waiting for that time to come. You&#39;ll always have a spot in my heart, beb. And my heart will never, ever be closed off for you.
+                                        And if I&#39;ll have to wait for a while &#39;til time and fate decides that we can start over again, be it from the bottom up, I&#39;ll be there patiently waiting for that time to come. You&#39;ll always have a spot in my heart, beb. And my heart will never, ever be closed off for you. I&#39m not giving up on you, you&#39re worth it, I&#39m gonna treat you the way you  deserve,  I&#39m gonna learn how to love you right. I&#39m not going anywhere."
                                     </p>
                                 </div>
 
@@ -496,8 +496,8 @@ Route::get('/ttat', function () {
                                 </div>
 
                                 <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 2.8s;">
-                                    <p class="text-lg leading-relaxed text-gray-700 indent-8">
-                                        I love you, beb. Now go listen to how I play "Got to Believe in Magic."
+                                    <p class="text-lg leading-relaxed text-gray-700 text-center">
+                                        I love you, beb. Now here I am dedicating to you "Got to Believe in Magic."
                                     </p>
                                 </div>
 
