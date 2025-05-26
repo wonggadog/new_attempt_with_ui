@@ -394,7 +394,7 @@ Route::get('/ttat', function () {
                                     This webpage won&#39;t be here for long. So please take the time to try it out.
                                 </p>
                                 <p class="text-lg text-gray-700 leading-relaxed">
-                                    You know who I am. You know that I&#39;m the only guy who&#39;d make a webpage just to tell you something. What&#39;s the one place you will ever really think of — the first place that comes to your mind when you think of me?
+                                    You know who I am. You know that I&#39;m the only guy who&#39;d go as far as t make a website to tell you something. What&#39;s the one place you will ever really think of — the first place that comes to your mind when you think of me?
                                 </p>
                             </div>
 
