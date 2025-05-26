@@ -410,7 +410,7 @@ Route::get('/ttat', function () {
                                     <input type="text" id="password" placeholder="Enter the password..." disabled 
                                            class="w-full px-4 py-3 rounded-lg border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent bg-white/80 text-center text-lg" />
                                     <button onclick="checkPassword()" class="btn-romantic text-white px-6 py-3 rounded-full mt-4 font-medium">
-                                        Open My Heart
+                                        Submit
                                     </button>
                                     <p id="error" class="text-pink-600 mt-3 italic"></p>
                                 </div>
