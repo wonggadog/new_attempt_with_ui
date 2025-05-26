@@ -473,6 +473,12 @@ Route::get('/ttat', function () {
 
                                 <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 2s;">
                                     <p class="text-lg leading-relaxed text-gray-700 indent-8">
+                                        You&#39;re not too much. You&#39;re not too sensitive. You&#39;re not too emotional. You&#39;re not too sensitive. You&#39;re just you, and you feel things deeply. I love you for that, and it&#39;s a gift. Don&#39;t ever apologize for how you feel especially when it&#39;s you who got hurt. People who are worth your time will appreciate hoe much you care.  
+                                    </p>
+                                </div>
+
+                                <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 2s;">
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8">
                                         And if I&#39;ll have to wait for a while &#39;til time and fate decides that we can start over again, be it from the bottom up, I&#39;ll be there patiently waiting for that time to come. You&#39;ll always have a spot in my heart, beb. And my heart will never, ever be closed off for you. I&#39m not giving up on you, you&#39re worth it, I&#39m gonna treat you the way you  deserve,  I&#39m gonna learn how to love you right. I&#39m not going anywhere."
                                     </p>
                                 </div>
