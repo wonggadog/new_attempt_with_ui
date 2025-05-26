@@ -518,8 +518,10 @@ Route::get('/ttat', function () {
                                         <span class="text-pink-600 font-semibold">Dian.</span>
                                     </div>
                                 </footer>
-
-                                <footer class="text-right mt-12 text-gray-600 fade-in-up" style="animation-delay: 3.2s;">
+                                <br>
+                                <br>
+                                <br>
+                                <footer class="text-left mt-12 text-gray-600 fade-in-up" style="animation-delay: 3.2s;">
                                     <div class="glass rounded-xl p-6 inline-block">
                                         PS: I&#39;m also inviting you to go an a hike with me.<br>I&#39;ve been craving to go up a mountain again, I hope you&#39;re G for that<br> What do ya think? hehe
                                     </div>
