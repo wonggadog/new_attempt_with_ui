@@ -357,7 +357,7 @@ Route::get('/ttat', function () {
                 <div class="heart" style="top: 70%; left: 8%; animation-delay: 4s;">💗</div>
                 <div class="heart" style="top: 30%; right: 8%; animation-delay: 6s;">💝</div>
                 <!-- Hidden Audio -->
-                <audio id="background-music" src="/audio/g2b-piano.mp3"></audio>
+                <audio id="background-music" src="/audio/piano.mp3"></audio>
                 <!-- Main Content Layer -->
                 <div class="content-layer relative z-10">
                     <div class="max-w-4xl mx-auto px-6 py-12 md:py-16 parallax-content">
@@ -467,7 +467,7 @@ Route::get('/ttat', function () {
                                 </div>
                                 <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 2.8s;">
                                     <p class="text-lg leading-relaxed text-gray-700 text-center">
-                                        I love you, beb. Now here I am dedicating to you "Got to Believe in Magic."
+                                        I love you, beb. Now here I am dedicating to you "Can&#39;t Help Falling in Love."
                                     </p>
                                 </div>
                                 <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 3s;">
