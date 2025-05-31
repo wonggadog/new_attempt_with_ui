@@ -484,7 +484,7 @@ Route::get('/ttat', function () {
                                 <br><br><br>
                                 <footer class="text-left mt-12 text-gray-600 fade-in-up" style="animation-delay: 3.2s;">
                                     <div class="glass rounded-xl p-6 inline-block">
-                                        PS: wanna watch Bicol Loco festival if you&#39;re free? Just let me know.
+                                        PS: Want to watch Bicol Loco festival again with me if you&#39;re free, just like last year?<br>Word sad there are going to be MORE hot air balloons hahaha. Let me know if ever ;))<br>Stay tuned to this website for updates! Haha
                                     </div>
                                 </footer>
                             </div>
