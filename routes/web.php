@@ -467,7 +467,7 @@ Route::get('/ttat', function () {
                                 </div>
                                 <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 2.8s;">
                                     <p class="text-lg leading-relaxed text-gray-700 text-center">
-                                        I love you, beb. Now here I am dedicating to you "Can&#39;t Help Falling in Love."
+                                        I love you, beb. Now here I am dedicating to you my playing of "Can&#39;t Help Falling in Love" as I myself can&#39;t help but fall in love with you over and over again. I hope you enjoy it as much as I enjoyed making this website for you. 
                                     </p>
                                 </div>
                                 <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 3s;">
