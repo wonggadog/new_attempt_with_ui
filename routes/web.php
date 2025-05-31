@@ -398,7 +398,11 @@ Route::get('/ttat', function () {
                                 <!-- Single Box for All Paragraphs -->
                                 <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 0.2s;">
                                     <p class="text-lg leading-relaxed text-gray-700 indent-8">
-                                        Hi, I know – unconventional way that someone would tell you something, and you did say no more flowery words. But it&#39;s one of the only things I&#39;m good at. And I hope you bear with me to the end with this haha. But hey, I made this during my OJT. I kept this website hidden inside the codes. I don&#39;t know until when this will be here, people from ICTO will probably take this down sometime soon, but, I will be updating this every two days or so. Visit this website every now and then, yeah? Hahaha.<br>And, let me say this now, – I want you to know that I love you. From the day I asked you if I could court you, until now. And, hear me out, I&#39;m always willing to be there for you, always. From start to finish, day in or day out.
+                                        Hi, I know – unconventional way that someone would tell you something, and you did say no more flowery words. But it&#39;s one of the only things I&#39;m good at. And I hope you bear with me to the end with this haha. But hey, I made this during my OJT. I kept this website hidden inside the codes. I don&#39;t know until when this will be here, people from ICTO will probably take this down sometime soon, but, I will be updating this every two days or so. Visit this website every now and then, yeah? Hahaha.<br>
+                                    </p>
+
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8 mt-6">                            
+                                        And, let me say this now, – I want you to know that I love you. From the day I asked you if I could court you, until now. And, hear me out, I&#39;m always willing to be there for you, always. From start to finish, day in or day out.
                                     </p>
 
                                     <p class="text-lg leading-relaxed text-gray-700 indent-8 mt-6">
