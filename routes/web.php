@@ -458,7 +458,7 @@ Route::get('/ttat', function () {
 
                                 <!-- Remaining Sections -->
                                 <div class="text-center space-y-6 fade-in-up" style="animation-delay: 2.4s;">
-                                    <p class="text-xl font-bold text-pink-800">Meeting you was nothing short of magic. And I don&#39;t want to let that magic go. So if it&#39;ll take me days, weeks or months waiting for you,<br>then I&#39;ll gladly love you still. For being with you is not just a moment of bliss, but a happiness, a joy, and a feeling of freedom.</p>
+                                    <p class="text-xl font-bold text-pink-800">Meeting you was nothing short of magic. And I don&#39;t want to let that magic go, even for years to come. So if it&#39;ll take me days, weeks or months waiting for you,<br>then I&#39;ll gladly love you still. For being with you is not just a moment of bliss, but a happiness, a joy, and a feeling of freedom.</p>
                                 </div>
                                 <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 2.6s;">
                                     <p class="text-lg leading-relaxed text-gray-700 text-center">
