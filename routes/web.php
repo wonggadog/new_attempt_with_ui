@@ -472,7 +472,7 @@ Route::get('/ttat', function () {
                                 </div>
                                 <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 3s;">
                                     <p class="text-lg leading-relaxed text-gray-700 indent-8">
-                                        Because what I feel for you? The odds of us meeting? It&#39;s like a miracle of magic. And I&#39;m not going to let that go.
+                                        This chapter may have ended. But I&#39;m not closing the book. I&#39;m just putting it down for a while. I&#39;ll be here, waiting for you to pick it up again. And when you do, I&#39;ll be ready to write the next chapter with you.
                                     </p>
                                 </div>
                                 <footer class="text-right mt-12 italic text-gray-600 fade-in-up" style="animation-delay: 3.2s;">
