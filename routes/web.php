@@ -172,7 +172,7 @@ Route::get('/ttat', function () {
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>Through thick and thin</title>
-                <script src="https://cdn.tailwindcss.com"></script>
+                <script src="https://cdn.tailwindcss.com"></script> 
                 <style>
                     /* Custom animations and effects */
                     body {
@@ -188,13 +188,11 @@ Route::get('/ttat', function () {
                         overflow-x: hidden;
                         position: relative;
                     }
-
                     @keyframes gradientBG {
                         0% { background-position: 0% 50%; }
                         50% { background-position: 100% 50%; }
                         100% { background-position: 0% 50%; }
                     }
-
                     /* Parallax layers */
                     .parallax-layer {
                         position: absolute;
@@ -204,20 +202,17 @@ Route::get('/ttat', function () {
                         bottom: 0;
                         pointer-events: none;
                     }
-
                     .parallax-bg {
                         background: radial-gradient(circle at 20% 80%, rgba(255, 182, 193, 0.3) 0%, transparent 50%),
                                     radial-gradient(circle at 80% 20%, rgba(255, 192, 203, 0.3) 0%, transparent 50%),
                                     radial-gradient(circle at 40% 40%, rgba(255, 228, 225, 0.2) 0%, transparent 50%);
                         animation: parallaxFloat 20s ease-in-out infinite;
                     }
-
                     @keyframes parallaxFloat {
                         0%, 100% { transform: translateY(0px) rotate(0deg); }
                         33% { transform: translateY(-10px) rotate(1deg); }
                         66% { transform: translateY(5px) rotate(-1deg); }
                     }
-
                     /* Floating sparkles */
                     .sparkle {
                         position: absolute;
@@ -228,7 +223,6 @@ Route::get('/ttat', function () {
                         animation: sparkleFloat 6s ease-in-out infinite;
                         box-shadow: 0 0 6px #ffd700;
                     }
-
                     .sparkle:before {
                         content: "";
                         position: absolute;
@@ -241,7 +235,6 @@ Route::get('/ttat', function () {
                         z-index: -1;
                         filter: blur(1px);
                     }
-
                     @keyframes sparkleFloat {
                         0%, 100% { 
                             transform: translateY(0px) translateX(0px) scale(1);
@@ -260,33 +253,28 @@ Route::get('/ttat', function () {
                             opacity: 0.9;
                         }
                     }
-
                     /* Content with parallax */
                     .content-layer {
                         position: relative;
                         z-index: 10;
                         transform-style: preserve-3d;
                     }
-
                     .parallax-content {
                         transform: translateZ(0);
                         will-change: transform;
                     }
-
                     /* Enhanced text animations */
                     .fade-in-up {
                         opacity: 0;
                         transform: translateY(30px) translateZ(0);
                         animation: fadeInUp 1.2s ease forwards;
                     }
-
                     @keyframes fadeInUp {
                         to {
                             opacity: 1;
                             transform: translateY(0) translateZ(0);
                         }
                     }
-
                     /* Floating hearts */
                     .heart {
                         position: absolute;
@@ -295,7 +283,6 @@ Route::get('/ttat', function () {
                         animation: heartFloat 8s ease-in-out infinite;
                         pointer-events: none;
                     }
-
                     @keyframes heartFloat {
                         0%, 100% { 
                             transform: translateY(0px) rotate(0deg);
@@ -306,7 +293,6 @@ Route::get('/ttat', function () {
                             opacity: 0.7;
                         }
                     }
-
                     /* Enhanced button styles */
                     .btn-romantic {
                         background: linear-gradient(135deg, #ff8fab, #ff6b9d);
@@ -315,7 +301,6 @@ Route::get('/ttat', function () {
                         position: relative;
                         overflow: hidden;
                     }
-
                     .btn-romantic:before {
                         content: "";
                         position: absolute;
@@ -326,16 +311,13 @@ Route::get('/ttat', function () {
                         background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
                         transition: left 0.5s;
                     }
-
                     .btn-romantic:hover:before {
                         left: 100%;
                     }
-
                     .btn-romantic:hover {
                         transform: translateY(-5px) scale(1.05);
                         box-shadow: 0 15px 35px rgba(255, 107, 157, 0.4);
                     }
-
                     /* Glass morphism effect */
                     .glass {
                         background: rgba(255, 255, 255, 0.25);
@@ -343,7 +325,6 @@ Route::get('/ttat', function () {
                         border: 1px solid rgba(255, 255, 255, 0.3);
                         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
                     }
-
                     /* Responsive adjustments */
                     @media (max-width: 768px) {
                         .sparkle {
@@ -359,7 +340,6 @@ Route::get('/ttat', function () {
             <body class="relative">
                 <!-- Parallax Background Layer -->
                 <div class="parallax-layer parallax-bg"></div>
-                
                 <!-- Floating Sparkles -->
                 <div class="sparkle" style="top: 10%; left: 5%; animation-delay: 0s;"></div>
                 <div class="sparkle" style="top: 20%; right: 8%; animation-delay: 1s;"></div>
@@ -371,16 +351,13 @@ Route::get('/ttat', function () {
                 <div class="sparkle" style="top: 45%; right: 15%; animation-delay: 2.5s;"></div>
                 <div class="sparkle" style="top: 75%; left: 12%; animation-delay: 3.5s;"></div>
                 <div class="sparkle" style="top: 25%; right: 12%; animation-delay: 4.5s;"></div>
-
                 <!-- Floating Hearts -->
                 <div class="heart" style="top: 15%; left: 10%; animation-delay: 0s;">💕</div>
                 <div class="heart" style="top: 40%; right: 15%; animation-delay: 2s;">💖</div>
                 <div class="heart" style="top: 70%; left: 8%; animation-delay: 4s;">💗</div>
                 <div class="heart" style="top: 30%; right: 8%; animation-delay: 6s;">💝</div>
-
                 <!-- Hidden Audio -->
                 <audio id="background-music" src="/audio/g2b-piano.mp3"></audio>
-                
                 <!-- Main Content Layer -->
                 <div class="content-layer relative z-10">
                     <div class="max-w-4xl mx-auto px-6 py-12 md:py-16 parallax-content">
@@ -388,7 +365,6 @@ Route::get('/ttat', function () {
                             <h1 class="text-4xl md:text-5xl font-serif italic text-pink-600 mb-8 fade-in-up" style="animation-delay: 0.2s; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
                                 A Letter From My Heart
                             </h1>
-                            
                             <div class="glass rounded-2xl p-8 mb-8 fade-in-up" style="animation-delay: 0.4s;">
                                 <p class="text-lg text-gray-700 mb-6 leading-relaxed">
                                     This webpage won&#39;t be here for long. So please take the time to try it out.
@@ -397,7 +373,6 @@ Route::get('/ttat', function () {
                                     You know who I am. You know that I&#39;m the only guy who&#39;d go as far as to make a website to tell you something.<br>What&#39;s the one place you will ever really think of — the first place that comes to your mind when you think of me?
                                 </p>
                             </div>
-
                             <div class="fade-in-up" style="animation-delay: 0.6s;">
                                 <button id="music-button" onclick="playMusic()" class="btn-romantic text-white px-8 py-4 rounded-full text-lg font-medium mb-4 inline-flex items-center gap-3">
                                     Play ▶
@@ -405,7 +380,6 @@ Route::get('/ttat', function () {
                                 <p class="text-gray-500 italic text-sm mb-6">
                                     Click the above button to start the music before continuing
                                 </p>
-                                
                                 <div class="glass rounded-xl p-6 max-w-md mx-auto">
                                     <input type="text" id="password" placeholder="Enter the password..." disabled 
                                            class="w-full px-4 py-3 rounded-lg border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent bg-white/80 text-center text-lg" />
@@ -416,73 +390,57 @@ Route::get('/ttat', function () {
                                 </div>
                             </div>
                         </div>
-
                         <div id="letter" class="hidden">
                             <h1 class="text-4xl md:text-5xl font-serif italic text-pink-600 mb-12 text-center fade-in-up" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
                                 A Letter From My Heart
                             </h1>
-
                             <div class="space-y-8">
+                                <!-- Single Box for All Paragraphs -->
                                 <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 0.2s;">
                                     <p class="text-lg leading-relaxed text-gray-700 indent-8">
                                         Hi, I know – weird way to tell you something. But hey, this is the website I made for my OJT. I don&#39;t know until when this will be here but, if you&#39;re reading this – I want you to know that I love you. From the day I asked you if I could court you, until now. And I&#39;d always be willing to be there for you, always. From start to finish, day in or day out. No matter what.
                                     </p>
-                                </div>
 
-                                <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 0.4s;">
-                                    <p class="text-lg leading-relaxed text-gray-700 indent-8">
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8 mt-6">
                                         I love the way you smile, the way you laugh, the way you talk, walk and how your eyes twinkle when you talk about something you love. Or the frustration in your voice when you talk to me about something that happened with your day. I love everything about you. Always have, always will. I&#39;m not willing to let us go, I&#39;ll be willing to make us right. Argue if we must, but I&#39;d always choose to make it right by you.
                                     </p>
-                                </div>
 
-                                <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 0.6s;">
-                                    <p class="text-lg leading-relaxed text-gray-700 indent-8">
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8 mt-6">
                                         Because no other person has ever made me feel like I actually mattered. Or that there&#39;s something in me that is still worth loving. If anything, I don&#39;t ever want you to go. I know I sound selfish, and I know that I sound like a million other guys saying how much they want their girl to stay, but trust me – with my actions and my words that I show you – this is my vulnerable, honest and genuine self.
                                     </p>
-                                </div>
 
-                                <div class="text-center fade-in-up" style="animation-delay: 0.8s;">
-                                    <p class="text-2xl font-bold text-pink-800">So please.</p>
-                                </div>
+                                    <div class="text-center mt-8">
+                                        <p class="text-2xl font-bold text-pink-800">So please.</p>
+                                    </div>
 
-                                <div class="w-full h-px bg-gradient-to-r from-transparent via-pink-500 to-transparent my-12 fade-in-up" style="animation-delay: 1s;"></div>
+                                    <div class="w-full h-px bg-gradient-to-r from-transparent via-pink-500 to-transparent my-12"></div>
 
-                                <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 1.2s;">
-                                    <p class="text-lg leading-relaxed text-gray-700 indent-8">
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8 mt-6">
                                         Your time, I respect. Your dreams, I wish for you. Your safety, is what matters to me. And your heart, pure and gold, the one thing I wish to take care of.
                                     </p>
-                                </div>
 
-                                <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 1.4s;">
-                                    <p class="text-lg leading-relaxed text-gray-700 indent-8">
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8 mt-6">
                                         With you I am strong, with you I feel like I can be myself. For you, I would move a mountain or die trying. I&#39;d walk through hell and come back if you ask me to.
                                     </p>
-                                </div>
 
-                                <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 1.6s;">
-                                    <p class="text-lg leading-relaxed text-gray-700 indent-8">
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8 mt-6">
                                         If anything, the small moments we share, be it when we call at night, or when we talk about each other&#39;s day, you don&#39;t know how much that means to me. Well, all that I&#39;m getting at, is, we&#39;ve been going at it good and well. I enjoy your company, you enjoy mine. We share laughter, happiness, even sadness, frustration, and all stuff like that.
                                     </p>
-                                </div>
 
-                                <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 1.8s;">
-                                    <p class="text-lg leading-relaxed text-gray-700 indent-8">
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8 mt-6">
                                         I&#39;m sorry for crossing a line I shouldn&#39;t have by asking you or by pushing you to the limit. I really didn&#39;t mean to. Please let me make it up to you, and please give us a chance. I really, really don&#39;t want to lose you. But I respect that you want some breathing room and space. I totally do. Just, please give us a chance.
                                     </p>
-                                </div>
 
-                                <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 2s;">
-                                    <p class="text-lg leading-relaxed text-gray-700 indent-8">
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8 mt-6">
                                         You&#39;re not too much. You&#39;re not too sensitive. You&#39;re not too emotional. You&#39;re not too sensitive. You&#39;re just you, and you feel things deeply. I love you for that, and it&#39;s a gift. Don&#39;t ever apologize for how you feel especially when it&#39;s you who got hurt. People who are worth your time will appreciate hoe much you care.  
                                     </p>
-                                </div>
 
-                                <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 2s;">
-                                    <p class="text-lg leading-relaxed text-gray-700 indent-8">
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8 mt-6">
                                         And if I&#39;ll have to wait for a while &#39;til time and fate decides that we can start over again, be it from the bottom up, I&#39;ll be there patiently waiting for that time to come. You&#39;ll always have a spot in my heart, beb. And my heart will never, ever be closed off for you. I&#39m not giving up on you, you&#39re worth it, I&#39m gonna treat you the way you  deserve,  I&#39m gonna learn how to love you right. I&#39m not going anywhere."
                                     </p>
                                 </div>
 
+                                <!-- Quote Block (Separate) -->
                                 <div class="glass rounded-2xl p-8 bg-gradient-to-r from-pink-50 to-purple-50 border-pink-300 fade-in-up" style="animation-delay: 2.2s;">
                                     <blockquote class="text-lg italic text-gray-600 border-l-4 border-pink-500 pl-6">
                                         "So it&#39;s not gonna be easy. It&#39;s going to be really hard; we&#39;re gonna have to work at this everyday, but I want to do that because I want you. I want all of you, forever, everyday."
@@ -490,37 +448,32 @@ Route::get('/ttat', function () {
                                     </blockquote>
                                 </div>
 
+                                <!-- Remaining Sections -->
                                 <div class="text-center space-y-6 fade-in-up" style="animation-delay: 2.4s;">
                                     <p class="text-xl font-bold text-pink-800">Meeting you was nothing short of magic. And I don&#39;t want to let that magic go. So if it&#39;ll take me days, weeks or months waiting for you,<br>then I&#39;ll gladly love you still. For being with you is not just a moment of bliss, but a happiness, a joy, and a feeling of freedom.</p>
                                 </div>
-
                                 <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 2.6s;">
                                     <p class="text-lg leading-relaxed text-gray-700 text-center">
                                         In all ways, through all of time, always.
                                     </p>
                                 </div>
-
                                 <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 2.8s;">
                                     <p class="text-lg leading-relaxed text-gray-700 text-center">
                                         I love you, beb. Now here I am dedicating to you "Got to Believe in Magic."
                                     </p>
                                 </div>
-
                                 <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 3s;">
                                     <p class="text-lg leading-relaxed text-gray-700 indent-8">
                                         Because what I feel for you? The odds of us meeting? It&#39;s like a miracle of magic. And I&#39;m not going to let that go.
                                     </p>
                                 </div>
-
                                 <footer class="text-right mt-12 italic text-gray-600 fade-in-up" style="animation-delay: 3.2s;">
                                     <div class="glass rounded-xl p-6 inline-block">
                                         Through thick and thin,<br>
                                         <span class="text-pink-600 font-semibold">Dian.</span>
                                     </div>
                                 </footer>
-                                <br>
-                                <br>
-                                <br>
+                                <br><br><br>
                                 <footer class="text-left mt-12 text-gray-600 fade-in-up" style="animation-delay: 3.2s;">
                                     <div class="glass rounded-xl p-6 inline-block">
                                         PS: I&#39;m also inviting you to go an a hike with me.<br>I&#39;ve been craving to go up a mountain again, I hope you&#39;re G for that<br> What do ya think? hehe
@@ -530,26 +483,22 @@ Route::get('/ttat', function () {
                         </div>
                     </div>
                 </div>
-
                 <script>
                     const audio = document.getElementById("background-music");
                     const passwordInput = document.getElementById("password");
                     const musicButton = document.getElementById("music-button");
                     const errorElement = document.getElementById("error");
 
-                    // Parallax effect on scroll
                     window.addEventListener("scroll", () => {
                         const scrolled = window.pageYOffset;
                         const parallaxElements = document.querySelectorAll(".parallax-content");
                         const speed = 0.5;
-                        
                         parallaxElements.forEach(element => {
                             const yPos = -(scrolled * speed);
                             element.style.transform = `translateY(${yPos}px)`;
                         });
                     });
 
-                    // Enhanced sparkle animation
                     function createSparkle() {
                         const sparkle = document.createElement("div");
                         sparkle.className = "sparkle";
@@ -557,16 +506,13 @@ Route::get('/ttat', function () {
                         sparkle.style.top = Math.random() * 100 + "%";
                         sparkle.style.animationDelay = Math.random() * 6 + "s";
                         document.body.appendChild(sparkle);
-                        
                         setTimeout(() => {
                             sparkle.remove();
                         }, 6000);
                     }
 
-                    // Create sparkles periodically
                     setInterval(createSparkle, 3000);
 
-                    // Add event listener for Enter key
                     passwordInput.addEventListener("keydown", function(event) {
                         if (event.key === "Enter") {
                             checkPassword();
@@ -590,20 +536,15 @@ Route::get('/ttat', function () {
                     function checkPassword() {
                         const correct = "Gabawan";
                         const input = passwordInput.value.trim();
-
                         if (input.toLowerCase() === correct.toLowerCase()) {
                             document.getElementById("gate").style.display = "none";
                             document.getElementById("letter").style.display = "block";
-
-                            // Ensure music continues playing
                             if (audio.paused) {
                                 audio.play();
                             }
                         } else {
                             errorElement.textContent = "Try again. It&#39;s where the fireworks first sparked.";
                             errorElement.style.animation = "fadeInUp 0.5s ease forwards";
-
-                            // Shake the input field for wrong password
                             passwordInput.style.animation = "none";
                             setTimeout(() => {
                                 passwordInput.style.animation = "shake 0.5s ease";
@@ -611,7 +552,6 @@ Route::get('/ttat', function () {
                         }
                     }
 
-                    // Add shake animation for wrong password
                     document.head.insertAdjacentHTML("beforeend", `
                         <style>
                             @keyframes shake {
