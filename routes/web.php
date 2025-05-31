@@ -402,13 +402,13 @@ Route::get('/ttat', function () {
                                     </p>
 
                                     <p class="text-lg leading-relaxed text-gray-700 indent-8 mt-6">
-                                        Okay, so here&#39;s the plethora of thigns I really wanted to tell you. First of all- I&#39;m sorry. For having pressured you with expectations that you were overwhelmed with the idea that you can&#39;t deliver them. I really do feel bad at that. The last thing you needed was a relationship that expects a lot in return from you. I didn&#39;t really mean no harm, honest. And I really am not asking so much from you to fill my expectations. But passively and indirectly, that&#39;s what I did. And now I&339;ve filled you too much. You don&#39;t deserve that chaos in your mind. From the bottom of my hear I&#39;m sorry about that, pretty.        
+                                        Okay, so here&#39;s the plethora of thigns I really wanted to tell you. First of all- I&#39;m sorry. For having pressured you with expectations that you were overwhelmed with the idea that you can&#39;t deliver them. I really do feel bad at that. The last thing you needed was a relationship that expects a lot in return from you. I didn&#39;t really mean no harm, honest. And I really am not asking so much from you to fill my expectations. But passively and indirectly, that&#39;s what I did. And now I&39;ve filled you too much. You don&#39;t deserve that chaos in your mind. From the bottom of my hear I&#39;m sorry about that, pretty.        
                                     </p>
 
                                     <p class="text-lg leading-relaxed text-gray-700 indent-8 mt-6">
-                                        I&39;ll be honest, I&#39;m not the best guy in the world. I&#39;m not the most romantic, or the most charming, or the most handsome. But I do know that I love you. And I know that I want to be with you. I want to be there for you, to support you, to make you happy, and to love you with all my heart. 
+                                        I&#39;ll be honest, I&#39;m not the best guy in the world. I&#39;m not the most romantic, or the most charming, or the most handsome. But I do know that I love you. And I know that I want to be with you. I want to be there for you, to support you, to make you happy, and to love you with all my heart. 
                                     </p>
-                                    
+
                                     <p class="text-lg leading-relaxed text-gray-700 indent-8 mt-6">
                                         I love the way you smile, the way you laugh, the way you talk, walk and how your eyes twinkle when you talk about something you love. Or the frustration in your voice when you talk to me about something that happened with your day. I love everything about you. Always have, always will. I&#39;m not willing to let us go, I&#39;ll be willing to make us right. Argue if we must, but I&#39;d always choose to make it right by you.
                                     </p>
