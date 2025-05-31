@@ -448,11 +448,20 @@ Route::get('/ttat', function () {
                                     </p>
 
                                     <p class="text-lg leading-relaxed text-gray-700 indent-8 mt-6">
-                                        If you ever- ever want to reconnect, know that I&#39;ll be here, waiting for you. I&#39;ll be here, ready to listen, ready to understand, and ready to love you the way you deserve to be loved. I&#39;m not giving up on us.
+                                        Know that I&#39;ll be here, waiting for you. I&#39;ll be here, ready to listen, ready to understand, and ready to love you the way you deserve to be loved. I&#39;m not giving up on us.
                                     </p>
 
                                     <p class="text-lg leading-relaxed text-gray-700 indent-8 mt-6">
-                                        And if I&#39;ll have to wait for a while &#39;til time and fate decides that we can start over again, be it from the bottom up, I&#39;ll be there patiently waiting for that time to come. You&#39;ll always have a spot in my heart, beb. And my heart will never, ever be closed off for you. I&#39m not giving up on you, you&#39re worth it, I&#39m gonna treat you the way you  deserve,  I&#39m gonna learn how to love you right. I&#39m not going anywhere.
+                                        We can take a break, we can take a step back, and we can take a breather. We still converse every now and then, still talk about our day, still share our thoughts and feelings. Whenever something is "chika-worth" hahaha I love your chikas. But yeah, take it easy, give it a chill-time. Not make it feel as a burden because- it shouldn&#39;t be. And I&#39;ll be sure that we can work on that. I ain&#39;t gonna pressure you or whatever. Heck, we are now on vacation, and post-graduation? Chances are, we wouldn&#39;t meet each other as often so much anymore. But that is how it goes, we do our life-stuff separately. But we can still talk about it to each other. All that I know is that I love you, I want to be with you. And I love talking about each other&#39;s day with you.  
+                                    </p>
+
+
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8 mt-6">
+                                        If anything,, I don&#39;t want to be with anyone else and look for YOU in them. I don&#39;t want to be with anyone else and think of you. I don&#39;t want to be with anyone else and compare them to you. I don&#39;t want to be with anyone else and wish they were you. I don&#39;t want to be with anyone else and hope they would love me like you do. I don&#39;t want to be with anyone else and hope they would understand me like you do. I don&#39;t want to be with anyone else and wish they would care for me like you do. 
+                                    </p>
+
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8 mt-6">
+                                        And if that entails that I&#39;ll have to wait for a while &#39;til time and fate decides that we can go at it again, I&#39;ll be there patiently waiting for that time to come. You&#39;ll always have a spot in my heart, beb. And my heart will never, ever be closed off for you. I&#39m not giving up on you, you&#39re worth it, I&#39m gonna treat you the way you  deserve,  I&#39m gonna learn how to love you right. I&#39m not going anywhere.
                                     </p>
                                 </div>
 
