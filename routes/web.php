@@ -440,11 +440,15 @@ Route::get('/ttat', function () {
                                     </p>
 
                                     <p class="text-lg leading-relaxed text-gray-700 indent-8 mt-6">
-                                        I&#39;m sorry for crossing a line I shouldn&#39;t have by asking you or by pushing you to the limit. I really didn&#39;t mean to. Please let me make it up to you, and please give us a chance. I really, really don&#39;t want to lose you. But I respect that you want some breathing room and space. I totally do. Just, please give us a chance.
+                                        I&#39;m sorry for crossing a line I shouldn&#39;t have by asking you or by pushing you to the limit. I really didn&#39;t mean to. I really don&#39;t want to lose you. But I respect that you want some breathing room and space.
                                     </p>
 
                                     <p class="text-lg leading-relaxed text-gray-700 indent-8 mt-6">
-                                        You&#39;re not too much. You&#39;re not too sensitive. You&#39;re not too emotional. You&#39;re not too sensitive. You&#39;re just you, and you feel things deeply. I love you for that, and it&#39;s a gift. Don&#39;t ever apologize for how you feel especially when it&#39;s you who got hurt. People who are worth your time will appreciate hoe much you care.  
+                                        You&#39;re not too much. You&#39;re not too sensitive. You&#39;re not too emotional. You&#39;re not too sensitive. You&#39;re just you, and you feel things deeply. I love you for that, and it&#39;s a gift. Don&#39;t ever apologize for how you feel especially when it&#39;s your feelings that got disturbed. People who are worth your time will appreciate how much you care.  
+                                    </p>
+
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8 mt-6">
+                                        If you ever- ever want to reconnect, know that I&#39;ll be here, waiting for you. I&#39;ll be here, ready to listen, ready to understand, and ready to love you the way you deserve to be loved. I&#39;m not giving up on us.
                                     </p>
 
                                     <p class="text-lg leading-relaxed text-gray-700 indent-8 mt-6">
