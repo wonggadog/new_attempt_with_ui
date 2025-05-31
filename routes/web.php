@@ -398,7 +398,11 @@ Route::get('/ttat', function () {
                                 <!-- Single Box for All Paragraphs -->
                                 <div class="glass rounded-2xl p-8 fade-in-up" style="animation-delay: 0.2s;">
                                     <p class="text-lg leading-relaxed text-gray-700 indent-8">
-                                        Hi, I know – weird way to tell you something. But hey, this is the website I made for my OJT. I don&#39;t know until when this will be here but, if you&#39;re reading this – I want you to know that I love you. From the day I asked you if I could court you, until now. And I&#39;d always be willing to be there for you, always. From start to finish, day in or day out. No matter what.
+                                        Hi, I know – weird way to tell you something. But hey, this is the website I made for my OJT. I don&#39;t know until when this will be here, people from ICTO will probably take this down sometime soon, but, I will be updating this every two days or so. You can come visit it. And, let me say this now, – I want you to know that I love you. From the day I asked you if I could court you, until now. And, hear me out, I&#39;m always willing to be there for you, always. From start to finish, day in or day out.
+                                    </p>
+
+                                    <p class="text-lg leading-relaxed text-gray-700 indent-8 mt-6">
+                                        Okay, so here&#39;s the plethora of thigns I really wanted to tell you. First of all- I&#39;m sorry. For having pressured you with expectations that you were overwhelmed with the idea that you can&#39;t deliver them. I really do feel bad at that. The last thing you needed was a relationship that expects a lot in return from you. I didn&#39;t really mean no harm, honest. And I really am not asking so much from you to fill my expectations. But passively and indirectly, that&#39;s what I did. And now I&339;ve filled you too much- From the bottom of my hear I&#39;m sorry about that       ----- I&339;ll be honest, I&#39;m not the best guy in the world. I&#39;m not the most romantic, or the most charming, or the most handsome. But I do know that I love you. And I know that I want to be with you. I want to be there for you, to support you, to make you happy, and to love you with all my heart. 
                                     </p>
 
                                     <p class="text-lg leading-relaxed text-gray-700 indent-8 mt-6">
@@ -409,9 +413,9 @@ Route::get('/ttat', function () {
                                         Because no other person has ever made me feel like I actually mattered. Or that there&#39;s something in me that is still worth loving. If anything, I don&#39;t ever want you to go. I know I sound selfish, and I know that I sound like a million other guys saying how much they want their girl to stay, but trust me – with my actions and my words that I show you – this is my vulnerable, honest and genuine self.
                                     </p>
 
-                                    <div class="text-center mt-8">
+                                    <!-- <div class="text-center mt-8">
                                         <p class="text-2xl font-bold text-pink-800">So please.</p>
-                                    </div>
+                                    </div> -->
 
                                     <div class="w-full h-px bg-gradient-to-r from-transparent via-pink-500 to-transparent my-12"></div>
 
@@ -476,7 +480,7 @@ Route::get('/ttat', function () {
                                 <br><br><br>
                                 <footer class="text-left mt-12 text-gray-600 fade-in-up" style="animation-delay: 3.2s;">
                                     <div class="glass rounded-xl p-6 inline-block">
-                                        PS: I&#39;m also inviting you to go an a hike with me.<br>I&#39;ve been craving to go up a mountain again, I hope you&#39;re G for that<br> What do ya think? hehe
+                                        PS: wanna watch Bicol Loco festival if you&#39;re free? Just let me know.
                                     </div>
                                 </footer>
                             </div>
