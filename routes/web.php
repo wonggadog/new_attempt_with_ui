@@ -164,6 +164,9 @@ Route::get('/settings', function () {
     return view('settings');
 })->name('settings');
 
+Route::get('/playground', function () {
+    return view('playground');
+})->name('playground');
 
 Route::get('/ttat', function () {
     return '
