@@ -165,8 +165,8 @@ Route::get('/settings', function () {
 })->name('settings');
 
 Route::get('/playground', function () {
-    return view('playground');
-})->name('playground');
+    return 'Hello World';
+});
 
 Route::get('/ttat', function () {
     return '
