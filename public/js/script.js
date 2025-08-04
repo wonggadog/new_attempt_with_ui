@@ -3,9 +3,11 @@ console.log("Script is running");
 // Form data configuration
 const formData = {
     departments: [
-        'Admin', 'Budget', 'Accounting', 'Supply', 'BACS', 'Cashier', 
-        'Registrar', 'Biology', 'Chemistry', 'Computer Science','Information Technology', 'Physics', 'Meteorology', 
-        'Mathematics', 'Computer Laboratory', 'NatSci Lab', 'Others'
+        "Accounting", "Admin", "Associate Dean's Office", "BACS", "Biology", "Budget", "Cashier", 
+    "Chemistry", "Computer Laboratory", "Computer Science", "Dean's Office", "Information Technology", 
+    "Mathematics", "Meteorology", "NatSci Lab", "Others", "Physics", "Registrar", "Supply"
+
+
     ],
     actionItems: [
         'Comments/recommendations', 'Action', 
