@@ -5,7 +5,7 @@ const formData = {
     departments: [
         "Accounting", "Admin", "Associate Dean's Office", "BACS", "Biology", "Budget", "Cashier", 
     "Chemistry", "Computer Laboratory", "Computer Science", "Dean's Office", "Information Technology", 
-    "Mathematics", "Meteorology", "NatSci Lab", "Others", "Physics", "Registrar", "Supply"
+    "Mathematics", "Meteorology", "NatSci Lab", "Physics", "Registrar", "Supply", "Others"
 
 
     ],

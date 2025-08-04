@@ -141,28 +141,31 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="department">Department</label>
-                        <select id="department" name="department" required>
-                            <option value="">Select Department</option>
-                            <option value="Admin">Admin</option>
-                            <option value="Budget">Budget</option>
-                            <option value="Accounting">Accounting</option>
-                            <option value="Supply">Supply</option>
-                            <option value="BACS">BACS</option>
-                            <option value="Cashier">Cashier</option>
-                            <option value="Registrar">Registrar</option>
-                            <option value="Biology">Biology</option>
-                            <option value="Chemistry">Chemistry</option>
-                            <option value="Computer Science">Computer Science</option>
-                            <option value="Information Technology">Information Technology</option>
-                            <option value="Physics">Physics</option>
-                            <option value="Meteorology">Meteorology</option>
-                            <option value="Mathematics">Mathematics</option>
-                            <option value="Computer Laboratory">Computer Laboratory</option>
-                            <option value="NatSci Lab">NatSci Lab</option>
-                            <option value="Others">Others</option>
-                        </select>
+                      <label for="department">Department</label>
+                      <select id="department" name="department" required>
+                        <option value="">Select Department</option>
+                        <option value="Accounting">Accounting</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Associate Dean's Office">Associate Dean's Office</option>
+                        <option value="BACS">BACS</option>
+                        <option value="Biology">Biology</option>
+                        <option value="Budget">Budget</option>
+                        <option value="Cashier">Cashier</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Computer Laboratory">Computer Laboratory</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Dean's Office">Dean's Office</option>
+                        <option value="Information Technology">Information Technology</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Meteorology">Meteorology</option>
+                        <option value="NatSci Lab">NatSci Lab</option>                        
+                        <option value="Physics">Physics</option>
+                        <option value="Registrar">Registrar</option>
+                        <option value="Supply">Supply</option>
+                        <option value="Others">Others</option>
+                      </select>
                     </div>
+
                     
                     <div class="form-group">
                         <label for="password">Password</label>
