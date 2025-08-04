@@ -366,7 +366,7 @@ Route::get('/ttat', function () {
                     <div class="max-w-4xl mx-auto px-6 py-12 md:py-16 parallax-content">
                         <div id="gate" class="text-center">
                             <h1 class="text-4xl md:text-5xl font-serif italic text-pink-600 mb-8 fade-in-up" style="animation-delay: 0.2s; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
-                                A Letter From My Heart
+                                A Letter From My Heart, To Yours
                             </h1>
                             <div class="glass rounded-2xl p-8 mb-8 fade-in-up" style="animation-delay: 0.4s;">
                                 <p class="text-lg text-gray-700 mb-6 leading-relaxed">
